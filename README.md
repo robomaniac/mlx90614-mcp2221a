@@ -18,6 +18,7 @@ I wanted a simple way to see infrared temperature readings and a live graph with
 - **1, 2, 4, 5 and 10 Hz** sample-rate controls.
 - Remembered device permission for easier reconnecting.
 - Successful and attempted sample counts, with failed reads retained in the debug log.
+- **CSV export** of the latest 10,000 attempted pairs, including errors, readable UTC timestamps and acquisition duration.
 - One HTML file with embedded CSS and JavaScript; processing stays in your browser.
 
 ## Use it
@@ -26,7 +27,8 @@ I wanted a simple way to see infrared temperature readings and a live graph with
 2. Select **2 Hz** and click **Connect**. Choose the MCP2221A in the device chooser if prompted; previously granted permission may be reused automatically.
 3. Expect changing object/ambient readings and growing chart points. Hover over the chart to inspect individual samples. The debug log should show an initial sample and periodic `Read OK` entries.
 4. Try other sample rates as needed. **10 Hz is a requested rate**; actual successful throughput depends on the hardware and read retries. Keep failed-read logs when troubleshooting.
-5. Click **Disconnect** before closing the tab. Reloading starts a fresh chart and log.
+5. Click **Export CSV** beside the sample-rate control to save the retained readings to your browser's download folder. Export works while reading or after **Disconnect**; it does not stop acquisition. The chart footer shows how many attempts remain available.
+6. Click **Disconnect** before closing the tab. Export before reconnecting or reloading; these start a fresh chart and CSV buffer.
 
 For local editing, follow the [complete VS Code / PowerShell setup guide](08_Software/mlx90614-webhid/README.md#local-setup-and-operation). It includes exact check/server commands, expected results, restart instructions and cleanup. An existing local server can be reused after saving and reloading the HTML; there is no build or firmware-flash step.
 

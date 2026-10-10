@@ -615,6 +615,7 @@
                     </div>
                   </div>
                 </div>
+                <button id="exportCsvBtn" class="secondary" type="button" aria-describedby="csvMeta" disabled>Export CSV</button>
               </div>
               <div class="chip-row">
                 <span id="samplePill" class="pill">2 Hz</span>
@@ -632,6 +633,7 @@
             <span><span class="legend-dot dot-object"></span>Object</span>
             <span><span class="legend-dot dot-ambient"></span>Ambient</span>
             <span class="dim">Hover the graph for exact values. Newest point is at the right edge.</span>
+            <span id="csvMeta" class="dim">CSV: no attempted readings yet.</span>
           </div>
         </section>
 
@@ -662,6 +664,7 @@
     const I2C_CLOCK_HZ = 100000;
     const DEFAULT_SAMPLE_RATE_HZ = 2;
     const MAX_POINTS = 5000;
+    const MAX_CSV_ROWS = 10000;
     const MAX_LOG_LINES = 700;
     const INPUT_TIMEOUT_MS = 900;
     const OK_LOG_INTERVAL_MS = 1000;
@@ -670,6 +673,8 @@
     const els = {
       connectBtn: document.getElementById('connectBtn'),
       disconnectBtn: document.getElementById('disconnectBtn'),
+      exportCsvBtn: document.getElementById('exportCsvBtn'),
+      csvMeta: document.getElementById('csvMeta'),
       clearLogBtn: document.getElementById('clearLogBtn'),
       statusPill: document.getElementById('statusPill'),
       modePill: document.getElementById('modePill'),
@@ -701,6 +706,7 @@
       inputQueue: [],
       inputWaiters: [],
       history: [],
+      csvRows: [],
       totalSamples: 0,
       sampleAttempts: 0,
       lastReadAt: null,
@@ -817,6 +823,43 @@
       state.lastReadAt = Date.now();
       updateSampleMeta();
       drawChart();
+    }
+
+    function updateCsvMeta() {
+      els.exportCsvBtn.disabled = state.csvRows.length === 0;
+      els.csvMeta.textContent = state.csvRows.length
+        ? 'CSV: ' + state.csvRows.length.toLocaleString() + ' of ' + state.sampleAttempts.toLocaleString() + ' attempted readings retained (including errors).'
+        : 'CSV: no attempted readings yet.';
+    }
+
+    function retainCsvRow(row) {
+      state.csvRows.push(row);
+      if (state.csvRows.length > MAX_CSV_ROWS) state.csvRows.shift();
+      updateCsvMeta();
+    }
+
+    function csvCell(value) {
+      const text = String(value ?? '');
+      return /[",\r\n]/.test(text) ? '"' + text.replace(/"/g, '""') + '"' : text;
+    }
+
+    function buildCsv() {
+      const fields = ['sequence', 'timestamp_ms', 'timestamp_utc', 'status', 'object_c', 'ambient_c',
+        'object_raw', 'ambient_raw', 'acquisition_ms', 'recovered_register_reads', 'error_code', 'error'];
+      return [fields.join(','), ...state.csvRows.map(row => fields.map(field => csvCell(row[field])).join(','))].join('\r\n') + '\r\n';
+    }
+
+    function exportCsv() {
+      if (!state.csvRows.length) return;
+      const url = URL.createObjectURL(new Blob([buildCsv()], { type: 'text/csv;charset=utf-8' }));
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'mlx90614_' + new Date().toISOString().replace(/[:.]/g, '-') + '.csv';
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      log('Exported CSV: ' + state.csvRows.length + ' of ' + state.sampleAttempts + ' attempted readings retained, including errors.');
     }
 
     function crc8(bytes) {
@@ -1302,9 +1345,32 @@
     async function sampleSensor() {
       state.sampleAttempts += 1;
       updateSampleMeta();
-      const ambient = await readValidatedMlxWord(MLX_RAM_AMBIENT, 'Ambient');
-      await sleep(state.sampleRateHz >= 10 ? 2 : 4);
-      const object = await readValidatedMlxWord(MLX_RAM_OBJECT_1, 'Object');
+      const started = performance.now();
+      const recoveredBefore = state.totalRecoveredReads;
+      const row = { sequence: state.sampleAttempts, status: 'error', object_c: '', ambient_c: '',
+        object_raw: '', ambient_raw: '', error_code: '', error: '' };
+      let ambient, object;
+      try {
+        ambient = await readValidatedMlxWord(MLX_RAM_AMBIENT, 'Ambient');
+        row.ambient_raw = hex(ambient.raw, 4);
+        await sleep(state.sampleRateHz >= 10 ? 2 : 4);
+        object = await readValidatedMlxWord(MLX_RAM_OBJECT_1, 'Object');
+        row.object_raw = hex(object.raw, 4);
+        row.object_c = Number(object.celsius.toFixed(4));
+        row.ambient_c = Number(ambient.celsius.toFixed(4));
+        row.status = 'ok';
+      } catch (error) {
+        row.error_code = error.code || '';
+        row.error = error.message || String(error);
+        throw error;
+      } finally {
+        // Host read completion, not the sensor's conversion time. Duration includes retries and waits.
+        row.timestamp_ms = Date.now();
+        row.timestamp_utc = new Date(row.timestamp_ms).toISOString();
+        row.acquisition_ms = Number((performance.now() - started).toFixed(4));
+        row.recovered_register_reads = state.totalRecoveredReads - recoveredBefore;
+        retainCsvRow(row);
+      }
 
       setTemps(object.celsius, ambient.celsius);
       addPoint(object.celsius, ambient.celsius);
@@ -1541,8 +1607,10 @@
         state.device = selectedDevice;
         state.transport = selectedTransport;
         state.history = [];
+        state.csvRows = [];
         state.totalSamples = 0;
         state.sampleAttempts = 0;
+        updateCsvMeta();
         state.lastReadAt = null;
         state.reconnectingAfterReset = false;
       state.hoverIndex = null;
@@ -1828,6 +1896,7 @@
 
     els.connectBtn.addEventListener('click', connect);
     els.disconnectBtn.addEventListener('click', () => disconnect());
+    els.exportCsvBtn.addEventListener('click', exportCsv);
     els.clearLogBtn.addEventListener('click', clearLog);
     els.sampleRateButton.addEventListener('click', event => {
       event.stopPropagation();

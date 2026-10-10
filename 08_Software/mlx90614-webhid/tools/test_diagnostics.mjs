@@ -29,14 +29,14 @@ const context = vm.createContext({
 vm.runInContext(inline.slice(0, eventStart) + `
 globalThis.app = {
   state, crc8, validateMlxWord, softResetAndReconnectDevice,
-  sampleSensor, readValidatedMlxWord, pollingLoop, log,
+  sampleSensor, readValidatedMlxWord, pollingLoop, log, buildCsv,
   replaceRead(fn) { readMlxWord = fn; },
   replaceCancel(fn) { cancelI2cTransfer = fn; },
   replaceSleep(fn) { sleep = fn; },
   replaceSample(fn) { sampleSensor = fn; },
 };`, context);
 const app = context.app;
-const valid = { error: false, pecOk: true, celsius: 23.5 };
+const valid = { error: false, pecOk: true, raw: 0x39F0, celsius: 23.49 };
 
 let resetSends = 0;
 app.state.device = { sendReport() { resetSends++; }, sendFeatureReport() { resetSends++; } };
@@ -65,7 +65,10 @@ assert.throws(() => app.validateMlxWord({ ...valid, pecOk: false, pec: 0, expect
 console.log('PASS all failed attempts, sensor flags, and bad PEC remain errors');
 
 app.state.totalSamples = 0; app.state.sampleAttempts = 0; app.state.history = [];
-app.replaceRead(async register => { if (register === 7) throw new Error('simulated object failure'); return valid; });
+app.replaceRead(async register => {
+  if (register === 7) throw Object.assign(new Error('simulated object failure, "timeout"\nretry exhausted'), { code: 'TEST_TIMEOUT' });
+  return valid;
+});
 await assert.rejects(app.sampleSensor(), /simulated object failure/);
 assert.equal(app.state.sampleAttempts, 1);
 assert.equal(app.state.totalSamples, 0);
@@ -77,6 +80,45 @@ assert.equal(app.state.totalSamples, 1);
 assert.equal(app.state.history.length, 1);
 assert.match(element('pointsPill').textContent, /1 successful \/ 2 attempted/);
 console.log('PASS partial pairs are not plotted; successful and attempted pairs differ');
+
+const [failedRow, goodRow] = app.state.csvRows;
+assert.equal(failedRow.sequence, 1);
+assert.equal(failedRow.status, 'error');
+assert.equal(failedRow.error_code, 'TEST_TIMEOUT');
+assert.equal(failedRow.object_c, '');
+assert.equal(failedRow.ambient_c, '', 'A partial pair must not export as valid temperatures');
+assert.equal(failedRow.ambient_raw, '0x39F0', 'Retain the validated partial raw word');
+assert.equal(failedRow.object_raw, '');
+assert.equal(goodRow.sequence, 2);
+assert.equal(goodRow.status, 'ok');
+assert.equal(goodRow.object_c, valid.celsius);
+assert.equal(goodRow.object_raw, '0x39F0');
+assert.equal(goodRow.timestamp_utc, new Date(goodRow.timestamp_ms).toISOString());
+assert.ok(goodRow.acquisition_ms >= 0);
+assert.equal(element('exportCsvBtn').disabled, false);
+const csv = app.buildCsv();
+assert.ok(csv.startsWith('sequence,timestamp_ms,timestamp_utc,status,object_c,ambient_c,'));
+assert.ok(csv.includes('"simulated object failure, ""timeout""\nretry exhausted"'), 'Escape commas, quotes and embedded newlines');
+assert.ok(csv.endsWith('\r\n'));
+let recoveredReads = 0;
+app.replaceRead(async () => {
+  if (++recoveredReads === 1) throw new Error('simulated recovered CSV read');
+  return valid;
+});
+await app.sampleSensor();
+assert.equal(app.state.csvRows.at(-1).recovered_register_reads, 1);
+assert.equal(app.state.csvRows.at(-1).status, 'ok');
+console.log('PASS CSV retains failed/valid pairs, partial raw evidence, UTC timestamps, timing and recovered reads; text is escaped');
+
+app.state.csvRows = Array.from({ length: 10000 }, (_, i) => ({ ...goodRow, sequence: i + 1 }));
+app.state.sampleAttempts = 10000;
+app.replaceRead(async () => valid);
+await app.sampleSensor();
+assert.equal(app.state.csvRows.length, 10000);
+assert.equal(app.state.csvRows[0].sequence, 2);
+assert.equal(app.state.csvRows.at(-1).sequence, 10001);
+assert.match(element('csvMeta').textContent.replace(/,/g, ''), /10000 of 10001 attempted readings retained/);
+console.log('PASS CSV bounds preserve the newest 10000 attempts and disclose the retained/attempted counts');
 
 app.state.readErrorCount = 0; app.state.consecutiveReadErrors = 0;
 app.replaceSample(async () => { app.state.polling = false; throw new Error('simulated poll failure'); });

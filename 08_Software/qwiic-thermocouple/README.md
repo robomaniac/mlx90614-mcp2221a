@@ -85,6 +85,21 @@ The actual sensor returned device ID **`0x4014`**, sensor configuration **`0x00`
 
 Use the board's actual signal labels and existing compatible pull-ups. Connect the thermocouple to the amplifier's marked **+ / −** terminals or matching PCC connector. See the [SparkFun hookup guide](https://learn.sparkfun.com/tutorials/sparkfun-qwiic-thermocouple-hookup-guide), [board hardware](https://github.com/sparkfun/Qwiic_Thermocouple_Amplifer), and [Microchip datasheet](https://ww1.microchip.com/downloads/en/DeviceDoc/MCP960X-L0X-RL0X-Data-Sheet-20005426F.pdf).
 
+## CSV timestamps and columns
+
+| Column | Meaning |
+| --- | --- |
+| `sequence` | Attempt number within this connection, including failed attempts |
+| `timestamp_ms` | Time the PC finished the read attempt, in Unix milliseconds since `1970-01-01T00:00:00Z` |
+| `status` | `ok` for a valid pair, or `error` for a failed pair |
+| `hot_c`, `cold_c` | Thermocouple tip and board cold-junction temperatures in Celsius |
+| `hot_raw`, `cold_raw` | Sensor temperature words in hexadecimal, decoded as signed 16-bit values at 0.0625 °C/LSB |
+| `sensor_status` | Status-register byte as a decimal integer |
+| `acquisition_ms` | Duration of the status → probe → board → status USB/I2C read, in milliseconds; measured using the host's monotonic clock |
+| `error_code`, `error` | Failure code and message; blank for successful pairs |
+
+In the example `timestamp_ms = 1791662872046`, the time is **2026-10-10 20:07:52.046 UTC**, or **1:07:52.046 PM PDT**. `acquisition_ms = 23.7189` means the read took **23.7189 milliseconds**, approximately 0.02372 seconds. The timestamp dates the completed attempt; it is not the sensor's internal conversion time. Acquisition duration does not set the polling interval or sensor conversion rate. The dashboard displays local times; Unix timestamps identify the same instant in every timezone.
+
 ## Timing and limits
 
 | Topic | Behavior / limit |

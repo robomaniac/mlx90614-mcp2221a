@@ -86,8 +86,8 @@
     },
     {
       "path": "04_Media/temperature-monitor.png",
-      "bytes": 329067,
-      "sha256": "af24e78592483127d1a5764b2e0c8b92d5e7cabfc819f76644b1a837b14e4acd"
+      "bytes": 322778,
+      "sha256": "44caff2dd9e4a7a8b9ae8f903b6bfd2b39f01fbd0686311c054b4411e490c79c"
     },
     {
       "path": "05_Data/NATIVE_HARDWARE_RESULTS.json",
@@ -126,8 +126,8 @@
     },
     {
       "path": "05_Data/VALIDATION.md",
-      "bytes": 10023,
-      "sha256": "7dc17cafa34e3ead7333b5db656406a6bb59ba7dbb9dce2e45b41c1b121213e2"
+      "bytes": 11033,
+      "sha256": "d0525caf386f41ac7f1217e6b1958c72f4e471d99ea2c8cec612f1a036ac02ac"
     },
     {
       "path": "08_Software/mlx90614-hidapi-demo/README.md",
@@ -166,13 +166,13 @@
     },
     {
       "path": "08_Software/mlx90614-webhid/README.md",
-      "bytes": 9863,
-      "sha256": "dc72b9421ea5b9cb28baa7aa6d7b65fd8eb6ef693125d16bb3a843016be7b518"
+      "bytes": 12328,
+      "sha256": "081f8a4f1b428a606d514677680e108b82e4e1fa2aeee22994ce4c47952d4fa7"
     },
     {
       "path": "08_Software/mlx90614-webhid/mlx.html",
-      "bytes": 66751,
-      "sha256": "798a587ee3e26872c815b94e929cdc354bd5d25d3bb6a16e101cebb4eb01527d"
+      "bytes": 70012,
+      "sha256": "f0872108f3a73132feb8cb55776ca3a137ccc903e685f839dd9b1bd1b4323308"
     },
     {
       "path": "08_Software/mlx90614-webhid/tools/Check-Html.ps1",
@@ -186,8 +186,8 @@
     },
     {
       "path": "08_Software/mlx90614-webhid/tools/test_diagnostics.mjs",
-      "bytes": 5008,
-      "sha256": "df3227d3fc12486210c347e4b18a870cf51cbdd88035766326c09017e98fb491"
+      "bytes": 7170,
+      "sha256": "4fb9783369e03f0bc3445c14346f76513649ad4da9b57953791f8ea233f78060"
     },
     {
       "path": "08_Software/qwiic-thermocouple/Check-UI.ps1",
@@ -196,8 +196,8 @@
     },
     {
       "path": "08_Software/qwiic-thermocouple/README.md",
-      "bytes": 11515,
-      "sha256": "eee2860b674441bec729efa71a9e933701a07cc45ff8d8db1bee39ab70cd02ce"
+      "bytes": 12839,
+      "sha256": "8df946e7f1cdad0cad5bdbd1cbb21781a4c775e6dfa42029574a1695fe28134b"
     },
     {
       "path": "08_Software/qwiic-thermocouple/Start-Monitor.ps1",
@@ -276,8 +276,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 7732,
-      "sha256": "c75346e685db9ba6616a65c16123408f0f16e1a0c154e63b0290174274542436"
+      "bytes": 8159,
+      "sha256": "7e4e06fac00fb76089f88f04942cc3b475d9538287439861340116bdeddfdb90"
     }
   ]
 }

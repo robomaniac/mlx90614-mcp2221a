@@ -26,7 +26,7 @@ Local serving requires Python 3. Checks require Node.js or installed desktop Vis
    powershell -NoProfile -ExecutionPolicy Bypass -File .\08_Software\mlx90614-webhid\tools\Check-Html.ps1 -Diagnostics
    ```
 
-   Expect `PASS` for active HTML and baseline syntax, then six diagnostic checks. Stop on any error. These tests use simulated failures and do not open USB hardware. On macOS/Linux or with Node already installed, run from the repository root:
+   Expect `PASS` for active HTML and baseline syntax, then eight diagnostic/CSV checks. Stop on any error. These tests use simulated failures and do not open USB hardware. On macOS/Linux or with Node already installed, run from the repository root:
 
    ```sh
    node 08_Software/mlx90614-webhid/tools/check_html.mjs
@@ -49,11 +49,31 @@ Local serving requires Python 3. Checks require Node.js or installed desktop Vis
 
 7. If a read fails, retain the debug log. An example failed-attempt entry is `Ambient register 0x06 read failed (attempt 1/2): ...`; the real message explains the failure. A transient failure displays **Retrying** while waiting for a valid pair. A startup error such as `I2C speed set failed ... 0x21` is a failure, even if SCL/SDA were high at one instant. Do not call the connection recovered until readings resume.
 
-8. Click **Disconnect** before closing the tab. Return to the server terminal and press **Ctrl+C**; the PowerShell prompt returning confirms the server stopped. Unplug the bridge only after its clients are closed if needed. The app keeps data in memory; reloading clears the displayed chart/log.
+8. Click **Export CSV** beside the chart's sample-rate control. Expect a file named `mlx90614_<UTC date-time>.csv` in Chrome/Edge's download folder; open **Downloads** with **Ctrl+J** to locate it. Export includes the latest **10,000 attempted pairs**, including errors, while the chart keeps the latest 5,000 successful pairs. The chart footer states retained/attempted CSV counts. Export can run during acquisition or after disconnecting. If the button is disabled, no reading attempt has completed yet. Export before reconnecting or reloading, which clear the CSV buffer.
 
-Optional direct-file method: in **File Explorer**, locate `08_Software\mlx90614-webhid\mlx.html`, right-click **Open with > Google Chrome** or **Microsoft Edge**, then follow steps 5–8. If device access is blocked under `file://`, use the loopback server above. The loopback method is the documented reference.
+9. Click **Disconnect** before closing the tab. Return to the server terminal and press **Ctrl+C**; the PowerShell prompt returning confirms the server stopped. Unplug the bridge only after its clients are closed if needed. The app keeps data in memory; reloading clears the displayed chart/log and CSV buffer. Downloaded files remain on your computer.
+
+Optional direct-file method: in **File Explorer**, locate `08_Software\mlx90614-webhid\mlx.html`, right-click **Open with > Google Chrome** or **Microsoft Edge**, then follow steps 5-9. If device access is blocked under `file://`, use the loopback server above. The loopback method is the documented reference.
 
 Optional VS Code tasks: choose **Terminal > Run Task > Check HTML and simulated diagnostics**, or **Serve MLX90614 app on localhost:8000**. Stop the server with Ctrl+C in its dedicated task terminal. The server task requires Python on PATH.
+
+## CSV columns and timing
+
+One row represents one attempted ambient/object pair, including the initial connection sample. `ok` requires both validated words; a failed partial pair has blank Celsius values and retains any validated partial raw word. Register retries remain in the debug log and are included in the acquisition duration.
+
+| Column | Meaning |
+| --- | --- |
+| `sequence` | Attempt number within this connection; remains unchanged when older rows leave the buffer |
+| `timestamp_ms` | PC read-completion time, Unix milliseconds since `1970-01-01T00:00:00Z` |
+| `timestamp_utc` | The same completion time as a readable ISO UTC date, ending in `Z` |
+| `status` | `ok` or `error` for the complete pair |
+| `object_c`, `ambient_c` | Valid pair temperatures in Celsius; blank for failed pairs |
+| `object_raw`, `ambient_raw` | Validated 16-bit sensor words in hexadecimal, prefixed `0x`; unavailable words are blank |
+| `acquisition_ms` | Elapsed host time for the pair, including USB/I2C operations, retry waits and the inter-register delay; measured using a monotonic clock |
+| `recovered_register_reads` | Number of registers that succeeded after a retry within this pair |
+| `error_code`, `error` | Final pair failure code, when available, and message; blank for successful pairs |
+
+For example, `timestamp_ms = 1791662872046` is `2026-10-10T20:07:52.046Z`, or **October 10 at 1:07:52.046 PM PDT**. `acquisition_ms = 23.7189` is a **23.7189 ms read duration**. These are host timings; the sensor does not supply its conversion timestamp. The local chart displays times in the browser's timezone. Export saves a snapshot without clearing the buffer or stopping acquisition. Download periodically during long sessions; older attempts beyond 10,000 are discarded, and exporting does not append to a previous download.
 
 ## Reuse, editing and restart
 
