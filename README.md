@@ -30,7 +30,7 @@ I wanted a simple way to see infrared temperature readings and a live graph with
 
 For local editing, follow the [complete VS Code / PowerShell setup guide](08_Software/mlx90614-webhid/README.md#local-setup-and-operation). It includes exact check/server commands, expected results, restart instructions and cleanup. An existing local server can be reused after saving and reloading the HTML; there is no build or firmware-flash step.
 
-For a native timing experiment, try the separate [Cython + HIDAPI demo](08_Software/mlx90614-hidapi-demo/README.md). It records every attempted pair to CSV and measures successful rate, read latency and missed polling slots. A [30-second hardware trial](05_Data/NATIVE_HARDWARE_TESTS.md) completed 600/600 validated pairs at 20 Hz with zero read errors or missed slots. Its Windows launcher handles setup/build; run it with the browser disconnected.
+For a native timing experiment, try the separate [Cython + HIDAPI demo](08_Software/mlx90614-hidapi-demo/README.md). It records every attempted pair to CSV and measures successful rate, read latency and missed polling slots. The [hardware sweep](05_Data/NATIVE_HARDWARE_TESTS.md#rate-sweep-and-timing-failure) reached 100 requested Hz and found missed deadlines above the practical limit; **60 Hz completed 3,600/3,600 validated pairs over one minute with zero misses**. Its Windows launcher handles setup/build; run it with the browser disconnected.
 
 ## Hardware
 

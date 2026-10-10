@@ -1,18 +1,18 @@
 # Native MLX90614 hardware timing
 
-On **2026-10-10**, the separate [Cython + HIDAPI demo](../08_Software/mlx90614-hidapi-demo/README.md) completed real MLX90614 object/ambient reads at 2, 10 and 20 requested Hz. The completed trials had **zero read errors and zero missed slots**. These results apply to the native demo; the edited browser transport was not tested against it.
+On **2026-10-10**, the separate [Cython + HIDAPI demo](../08_Software/mlx90614-hidapi-demo/README.md) completed real MLX90614 object/ambient reads, then increased the request to **100 Hz to find the timing failure**. Initial 2/10/20 Hz trials had zero errors or misses. The later sweep found occasional misses around 65–75 Hz, substantial misses at 80 Hz, and every other slot skipped at 100 Hz. **60 Hz completed 3,600/3,600 pairs over one minute with zero misses.** These results apply to the native demo; the edited browser transport was not tested against it.
 
 ## Conditions
 
 - Windows x64, CPython 3.11.15, Cython 3.3.0, HIDAPI 0.15.0; existing compiled extension reused.
-- Tested source commit: `f6c742c29b59c60126378fdf1e0d3b084e9098cf`.
+- Initial trial source commit: `f6c742c29b59c60126378fdf1e0d3b084e9098cf`. Sweep source fingerprints and base commit are retained in [sweep evidence](NATIVE_RATE_SWEEP.json); the Python window count and request limit changed during the sweep, with the native transport unchanged.
 - One MCP2221A bridge client; other readers stopped. Same wiring throughout the sequential tests.
 - Verified **100 kHz** bus, divider **118**, sensor address **0x5A**, ambient register **0x06**, object register **0x07**; per-register budget **100 ms**.
 - PEC and sensor error-bit validation enabled; a valid pair requires both temperatures to pass. No hidden sample retries, fixed inter-register pause or USB soft reset.
 - Ordinary timing runs used no verbose protocol trace. Every valid pair required six HID exchanges.
 - Exact sensor module, supply input and pull-up configuration remain unconfirmed. Existing wiring was used without electrical changes.
 
-## Completed trials
+## Initial completed trials
 
 | Requested rate | Elapsed seconds | Valid / attempted pairs | Read errors | Missed slots | Valid pairs/s | Acquisition p95 (ms) | Start lateness p95 (ms) |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -21,6 +21,35 @@ On **2026-10-10**, the separate [Cython + HIDAPI demo](../08_Software/mlx90614-h
 | 20 Hz | 30.000521 | 600 / 600 | 0 | 0 | 19.9997 | 12.2658 | 0.7282 |
 
 At 20 Hz, median acquisition took **11.7747 ms**, maximum **13.0352 ms**. The median valid-pair completion interval was **50.0008 ms**, p95 **50.4620 ms**, maximum **52.0788 ms**. Maximum start lateness was **2.3384 ms**. This is measured host scheduling variation on this setup, not a hard real-time guarantee.
+
+## Rate sweep and timing failure
+
+A rate passes this experiment's strict criterion only if the requested window completes with **zero failed/interrupted pairs and zero missed nominal slots**. Read-error count alone does not establish that a requested rate was maintained.
+
+| Requested rate | Window (s) | Valid / nominal pairs | Missed slots | Valid pairs/s | Acquisition p95 (ms) | Start lateness p95 (ms) |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| 30 Hz | 30 | 900 / 900 | 0* | 29.9997 | 12.3707 | 0.6621 |
+| 40 Hz | 30 | 1,200 / 1,200 | 0 | 39.9996 | 12.3428 | 0.7500 |
+| 50 Hz | 30 | 1,500 / 1,500 | 0 | 49.9995 | 12.2834 | 0.6827 |
+| 60 Hz | 30 | 1,800 / 1,800 | 0 | 59.9978 | 12.3711 | 0.7455 |
+| 70 Hz | 30 | 2,100 / 2,100 | 0 | 69.9990 | 12.2726 | 0.6294 |
+| 80 Hz | 30 | 2,061 / 2,400 | 339 | 68.6992 | 12.2664 | 0.6507 |
+| 100 Hz | 30 | 1,500 / 3,000 | 1,500 | 49.9993 | 12.1761 | 0.6619 |
+| 75 Hz, boundary check | 30 | 2,244 / 2,250 | 6 | 74.7995 | 12.2974 | 0.6892 |
+| 72.5 Hz, boundary check | 30 | 2,174 / 2,175 | 1 | 72.4649 | 12.2800 | 0.6638 |
+| 70 Hz, longer repeat | 60 | 4,196 / 4,200 | 4 | 69.9332 | 12.3062 | 0.6409 |
+| 65 Hz, longer check | 60 | 3,898 / 3,900 | 2 | 64.9665 | 12.3054 | 0.6653 |
+| 60 Hz, longer check | 60 | 3,600 / 3,600 | 0 | 59.9996 | 12.2771 | 0.5911 |
+
+**Every attempted pair was valid in these runs:** zero PEC, sensor-flag, I2C-command or HID transport errors; no interrupted pairs or USB soft resets. All valid pairs used six HID exchanges. Misses were verified against CSV slot numbers, rather than inferred from temperature values.
+
+The first timing failure during the ascending sweep was at **80 Hz**, with **14.125%** of nominal slots skipped. At 100 Hz the period is 10 ms while a pair takes approximately 12 ms. The scheduler then skips the next deadline and waits for a later slot; this produced even-numbered slots and about 50 valid pairs/s. Increasing the request past the limit can therefore reduce throughput in this scheduler.
+
+The shorter 70 Hz trial was clean, but its longer repeat missed four slots. One of those acquisitions finished **1.868 ms before** the next deadline, showing that work/scheduling after acquisition also consumed the remaining margin. Other misses exceeded the deadline during acquisition because of start lateness or longer reads. The 65 Hz run also missed twice. These observations locate a practical boundary for the whole demo, including CSV/output and Windows scheduling; they do not isolate a USB-only or sensor-only maximum.
+
+**60 Hz is the highest rate demonstrated without misses in a one-minute trial.** Its median acquisition was 11.8320 ms, maximum 13.8865 ms; median completion interval 16.9596 ms, p95 17.0784 ms, maximum 20.8243 ms. A zero-miss trial still has interval variation. Desktop load was not controlled, and this is not an all-duration timing guarantee. The fastest observed valid throughput was 74.7995 pairs/s at requested 75 Hz, with six skipped slots.
+
+\* The initial 30 Hz summary reported one missed slot despite all 900 nominal slots being present. Rounding the 33,333,333.333… ns period to an integer caused the old window formula to create a 901st deadline just before the end. Window counting now uses the nominal duration multiplied by rate, independently of the rounded period. A fake-clock regression covers 30, 70, 3.3 and 2.5 Hz. Original CSV/summary files are preserved; the public evidence explicitly retains the original count and its correction.
 
 ## Additional runs and interruption accounting
 
@@ -51,11 +80,11 @@ The following trials succeeded. This establishes recovery for the observed state
 
 ## Evidence and limits
 
-[Machine-readable evidence](NATIVE_HARDWARE_RESULTS.json) retains the original summaries, independently counted CSV statuses, source filenames and SHA-256 hashes. Raw CSVs and matching summaries remain local under `08_Software/mlx90614-hidapi-demo/output/` and are excluded from Git. Public evidence omits device serial numbers, HID paths and private filesystem paths.
+[Initial machine-readable evidence](NATIVE_HARDWARE_RESULTS.json) and [rate-sweep evidence](NATIVE_RATE_SWEEP.json) retain the original summaries, independently counted CSV statuses/slots, source filenames and SHA-256 hashes. Raw CSVs and matching summaries remain local under `08_Software/mlx90614-hidapi-demo/output/` and are excluded from Git. Public evidence omits device serial numbers, HID paths and private filesystem paths.
 
 **20 successful read pairs/s does not establish 20 independent sensor conversions/s.** The completed 20 Hz trial repeated the preceding raw object/ambient pair 399 times; the stopped run repeated it 280 times. A steady temperature and rereading stored sensor data can both produce identical words. Host monotonic acquisition timestamps are not sensor conversion timestamps, and the two registers are read sequentially.
 
-These are 10–30-second tests, without a temperature reference, conversion-timestamp measurement, scope capture or matched browser benchmark. Long-run error rate, restart reliability, calibrated accuracy and a Cython-versus-Python performance advantage remain unmeasured. A 12 ms median acquisition is not a verified maximum polling rate; the OS, USB, bridge and sensor impose additional limits.
+These are 10–60-second tests, without a temperature reference, conversion-timestamp measurement, scope capture or matched browser benchmark. Longer-run error rate, restart reliability, calibrated accuracy and a Cython-versus-Python performance advantage remain unmeasured. A 12 ms median acquisition is not a verified maximum polling rate; the OS, USB, bridge, sensor and host output impose additional limits. The one-minute 60 Hz trial repeated the previous raw pair 3,234 times out of 3,600 valid pairs; higher read rates do not establish faster independent conversion rates.
 
 ## Repeat the trials
 
@@ -76,3 +105,20 @@ Use the existing environment; no rebuild is needed unless native source/build in
    ```
 
    Compare valid throughput, errors, missed slots and timing percentiles. Targets are 300 and 600 valid pairs; retain the generated evidence for any failure. Ctrl+C saves the interrupted run; it does not complete the requested duration. These repeats collect new evidence, not a required setup step.
+
+## Repeat the rate sweep
+
+Optional: the recorded sweep above is already completed. First finish the low-rate checks above. Continue in the **same PowerShell terminal at the repository root**, with unchanged wiring and exclusive bridge access. The environment and native extension can be reused.
+
+1. Execute the increasing-rate loop from the [timing-limit guide](../08_Software/mlx90614-hidapi-demo/README.md#test-the-timing-limit). It runs 30/40/50/60/70/80/100 Hz sequentially for 30 seconds each, about four minutes including startup. Any protocol/setup failure stops the loop; timing misses remain visible even with exit code `0`.
+2. Reproduce the boundary checks one command at a time:
+
+   ```powershell
+   powershell -NoProfile -ExecutionPolicy Bypass -File .\08_Software\mlx90614-hidapi-demo\Run-Demo.ps1 -Hz 75 -Seconds 30
+   powershell -NoProfile -ExecutionPolicy Bypass -File .\08_Software\mlx90614-hidapi-demo\Run-Demo.ps1 -Hz 72.5 -Seconds 30
+   powershell -NoProfile -ExecutionPolicy Bypass -File .\08_Software\mlx90614-hidapi-demo\Run-Demo.ps1 -Hz 70 -Seconds 60
+   powershell -NoProfile -ExecutionPolicy Bypass -File .\08_Software\mlx90614-hidapi-demo\Run-Demo.ps1 -Hz 65 -Seconds 60
+   powershell -NoProfile -ExecutionPolicy Bypass -File .\08_Software\mlx90614-hidapi-demo\Run-Demo.ps1 -Hz 60 -Seconds 60
+   ```
+
+   Expect new `HARDWARE` summaries and CSVs. A pass requires the target nominal count with zero failed/interrupted pairs and zero missed slots. Compare the complete CSV and p95/max values when a rate passes a short trial but misses during the longer repeat. Stop and retain evidence on protocol/setup failure; never hide it through retries or reset.

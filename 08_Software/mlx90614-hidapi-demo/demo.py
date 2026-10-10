@@ -1,6 +1,7 @@
 """Separate terminal demo: native HIDAPI/Cython, absolute deadlines, CSV evidence."""
 from collections import Counter, deque
 from datetime import datetime, timezone
+from decimal import Decimal
 from pathlib import Path
 import argparse
 import csv
@@ -57,7 +58,8 @@ FIELDS = ("mode", "slot", "scheduled_s", "start_s", "finish_s", "start_lateness_
 def acquire(sensor, native, args, path):
     period = round(1_000_000_000 / args.hz)
     duration = round(args.seconds * 1_000_000_000)
-    slots = (duration + period - 1) // period
+    # Count requested samples independently of nanosecond period rounding.
+    slots = math.ceil(Decimal(str(args.seconds)) * Decimal(str(args.hz)))
     latency, lateness, intervals = (deque(maxlen=10000) for _ in range(3))
     errors = Counter()
     attempts = successes = failures = interrupted_pairs = missed = repeated = slot = 0
@@ -173,7 +175,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--list", action="store_true", help="Enumerate matching HID devices without opening them.")
     parser.add_argument("--simulate", action="store_true", help="Artificial data; no USB access.")
-    parser.add_argument("--hz", type=float, default=10, help="Requested pair rate, 0.1 to 50 Hz; default 10.")
+    parser.add_argument("--hz", type=float, default=10, help="Requested pair rate, 0.1 to 200 Hz; default 10. High rates are stress tests.")
     parser.add_argument("--seconds", type=float, default=30, help="Run duration in seconds; default 30.")
     parser.add_argument("--address", type=lambda value: int(value, 0), default=0x5A, help="7-bit address; default 0x5A.")
     parser.add_argument("--timeout-ms", type=int, default=100, help="Per-register transaction budget; default 100 ms.")
@@ -181,8 +183,8 @@ def main():
     parser.add_argument("--csv", type=Path, help="New CSV file; an existing file is never overwritten.")
     parser.add_argument("--trace", action="store_true", help="Print HID TX/RX bytes; affects timing.")
     args = parser.parse_args()
-    if not math.isfinite(args.hz) or not .1 <= args.hz <= 50:
-        parser.error("--hz must be finite and between 0.1 and 50.")
+    if not math.isfinite(args.hz) or not .1 <= args.hz <= 200:
+        parser.error("--hz must be finite and between 0.1 and 200.")
     if not math.isfinite(args.seconds) or args.seconds <= 0:
         parser.error("--seconds must be finite and positive.")
     if not 0x08 <= args.address <= 0x77 or not 1 <= args.timeout_ms <= 5000:

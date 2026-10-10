@@ -1,5 +1,5 @@
 param(
-    [ValidateRange(0.1, 50)] [double]$Hz = 10,
+    [ValidateRange(0.1, 200)] [double]$Hz = 10,
     [ValidateRange(0.01, 86400)] [double]$Seconds = 30,
     [switch]$Simulate,
     [switch]$List,

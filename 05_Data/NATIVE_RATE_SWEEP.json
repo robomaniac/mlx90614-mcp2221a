@@ -1,0 +1,907 @@
+{
+  "recorded_on": "2026-10-10",
+  "source_base_commit": "e1692997c00db30ba969f7da969c9f12d02f96e5",
+  "source_changes": [
+    "Correct nominal slot count independently of rounded nanosecond periods.",
+    "Allow 0.1 to 200 Hz stress-test requests in CLI and launcher."
+  ],
+  "tested_source_sha256": {
+    "08_Software/mlx90614-hidapi-demo/demo.py": "453be8d6855972e87acea12892e0b81b74b0a7aa801d22bf4f7a5436dd21fee2",
+    "08_Software/mlx90614-hidapi-demo/Run-Demo.ps1": "1e223724e509186a9a438a3202bc0974b4506714365535d547a4fd1d8fa64854",
+    "08_Software/mlx90614-hidapi-demo/mcp2221_native.pyx": "f03721aaaef8c711cc542fb46790215b7dbc2944068f8c85ba0d1006041a77f6"
+  },
+  "bus_hz": 100000,
+  "sensor_address": 90,
+  "exclusive_bridge_access": true,
+  "usb_soft_reset_issued": false,
+  "pass_criterion": "No failed or interrupted pairs, no missed nominal slots, completed requested window.",
+  "runs": [
+    {
+      "csv_file": "hardware_20261010T182402_877712Z.csv",
+      "csv_sha256": "f47cedca3e2aa218981582e0de7b659b5a57c5615b560d61e220a3db6182523e",
+      "summary_file": "hardware_20261010T182402_877712Z.summary.json",
+      "summary_sha256": "f7ae64299d8578f04ac0316f81bbcf673a8180d10e780117340c857a3046783a",
+      "demo_source_sha256": "cafba6b4531edcd439f01bb382b4ec74effa11696bcd717423b954b0d7ba0642",
+      "original_summary": {
+        "mode": "HARDWARE",
+        "requested_hz": 30.0,
+        "requested_seconds": 30.0,
+        "elapsed_seconds": 30.000294,
+        "attempts": 900,
+        "valid_pairs": 900,
+        "failed_pairs": 0,
+        "interrupted_pairs": 0,
+        "missed_slots": 1,
+        "successful_pairs_per_second": 29.9997,
+        "repeated_raw_pairs": 691,
+        "errors": {},
+        "interrupted": false,
+        "fatal_transport_error": false,
+        "timing_window_pairs": 900,
+        "acquisition_ms": {
+          "p50": 11.8625,
+          "p95": 12.3707,
+          "p99": 12.776,
+          "max": 13.4476
+        },
+        "start_lateness_ms": {
+          "p50": 0.3652,
+          "p95": 0.6621,
+          "p99": 0.9215,
+          "max": 1.7796
+        },
+        "successful_interval_ms": {
+          "p50": 33.0296,
+          "p95": 34.099,
+          "p99": 34.5853,
+          "max": 35.3514
+        },
+        "i2c_hz": 100000,
+        "sensor_address": 90,
+        "register_budget_ms": 100,
+        "timestamp_definition": "Host monotonic acquisition start/end; not sensor conversion timestamps.",
+        "freshness_note": "Identical raw words can reflect a steady temperature or repeated sensor data."
+      },
+      "nominal_slots": 900,
+      "counts_from_csv": {
+        "attempts": 900,
+        "valid_pairs": 900,
+        "failed_pairs": 0,
+        "interrupted_pairs": 0,
+        "missed_nominal_slots": 0
+      },
+      "hid_exchanges_per_valid_pair": [
+        6
+      ],
+      "deadline_gap_analysis": {},
+      "deadline_gap_examples": [],
+      "met_rate_criterion": true,
+      "original_summary_note": "One false final missed slot from rounded-period window counting; all 900 nominal slots are present. Raw files preserved."
+    },
+    {
+      "csv_file": "hardware_20261010T182529_505833Z.csv",
+      "csv_sha256": "d2235f86e6414a5cd6d4fcbbfb530b9a17e972f1a8c21003544976c6aeff3901",
+      "summary_file": "hardware_20261010T182529_505833Z.summary.json",
+      "summary_sha256": "403968c4f481418f4ef89de90cb1b0d8bf0ac7aff5f849042d6bb5307d71b8e5",
+      "demo_source_sha256": "453be8d6855972e87acea12892e0b81b74b0a7aa801d22bf4f7a5436dd21fee2",
+      "original_summary": {
+        "mode": "HARDWARE",
+        "requested_hz": 40.0,
+        "requested_seconds": 30.0,
+        "elapsed_seconds": 30.000328,
+        "attempts": 1200,
+        "valid_pairs": 1200,
+        "failed_pairs": 0,
+        "interrupted_pairs": 0,
+        "missed_slots": 0,
+        "successful_pairs_per_second": 39.9996,
+        "repeated_raw_pairs": 934,
+        "errors": {},
+        "interrupted": false,
+        "fatal_transport_error": false,
+        "timing_window_pairs": 1200,
+        "acquisition_ms": {
+          "p50": 11.6177,
+          "p95": 12.3428,
+          "p99": 12.5234,
+          "max": 13.1974
+        },
+        "start_lateness_ms": {
+          "p50": 0.3702,
+          "p95": 0.75,
+          "p99": 0.9917,
+          "max": 1.119
+        },
+        "successful_interval_ms": {
+          "p50": 24.9998,
+          "p95": 26.0412,
+          "p99": 26.3125,
+          "max": 27.046
+        },
+        "i2c_hz": 100000,
+        "sensor_address": 90,
+        "register_budget_ms": 100,
+        "timestamp_definition": "Host monotonic acquisition start/end; not sensor conversion timestamps.",
+        "freshness_note": "Identical raw words can reflect a steady temperature or repeated sensor data."
+      },
+      "nominal_slots": 1200,
+      "counts_from_csv": {
+        "attempts": 1200,
+        "valid_pairs": 1200,
+        "failed_pairs": 0,
+        "interrupted_pairs": 0,
+        "missed_nominal_slots": 0
+      },
+      "hid_exchanges_per_valid_pair": [
+        6
+      ],
+      "deadline_gap_analysis": {},
+      "deadline_gap_examples": [],
+      "met_rate_criterion": true
+    },
+    {
+      "csv_file": "hardware_20261010T182606_673234Z.csv",
+      "csv_sha256": "927f7c711544c777f0e3e6c6911d4c34901e6ad0c257621dcf7ffdd7262b78a8",
+      "summary_file": "hardware_20261010T182606_673234Z.summary.json",
+      "summary_sha256": "7420d3a5fd5f3c72dd29f5fe499c04880bc9103e5de12c4f338aa0227e1406b2",
+      "demo_source_sha256": "453be8d6855972e87acea12892e0b81b74b0a7aa801d22bf4f7a5436dd21fee2",
+      "original_summary": {
+        "mode": "HARDWARE",
+        "requested_hz": 50.0,
+        "requested_seconds": 30.0,
+        "elapsed_seconds": 30.000297,
+        "attempts": 1500,
+        "valid_pairs": 1500,
+        "failed_pairs": 0,
+        "interrupted_pairs": 0,
+        "missed_slots": 0,
+        "successful_pairs_per_second": 49.9995,
+        "repeated_raw_pairs": 1260,
+        "errors": {},
+        "interrupted": false,
+        "fatal_transport_error": false,
+        "timing_window_pairs": 1500,
+        "acquisition_ms": {
+          "p50": 11.7437,
+          "p95": 12.2834,
+          "p99": 12.7326,
+          "max": 13.634
+        },
+        "start_lateness_ms": {
+          "p50": 0.3503,
+          "p95": 0.6827,
+          "p99": 0.8666,
+          "max": 3.0103
+        },
+        "successful_interval_ms": {
+          "p50": 19.9997,
+          "p95": 20.697,
+          "p99": 21.1926,
+          "max": 22.2486
+        },
+        "i2c_hz": 100000,
+        "sensor_address": 90,
+        "register_budget_ms": 100,
+        "timestamp_definition": "Host monotonic acquisition start/end; not sensor conversion timestamps.",
+        "freshness_note": "Identical raw words can reflect a steady temperature or repeated sensor data."
+      },
+      "nominal_slots": 1500,
+      "counts_from_csv": {
+        "attempts": 1500,
+        "valid_pairs": 1500,
+        "failed_pairs": 0,
+        "interrupted_pairs": 0,
+        "missed_nominal_slots": 0
+      },
+      "hid_exchanges_per_valid_pair": [
+        6
+      ],
+      "deadline_gap_analysis": {},
+      "deadline_gap_examples": [],
+      "met_rate_criterion": true
+    },
+    {
+      "csv_file": "hardware_20261010T182654_228970Z.csv",
+      "csv_sha256": "16395de3059dc79789dd570a81b544026a9c8d77bb5e4f0011c2e37ec642ca42",
+      "summary_file": "hardware_20261010T182654_228970Z.summary.json",
+      "summary_sha256": "1bf25e041788d51c15e9ae69e62c65f093ef67577daf0da90fa8601b93cb488f",
+      "demo_source_sha256": "453be8d6855972e87acea12892e0b81b74b0a7aa801d22bf4f7a5436dd21fee2",
+      "original_summary": {
+        "mode": "HARDWARE",
+        "requested_hz": 60.0,
+        "requested_seconds": 30.0,
+        "elapsed_seconds": 30.001084,
+        "attempts": 1800,
+        "valid_pairs": 1800,
+        "failed_pairs": 0,
+        "interrupted_pairs": 0,
+        "missed_slots": 0,
+        "successful_pairs_per_second": 59.9978,
+        "repeated_raw_pairs": 1552,
+        "errors": {},
+        "interrupted": false,
+        "fatal_transport_error": false,
+        "timing_window_pairs": 1800,
+        "acquisition_ms": {
+          "p50": 11.8733,
+          "p95": 12.3711,
+          "p99": 12.6752,
+          "max": 13.1467
+        },
+        "start_lateness_ms": {
+          "p50": 0.3847,
+          "p95": 0.7455,
+          "p99": 0.9804,
+          "max": 1.1634
+        },
+        "successful_interval_ms": {
+          "p50": 16.9567,
+          "p95": 17.2337,
+          "p99": 18.0123,
+          "max": 18.4104
+        },
+        "i2c_hz": 100000,
+        "sensor_address": 90,
+        "register_budget_ms": 100,
+        "timestamp_definition": "Host monotonic acquisition start/end; not sensor conversion timestamps.",
+        "freshness_note": "Identical raw words can reflect a steady temperature or repeated sensor data."
+      },
+      "nominal_slots": 1800,
+      "counts_from_csv": {
+        "attempts": 1800,
+        "valid_pairs": 1800,
+        "failed_pairs": 0,
+        "interrupted_pairs": 0,
+        "missed_nominal_slots": 0
+      },
+      "hid_exchanges_per_valid_pair": [
+        6
+      ],
+      "deadline_gap_analysis": {},
+      "deadline_gap_examples": [],
+      "met_rate_criterion": true
+    },
+    {
+      "csv_file": "hardware_20261010T182731_501054Z.csv",
+      "csv_sha256": "fae23e95798ac9bfadd913223d050a70608c6a4928609e996be140cf7020f384",
+      "summary_file": "hardware_20261010T182731_501054Z.summary.json",
+      "summary_sha256": "28b55978cd0044e94cbf15d0e35dbb24ee98b6c99a5904384453632da13f4fdd",
+      "demo_source_sha256": "453be8d6855972e87acea12892e0b81b74b0a7aa801d22bf4f7a5436dd21fee2",
+      "original_summary": {
+        "mode": "HARDWARE",
+        "requested_hz": 70.0,
+        "requested_seconds": 30.0,
+        "elapsed_seconds": 30.000425,
+        "attempts": 2100,
+        "valid_pairs": 2100,
+        "failed_pairs": 0,
+        "interrupted_pairs": 0,
+        "missed_slots": 0,
+        "successful_pairs_per_second": 69.999,
+        "repeated_raw_pairs": 1843,
+        "errors": {},
+        "interrupted": false,
+        "fatal_transport_error": false,
+        "timing_window_pairs": 2100,
+        "acquisition_ms": {
+          "p50": 11.7879,
+          "p95": 12.2726,
+          "p99": 12.4071,
+          "max": 13.4248
+        },
+        "start_lateness_ms": {
+          "p50": 0.3447,
+          "p95": 0.6294,
+          "p99": 0.7461,
+          "max": 1.2265
+        },
+        "successful_interval_ms": {
+          "p50": 14.0293,
+          "p95": 15.0403,
+          "p99": 15.1619,
+          "max": 15.9417
+        },
+        "i2c_hz": 100000,
+        "sensor_address": 90,
+        "register_budget_ms": 100,
+        "timestamp_definition": "Host monotonic acquisition start/end; not sensor conversion timestamps.",
+        "freshness_note": "Identical raw words can reflect a steady temperature or repeated sensor data."
+      },
+      "nominal_slots": 2100,
+      "counts_from_csv": {
+        "attempts": 2100,
+        "valid_pairs": 2100,
+        "failed_pairs": 0,
+        "interrupted_pairs": 0,
+        "missed_nominal_slots": 0
+      },
+      "hid_exchanges_per_valid_pair": [
+        6
+      ],
+      "deadline_gap_analysis": {},
+      "deadline_gap_examples": [],
+      "met_rate_criterion": true
+    },
+    {
+      "csv_file": "hardware_20261010T182813_448596Z.csv",
+      "csv_sha256": "cb1c85372e89a07f27abefcf9fd658a60122eec4cdcfdde7dec6030d1c6d08f7",
+      "summary_file": "hardware_20261010T182813_448596Z.summary.json",
+      "summary_sha256": "1e36a7638b978d5cf3c9f25fbcaeaa59cc52ca32a95989d7877e74aaf41487db",
+      "demo_source_sha256": "453be8d6855972e87acea12892e0b81b74b0a7aa801d22bf4f7a5436dd21fee2",
+      "original_summary": {
+        "mode": "HARDWARE",
+        "requested_hz": 80.0,
+        "requested_seconds": 30.0,
+        "elapsed_seconds": 30.000334,
+        "attempts": 2061,
+        "valid_pairs": 2061,
+        "failed_pairs": 0,
+        "interrupted_pairs": 0,
+        "missed_slots": 339,
+        "successful_pairs_per_second": 68.6992,
+        "repeated_raw_pairs": 1783,
+        "errors": {},
+        "interrupted": false,
+        "fatal_transport_error": false,
+        "timing_window_pairs": 2061,
+        "acquisition_ms": {
+          "p50": 11.7869,
+          "p95": 12.2664,
+          "p99": 12.5005,
+          "max": 15.4201
+        },
+        "start_lateness_ms": {
+          "p50": 0.3501,
+          "p95": 0.6507,
+          "p99": 0.8576,
+          "max": 1.2774
+        },
+        "successful_interval_ms": {
+          "p50": 12.9709,
+          "p95": 24.9686,
+          "p99": 25.2197,
+          "max": 26.8211
+        },
+        "i2c_hz": 100000,
+        "sensor_address": 90,
+        "register_budget_ms": 100,
+        "timestamp_definition": "Host monotonic acquisition start/end; not sensor conversion timestamps.",
+        "freshness_note": "Identical raw words can reflect a steady temperature or repeated sensor data."
+      },
+      "nominal_slots": 2400,
+      "counts_from_csv": {
+        "attempts": 2061,
+        "valid_pairs": 2061,
+        "failed_pairs": 0,
+        "interrupted_pairs": 0,
+        "missed_nominal_slots": 339
+      },
+      "hid_exchanges_per_valid_pair": [
+        6
+      ],
+      "deadline_gap_analysis": {
+        "after_acquisition_finished_with_margin": 7,
+        "acquisition_finished_after_next_deadline": 332
+      },
+      "deadline_gap_examples": [
+        {
+          "previous_slot": 17,
+          "skipped_slots": 1,
+          "previous_acquisition_ms": 12.0835,
+          "previous_start_lateness_ms": 0.4031,
+          "finish_slack_before_next_deadline_ms": 0.0134
+        },
+        {
+          "previous_slot": 20,
+          "skipped_slots": 1,
+          "previous_acquisition_ms": 12.2233,
+          "previous_start_lateness_ms": 0.5539,
+          "finish_slack_before_next_deadline_ms": -0.2772
+        },
+        {
+          "previous_slot": 34,
+          "skipped_slots": 1,
+          "previous_acquisition_ms": 12.3027,
+          "previous_start_lateness_ms": 0.5162,
+          "finish_slack_before_next_deadline_ms": -0.3189
+        },
+        {
+          "previous_slot": 38,
+          "skipped_slots": 1,
+          "previous_acquisition_ms": 11.9752,
+          "previous_start_lateness_ms": 0.8683,
+          "finish_slack_before_next_deadline_ms": -0.3435
+        }
+      ],
+      "met_rate_criterion": false
+    },
+    {
+      "csv_file": "hardware_20261010T182855_216839Z.csv",
+      "csv_sha256": "15e36291bdd7d6ca7c4ce96ce4d5f16a8bfcf25881f1e61943778fe1225484d6",
+      "summary_file": "hardware_20261010T182855_216839Z.summary.json",
+      "summary_sha256": "812248d4eb54f13abe8757e6fddba26e4a1a59955d0be411c9663491b5d2c9e0",
+      "demo_source_sha256": "453be8d6855972e87acea12892e0b81b74b0a7aa801d22bf4f7a5436dd21fee2",
+      "original_summary": {
+        "mode": "HARDWARE",
+        "requested_hz": 100.0,
+        "requested_seconds": 30.0,
+        "elapsed_seconds": 30.000396,
+        "attempts": 1500,
+        "valid_pairs": 1500,
+        "failed_pairs": 0,
+        "interrupted_pairs": 0,
+        "missed_slots": 1500,
+        "successful_pairs_per_second": 49.9993,
+        "repeated_raw_pairs": 1222,
+        "errors": {},
+        "interrupted": false,
+        "fatal_transport_error": false,
+        "timing_window_pairs": 1500,
+        "acquisition_ms": {
+          "p50": 11.8623,
+          "p95": 12.1761,
+          "p99": 12.4045,
+          "max": 12.8591
+        },
+        "start_lateness_ms": {
+          "p50": 0.3745,
+          "p95": 0.6619,
+          "p99": 0.8426,
+          "max": 1.1513
+        },
+        "successful_interval_ms": {
+          "p50": 19.9998,
+          "p95": 20.2663,
+          "p99": 20.7469,
+          "max": 21.2652
+        },
+        "i2c_hz": 100000,
+        "sensor_address": 90,
+        "register_budget_ms": 100,
+        "timestamp_definition": "Host monotonic acquisition start/end; not sensor conversion timestamps.",
+        "freshness_note": "Identical raw words can reflect a steady temperature or repeated sensor data."
+      },
+      "nominal_slots": 3000,
+      "counts_from_csv": {
+        "attempts": 1500,
+        "valid_pairs": 1500,
+        "failed_pairs": 0,
+        "interrupted_pairs": 0,
+        "missed_nominal_slots": 1500
+      },
+      "hid_exchanges_per_valid_pair": [
+        6
+      ],
+      "deadline_gap_analysis": {
+        "acquisition_finished_after_next_deadline": 1499
+      },
+      "deadline_gap_examples": [
+        {
+          "previous_slot": 0,
+          "skipped_slots": 1,
+          "previous_acquisition_ms": 12.1833,
+          "previous_start_lateness_ms": 0.0017,
+          "finish_slack_before_next_deadline_ms": -2.185
+        },
+        {
+          "previous_slot": 2,
+          "skipped_slots": 1,
+          "previous_acquisition_ms": 11.9839,
+          "previous_start_lateness_ms": 0.2006,
+          "finish_slack_before_next_deadline_ms": -2.1845
+        },
+        {
+          "previous_slot": 4,
+          "skipped_slots": 1,
+          "previous_acquisition_ms": 12.0083,
+          "previous_start_lateness_ms": 0.2129,
+          "finish_slack_before_next_deadline_ms": -2.2212
+        },
+        {
+          "previous_slot": 6,
+          "skipped_slots": 1,
+          "previous_acquisition_ms": 12.0104,
+          "previous_start_lateness_ms": 0.2217,
+          "finish_slack_before_next_deadline_ms": -2.2321
+        }
+      ],
+      "met_rate_criterion": false
+    },
+    {
+      "csv_file": "hardware_20261010T182946_759051Z.csv",
+      "csv_sha256": "0332ff445462c94a1eb92b367ecd1b87b4e2fb4137234581dbb9c3bfdb7ea70f",
+      "summary_file": "hardware_20261010T182946_759051Z.summary.json",
+      "summary_sha256": "f6dd5761dd7f1b9016349ac0191711c08d3b9425070d996ce592c5816390433e",
+      "demo_source_sha256": "453be8d6855972e87acea12892e0b81b74b0a7aa801d22bf4f7a5436dd21fee2",
+      "original_summary": {
+        "mode": "HARDWARE",
+        "requested_hz": 75.0,
+        "requested_seconds": 30.0,
+        "elapsed_seconds": 30.000194,
+        "attempts": 2244,
+        "valid_pairs": 2244,
+        "failed_pairs": 0,
+        "interrupted_pairs": 0,
+        "missed_slots": 6,
+        "successful_pairs_per_second": 74.7995,
+        "repeated_raw_pairs": 1961,
+        "errors": {},
+        "interrupted": false,
+        "fatal_transport_error": false,
+        "timing_window_pairs": 2244,
+        "acquisition_ms": {
+          "p50": 11.8487,
+          "p95": 12.2974,
+          "p99": 12.3932,
+          "max": 12.8579
+        },
+        "start_lateness_ms": {
+          "p50": 0.3791,
+          "p95": 0.6892,
+          "p99": 0.843,
+          "max": 2.0023
+        },
+        "successful_interval_ms": {
+          "p50": 13.036,
+          "p95": 14.0532,
+          "p99": 14.1958,
+          "max": 26.9091
+        },
+        "i2c_hz": 100000,
+        "sensor_address": 90,
+        "register_budget_ms": 100,
+        "timestamp_definition": "Host monotonic acquisition start/end; not sensor conversion timestamps.",
+        "freshness_note": "Identical raw words can reflect a steady temperature or repeated sensor data."
+      },
+      "nominal_slots": 2250,
+      "counts_from_csv": {
+        "attempts": 2244,
+        "valid_pairs": 2244,
+        "failed_pairs": 0,
+        "interrupted_pairs": 0,
+        "missed_nominal_slots": 6
+      },
+      "hid_exchanges_per_valid_pair": [
+        6
+      ],
+      "deadline_gap_analysis": {
+        "after_acquisition_finished_with_margin": 3,
+        "acquisition_finished_after_next_deadline": 3
+      },
+      "deadline_gap_examples": [
+        {
+          "previous_slot": 75,
+          "skipped_slots": 1,
+          "previous_acquisition_ms": 11.9831,
+          "previous_start_lateness_ms": 0.258425,
+          "finish_slack_before_next_deadline_ms": 1.091808
+        },
+        {
+          "previous_slot": 392,
+          "skipped_slots": 1,
+          "previous_acquisition_ms": 11.5463,
+          "previous_start_lateness_ms": 1.911464,
+          "finish_slack_before_next_deadline_ms": -0.124431
+        },
+        {
+          "previous_slot": 643,
+          "skipped_slots": 1,
+          "previous_acquisition_ms": 11.914,
+          "previous_start_lateness_ms": 2.002281,
+          "finish_slack_before_next_deadline_ms": -0.582948
+        },
+        {
+          "previous_slot": 1302,
+          "skipped_slots": 1,
+          "previous_acquisition_ms": 12.4954,
+          "previous_start_lateness_ms": 0.759034,
+          "finish_slack_before_next_deadline_ms": 0.078899
+        }
+      ],
+      "met_rate_criterion": false
+    },
+    {
+      "csv_file": "hardware_20261010T183043_912866Z.csv",
+      "csv_sha256": "fdec24b31d3b0e399c61fb1868d276917310529fb9d99253d4fd7201524d418e",
+      "summary_file": "hardware_20261010T183043_912866Z.summary.json",
+      "summary_sha256": "2d7b599e43a0ab9a80b7739041fe4d0dd8f8b1c95b466a1beff00ec676121126",
+      "demo_source_sha256": "453be8d6855972e87acea12892e0b81b74b0a7aa801d22bf4f7a5436dd21fee2",
+      "original_summary": {
+        "mode": "HARDWARE",
+        "requested_hz": 72.5,
+        "requested_seconds": 30.0,
+        "elapsed_seconds": 30.00073,
+        "attempts": 2174,
+        "valid_pairs": 2174,
+        "failed_pairs": 0,
+        "interrupted_pairs": 0,
+        "missed_slots": 1,
+        "successful_pairs_per_second": 72.4649,
+        "repeated_raw_pairs": 1979,
+        "errors": {},
+        "interrupted": false,
+        "fatal_transport_error": false,
+        "timing_window_pairs": 2174,
+        "acquisition_ms": {
+          "p50": 11.8333,
+          "p95": 12.28,
+          "p99": 12.3847,
+          "max": 12.6666
+        },
+        "start_lateness_ms": {
+          "p50": 0.3643,
+          "p95": 0.6638,
+          "p99": 0.8437,
+          "max": 1.7679
+        },
+        "successful_interval_ms": {
+          "p50": 13.9856,
+          "p95": 14.1816,
+          "p99": 15.0385,
+          "max": 25.9546
+        },
+        "i2c_hz": 100000,
+        "sensor_address": 90,
+        "register_budget_ms": 100,
+        "timestamp_definition": "Host monotonic acquisition start/end; not sensor conversion timestamps.",
+        "freshness_note": "Identical raw words can reflect a steady temperature or repeated sensor data."
+      },
+      "nominal_slots": 2175,
+      "counts_from_csv": {
+        "attempts": 2174,
+        "valid_pairs": 2174,
+        "failed_pairs": 0,
+        "interrupted_pairs": 0,
+        "missed_nominal_slots": 1
+      },
+      "hid_exchanges_per_valid_pair": [
+        6
+      ],
+      "deadline_gap_analysis": {
+        "acquisition_finished_after_next_deadline": 1
+      },
+      "deadline_gap_examples": [
+        {
+          "previous_slot": 328,
+          "skipped_slots": 1,
+          "previous_acquisition_ms": 12.18,
+          "previous_start_lateness_ms": 1.767916,
+          "finish_slack_before_next_deadline_ms": -0.154813
+        }
+      ],
+      "met_rate_criterion": false
+    },
+    {
+      "csv_file": "hardware_20261010T183121_291298Z.csv",
+      "csv_sha256": "1f116d516549abc14803db65195aadac742a283c60521699bb078de1cd797dd9",
+      "summary_file": "hardware_20261010T183121_291298Z.summary.json",
+      "summary_sha256": "b55c3eb6a0a4c65f56a6199455b1cab729a06faff6c31e2c3c40be7a278401a7",
+      "demo_source_sha256": "453be8d6855972e87acea12892e0b81b74b0a7aa801d22bf4f7a5436dd21fee2",
+      "original_summary": {
+        "mode": "HARDWARE",
+        "requested_hz": 70.0,
+        "requested_seconds": 60.0,
+        "elapsed_seconds": 60.000128,
+        "attempts": 4196,
+        "valid_pairs": 4196,
+        "failed_pairs": 0,
+        "interrupted_pairs": 0,
+        "missed_slots": 4,
+        "successful_pairs_per_second": 69.9332,
+        "repeated_raw_pairs": 3601,
+        "errors": {},
+        "interrupted": false,
+        "fatal_transport_error": false,
+        "timing_window_pairs": 4196,
+        "acquisition_ms": {
+          "p50": 11.814,
+          "p95": 12.3062,
+          "p99": 12.5049,
+          "max": 13.9204
+        },
+        "start_lateness_ms": {
+          "p50": 0.3343,
+          "p95": 0.6409,
+          "p99": 0.8186,
+          "max": 2.7761
+        },
+        "successful_interval_ms": {
+          "p50": 14.0215,
+          "p95": 15.0647,
+          "p99": 15.2631,
+          "max": 28.5984
+        },
+        "i2c_hz": 100000,
+        "sensor_address": 90,
+        "register_budget_ms": 100,
+        "timestamp_definition": "Host monotonic acquisition start/end; not sensor conversion timestamps.",
+        "freshness_note": "Identical raw words can reflect a steady temperature or repeated sensor data."
+      },
+      "nominal_slots": 4200,
+      "counts_from_csv": {
+        "attempts": 4196,
+        "valid_pairs": 4196,
+        "failed_pairs": 0,
+        "interrupted_pairs": 0,
+        "missed_nominal_slots": 4
+      },
+      "hid_exchanges_per_valid_pair": [
+        6
+      ],
+      "deadline_gap_analysis": {
+        "after_acquisition_finished_with_margin": 1,
+        "acquisition_finished_after_next_deadline": 3
+      },
+      "deadline_gap_examples": [
+        {
+          "previous_slot": 70,
+          "skipped_slots": 1,
+          "previous_acquisition_ms": 11.9801,
+          "previous_start_lateness_ms": 0.43742,
+          "finish_slack_before_next_deadline_ms": 1.868194
+        },
+        {
+          "previous_slot": 174,
+          "skipped_slots": 1,
+          "previous_acquisition_ms": 13.9204,
+          "previous_start_lateness_ms": 0.398864,
+          "finish_slack_before_next_deadline_ms": -0.03355
+        },
+        {
+          "previous_slot": 378,
+          "skipped_slots": 1,
+          "previous_acquisition_ms": 13.6037,
+          "previous_start_lateness_ms": 0.805708,
+          "finish_slack_before_next_deadline_ms": -0.123694
+        },
+        {
+          "previous_slot": 1729,
+          "skipped_slots": 1,
+          "previous_acquisition_ms": 12.1401,
+          "previous_start_lateness_ms": 2.776094,
+          "finish_slack_before_next_deadline_ms": -0.63048
+        }
+      ],
+      "met_rate_criterion": false
+    },
+    {
+      "csv_file": "hardware_20261010T183234_622863Z.csv",
+      "csv_sha256": "dd538aa8be27e9ca7e8f5bfb2ef0951812fdff95e0ef82709ef9b30b2eb37a27",
+      "summary_file": "hardware_20261010T183234_622863Z.summary.json",
+      "summary_sha256": "65f1c361ea77613b8c1376d50338ed5af9d0ae748f4cbcab4ed2ef394aa4c556",
+      "demo_source_sha256": "453be8d6855972e87acea12892e0b81b74b0a7aa801d22bf4f7a5436dd21fee2",
+      "original_summary": {
+        "mode": "HARDWARE",
+        "requested_hz": 65.0,
+        "requested_seconds": 60.0,
+        "elapsed_seconds": 60.000151,
+        "attempts": 3898,
+        "valid_pairs": 3898,
+        "failed_pairs": 0,
+        "interrupted_pairs": 0,
+        "missed_slots": 2,
+        "successful_pairs_per_second": 64.9665,
+        "repeated_raw_pairs": 3342,
+        "errors": {},
+        "interrupted": false,
+        "fatal_transport_error": false,
+        "timing_window_pairs": 3898,
+        "acquisition_ms": {
+          "p50": 11.8276,
+          "p95": 12.3054,
+          "p99": 12.5974,
+          "max": 14.5588
+        },
+        "start_lateness_ms": {
+          "p50": 0.3414,
+          "p95": 0.6653,
+          "p99": 0.8868,
+          "max": 2.6338
+        },
+        "successful_interval_ms": {
+          "p50": 15.0431,
+          "p95": 16.0712,
+          "p99": 16.3764,
+          "max": 28.7421
+        },
+        "i2c_hz": 100000,
+        "sensor_address": 90,
+        "register_budget_ms": 100,
+        "timestamp_definition": "Host monotonic acquisition start/end; not sensor conversion timestamps.",
+        "freshness_note": "Identical raw words can reflect a steady temperature or repeated sensor data."
+      },
+      "nominal_slots": 3900,
+      "counts_from_csv": {
+        "attempts": 3898,
+        "valid_pairs": 3898,
+        "failed_pairs": 0,
+        "interrupted_pairs": 0,
+        "missed_nominal_slots": 2
+      },
+      "hid_exchanges_per_valid_pair": [
+        6
+      ],
+      "deadline_gap_analysis": {
+        "acquisition_finished_after_next_deadline": 2
+      },
+      "deadline_gap_examples": [
+        {
+          "previous_slot": 350,
+          "skipped_slots": 1,
+          "previous_acquisition_ms": 14.5588,
+          "previous_start_lateness_ms": 1.06975,
+          "finish_slack_before_next_deadline_ms": -0.243935
+        },
+        {
+          "previous_slot": 359,
+          "skipped_slots": 1,
+          "previous_acquisition_ms": 13.2858,
+          "previous_start_lateness_ms": 2.633815,
+          "finish_slack_before_next_deadline_ms": -0.535
+        }
+      ],
+      "met_rate_criterion": false
+    },
+    {
+      "csv_file": "hardware_20261010T183401_101992Z.csv",
+      "csv_sha256": "59ebdd568fd41b507b103913bfeaabcda34363cb9dbc8ae32b8d98b8d41030fc",
+      "summary_file": "hardware_20261010T183401_101992Z.summary.json",
+      "summary_sha256": "6b8c4785ec7d6394d9d4c8e3a4a62108faf1533d77a4a24332da7aebe846fee1",
+      "demo_source_sha256": "453be8d6855972e87acea12892e0b81b74b0a7aa801d22bf4f7a5436dd21fee2",
+      "original_summary": {
+        "mode": "HARDWARE",
+        "requested_hz": 60.0,
+        "requested_seconds": 60.0,
+        "elapsed_seconds": 60.000401,
+        "attempts": 3600,
+        "valid_pairs": 3600,
+        "failed_pairs": 0,
+        "interrupted_pairs": 0,
+        "missed_slots": 0,
+        "successful_pairs_per_second": 59.9996,
+        "repeated_raw_pairs": 3234,
+        "errors": {},
+        "interrupted": false,
+        "fatal_transport_error": false,
+        "timing_window_pairs": 3600,
+        "acquisition_ms": {
+          "p50": 11.832,
+          "p95": 12.2771,
+          "p99": 12.3801,
+          "max": 13.8865
+        },
+        "start_lateness_ms": {
+          "p50": 0.3488,
+          "p95": 0.5911,
+          "p99": 0.7795,
+          "max": 3.7907
+        },
+        "successful_interval_ms": {
+          "p50": 16.9596,
+          "p95": 17.0784,
+          "p99": 17.9794,
+          "max": 20.8243
+        },
+        "i2c_hz": 100000,
+        "sensor_address": 90,
+        "register_budget_ms": 100,
+        "timestamp_definition": "Host monotonic acquisition start/end; not sensor conversion timestamps.",
+        "freshness_note": "Identical raw words can reflect a steady temperature or repeated sensor data."
+      },
+      "nominal_slots": 3600,
+      "counts_from_csv": {
+        "attempts": 3600,
+        "valid_pairs": 3600,
+        "failed_pairs": 0,
+        "interrupted_pairs": 0,
+        "missed_nominal_slots": 0
+      },
+      "hid_exchanges_per_valid_pair": [
+        6
+      ],
+      "deadline_gap_analysis": {},
+      "deadline_gap_examples": [],
+      "met_rate_criterion": true
+    }
+  ]
+}

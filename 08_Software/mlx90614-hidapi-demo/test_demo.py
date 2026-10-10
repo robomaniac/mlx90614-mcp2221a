@@ -157,7 +157,7 @@ class SchedulingTests(unittest.TestCase):
     def test_percentiles_are_reported(self):
         self.assertEqual(demo.distribution(range(1, 101)), {"p50": 50, "p95": 95, "p99": 99, "max": 100})
 
-    def run_fake(self, failure, work_ns, cancel_failure=None):
+    def run_fake(self, failure, work_ns, cancel_failure=None, hz=10, seconds=.4):
         clock = [0]
         class Sensor:
             exchanges = 0
@@ -174,7 +174,7 @@ class SchedulingTests(unittest.TestCase):
                 if cancel_failure:
                     raise cancel_failure
         sensor = Sensor()
-        args = SimpleNamespace(hz=10, seconds=.4, simulate=True, address=0x5A, timeout_ms=100)
+        args = SimpleNamespace(hz=hz, seconds=seconds, simulate=True, address=0x5A, timeout_ms=100)
         def sleep(seconds):
             clock[0] += round(seconds * 1e9)
         with TemporaryDirectory() as directory:
@@ -240,6 +240,16 @@ class SchedulingTests(unittest.TestCase):
         self.assertEqual(len(rows), 4)
         self.assertEqual(summary["elapsed_seconds"], .4)
         self.assertEqual(summary["successful_pairs_per_second"], 10)
+
+    def test_window_count_does_not_add_a_slot_from_rounded_nanosecond_periods(self):
+        for hz, seconds, expected in ((30, 1, 30), (70, 1, 70), (3.3, 10, 33), (2.5, 1, 3)):
+            with self.subTest(hz=hz, seconds=seconds):
+                result, rows, summary, _ = self.run_fake(None, 1_000_000, hz=hz, seconds=seconds)
+                self.assertEqual(result, 0)
+                self.assertEqual(len(rows), expected)
+                self.assertEqual(summary["attempts"], expected)
+                self.assertEqual(summary["missed_slots"], 0)
+                self.assertEqual(summary["elapsed_seconds"], seconds)
 
 
 if __name__ == "__main__":

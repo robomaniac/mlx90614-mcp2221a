@@ -2,7 +2,7 @@
 
 A separate terminal experiment for measuring acquisition timing with the **same MLX90614 + MCP2221A**. The bridge transport and PEC decoder compile from `mcp2221_native.pyx`; USB calls use the native [Cython HIDAPI binding](https://github.com/trezor/cython-hidapi). The existing [single-file browser app](../mlx90614-webhid/README.md) remains available.
 
-The demo prints temperatures once per second and saves every attempted object/ambient pair to CSV. It uses absolute monotonic deadlines, skips elapsed polling slots instead of issuing catch-up bursts, and reports successful throughput, latency and timing variation. **10 or 20 Hz is a requested polling rate, not a guaranteed sensor refresh rate or precise real-time timing.**
+The demo prints temperatures once per second and saves every attempted object/ambient pair to CSV. It uses absolute monotonic deadlines, skips elapsed polling slots instead of issuing catch-up bursts, and reports successful throughput, latency and timing variation. Requests from **0.1 to 200 Hz** are accepted so the timing limit can be tested. A requested polling rate is not a guaranteed sensor refresh rate or precise real-time timing.
 
 ## Run on Windows
 
@@ -40,6 +40,30 @@ Prerequisites: the existing sensor wiring, **x64 CPython 3.10+** with developmen
    Compare successful pairs per second, failed pairs, missed slots and interval percentiles. The requested counts are 300 and 600; they are targets. More polls do not establish more independent sensor conversions. An unchanged raw word can also mean temperature stayed constant.
 
 Press **Ctrl+C** to stop a run. Completed rows and a summary are retained; the HID handle closes before exit. A pair stopped during acquisition has CSV status `interrupted` and increments `interrupted_pairs`, separately from read failures. An interruption between pairs sets `interrupted` without adding an attempted pair. Exit code `0` means no failed pairs, `1` means a read/setup failure occurred, `2` means invalid arguments or incomplete setup, and `130` means interrupted. Missed slots remain visible even if every attempted read succeeded.
+
+## Test the timing limit
+
+The hardware sweep is already completed and [recorded here](../../05_Data/NATIVE_HARDWARE_TESTS.md#rate-sweep-and-timing-failure). **60 Hz passed 3,600/3,600 pairs over one minute with zero missed slots.** The one-minute 65 and 70 Hz runs missed two and four slots; 80 Hz missed 339 slots in 30 seconds. At 100 Hz, every other slot was skipped and effective throughput fell to 50 pairs/s. Every attempted pair remained valid.
+
+To repeat this optional experiment, use **PowerShell at the repository root**, after the setup and low-rate check above. Keep browser sensor tabs and other bridge readers stopped; reuse the existing environment and compiled extension.
+
+1. Run increasing rates sequentially in the same terminal:
+
+   ```powershell
+   foreach ($stressHz in @(30, 40, 50, 60, 70, 80, 100)) {
+       powershell -NoProfile -ExecutionPolicy Bypass -File .\08_Software\mlx90614-hidapi-demo\Run-Demo.ps1 -Hz $stressHz -Seconds 30
+       if ($LASTEXITCODE -ne 0) { throw "Read/setup failure at $stressHz Hz; retain the CSV and stop." }
+   }
+   ```
+
+   Expect one CSV/summary per rate. The loop intentionally continues through timing misses to show the saturation behavior. **Any missed slot fails the zero-miss rate criterion even when the process exits `0`.** A protocol/setup failure stops the loop; retain its error evidence before recovery. Increasing the requested rate does not increase the 100 kHz bus clock.
+2. Verify a rate with more margin for a longer window:
+
+   ```powershell
+   powershell -NoProfile -ExecutionPolicy Bypass -File .\08_Software\mlx90614-hidapi-demo\Run-Demo.ps1 -Hz 60 -Seconds 60
+   ```
+
+   Target 3,600 valid pairs, zero failed/interrupted pairs and zero missed slots. This collects new evidence; the observed clean run is not a guarantee under different desktop load or longer durations. Use the [recorded boundary tests](../../05_Data/NATIVE_HARDWARE_TESTS.md#repeat-the-rate-sweep) to reproduce the finer comparisons.
 
 ## Read the results
 
@@ -95,7 +119,7 @@ From **PowerShell at the repository root**, after first setup:
 & .\08_Software\mlx90614-hidapi-demo\.venv\Scripts\python.exe -m unittest discover -s .\08_Software\mlx90614-hidapi-demo -p test_demo.py -v
 ```
 
-Expect all 19 tests `OK`. Fake HID reports and a fake clock test PEC rejection, complete-pair accounting, packet layout, reset prevention, missed slots, retained failures and interruption during acquisition/recovery. These tests do not contact the sensor.
+Expect all 20 tests `OK`. Fake HID reports and a fake clock test PEC rejection, complete-pair accounting, packet layout, reset prevention, missed slots, retained failures, interruption during acquisition/recovery and correct window counts when the requested period cannot be represented as an integer number of nanoseconds. These tests do not contact the sensor.
 
 For manual setup/build, in the same PowerShell window starting at the repository root:
 
@@ -128,6 +152,6 @@ The next launcher invocation performs setup/build again because those generated 
 
 ## Validation
 
-Native Windows x64 build/import, 19 fake-device protocol/scheduler tests, a simulated timing run and real sensor runs passed. On 2026-10-10, completed hardware trials returned **20/20 pairs at 2 Hz**, **300/300 at 10 Hz**, and **600/600 at 20 Hz**, with zero read errors or missed slots at 100 kHz. The 20 Hz trial lasted 30 seconds; acquisition p95 was **12.27 ms** and start lateness p95 **0.73 ms**. See the [hardware results, startup evidence and limits](../../05_Data/NATIVE_HARDWARE_TESTS.md).
+Native Windows x64 build/import, 20 fake-device protocol/scheduler tests, a simulated timing run and real sensor runs passed. On 2026-10-10, initial hardware trials returned **20/20 pairs at 2 Hz**, **300/300 at 10 Hz**, and **600/600 at 20 Hz**, with zero read errors or missed slots at 100 kHz. Subsequent tests increased the request to **100 Hz**, exposed real timing misses, and verified **60 Hz over one minute with zero misses**. That run's acquisition p95 was **12.28 ms** and start lateness p95 **0.59 ms**. See the [hardware results, startup evidence and limits](../../05_Data/NATIVE_HARDWARE_TESTS.md).
 
-These short trials demonstrate complete validated reads on the tested setup. Long-run reliability, independent sensor-conversion rate, temperature accuracy and a matched WebHID comparison remain untested. This Python/Cython demo runs locally and cannot execute on GitHub Pages. The interruption-counter correction changes Python reporting only; the existing environment and native extension can be reused.
+These 10–60-second trials demonstrate complete validated reads on the tested setup and characterize missed deadlines. Longer-run reliability, independent sensor-conversion rate, temperature accuracy and a matched WebHID comparison remain untested. This Python/Cython demo runs locally and cannot execute on GitHub Pages. The interruption/window-counter corrections and higher request limit change Python/launcher behavior only; the existing environment and native extension can be reused.
