@@ -1,0 +1,37 @@
+# Secrets and local settings
+.env
+.env.*
+!.env.example
+**/secrets.h
+**/credentials*
+*.pem
+*.p12
+*.pfx
+*.key
+id_rsa*
+id_ed25519*
+# Local provenance retained, excluded from public publication
+99_Archive/original-handoff/
+99_Archive/original-releases/
+99_Archive/python-webapp/
+99_Archive/early-webhid-prototype/
+# Generated and temporary files
+.local/
+_site/
+**/.local-test/
+**/.venv/
+**/.buildvenv/
+**/__pycache__/
+**/*.pyc
+**/node_modules/
+**/build/
+**/dist/
+**/*.spec
+.cursor/
+.idea/
+.vscode/*
+!.vscode/tasks.json
+*.code-workspace
+.DS_Store
+Thumbs.db
+*.log

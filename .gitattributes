@@ -1,0 +1,5 @@
+# Keep new source/documentation consistent across Windows and GitHub.
+* text=auto eol=lf
+# Preserve exact historical bytes, including their original line endings.
+99_Archive/webhid-history/*.html -text
+*.png binary

@@ -1,0 +1,47 @@
+name: Deploy temperature monitor to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  validate-and-package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v6
+      - name: Check single-file HTML and diagnostics
+        run: |
+          node 08_Software/mlx90614-webhid/tools/check_html.mjs
+          node 08_Software/mlx90614-webhid/tools/test_diagnostics.mjs
+      - name: Package only the active HTML
+        run: |
+          mkdir -p _site
+          cp 08_Software/mlx90614-webhid/mlx.html _site/index.html
+          touch _site/.nojekyll
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+  deploy:
+    needs: validate-and-package
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

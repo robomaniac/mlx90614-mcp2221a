@@ -1,0 +1,158 @@
+{
+  "name": "MLX90614 MCP2221A temperature monitor",
+  "reviewed_on": "2026-10-09",
+  "canonical_entrypoint": "08_Software/mlx90614-webhid/mlx.html",
+  "canonical_entrypoint_status": "USB reset blocked; diagnostics corrected; edited hardware validation pending",
+  "comparison_baseline": "99_Archive/webhid-history/03-dropdown-last-reading-baseline.html",
+  "baseline_status": "Earlier preserved comparison candidate; not the fetched deployed source",
+  "original_hosted_source_sha256": "2b252a1eb651d16f144040758d6844ecb7548aabc9196ea3ce6319c24d6c2787",
+  "original_hosted_source_matches": "99_Archive/webhid-history/07-latest-soft-reset-recovery.html",
+  "website_reported_by_user": "https://jeromedemers.com/mlx.html",
+  "files": [
+    {
+      "path": ".gitattributes",
+      "bytes": 215,
+      "sha256": "76f112e37044451a351787fc148a7428b4b08bc2afffe86c1107e3483d8ac4c9"
+    },
+    {
+      "path": ".github/workflows/pages.yml",
+      "bytes": 1164,
+      "sha256": "f164c7fa52d8c1beb4ab7ab281745097a62f484b0002dda488188c4893dc86e8"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 558,
+      "sha256": "bae3a6ead7329d94eb8f62c2f30709b6835e1d696c4e27a4bdad541065ac12b3"
+    },
+    {
+      "path": ".vscode/tasks.json",
+      "bytes": 1072,
+      "sha256": "23ef01388595663b2536ca45471323a6cdce1dc3980ee431ed34b8c711f5a646"
+    },
+    {
+      "path": "00_Documentations/GITHUB_PAGES.md",
+      "bytes": 8586,
+      "sha256": "af1ab4dd743dbcad1ba7a1289bf32fec9bba6af3eb06695880dd582a51b40c00"
+    },
+    {
+      "path": "00_Documentations/HARDWARE_AND_PROTOCOL.md",
+      "bytes": 9575,
+      "sha256": "01b6a174c1c2ca6439b76c321bdc20b4d609e96d6aec1551050816ad758b4af5"
+    },
+    {
+      "path": "00_Documentations/KNOWN_ISSUES_AND_TEST_PLAN.md",
+      "bytes": 9985,
+      "sha256": "8caebd0307f1a0e778eb26741ea5f29f406da8f3a380407bc12cea31809dc842"
+    },
+    {
+      "path": "00_Documentations/NEXT_ASSISTANT_PROMPT.md",
+      "bytes": 2786,
+      "sha256": "271dbded5c494fecdf8b091e0cc31290fa63b4b72bec6c6c78c1a946855bc6ac"
+    },
+    {
+      "path": "00_Documentations/PROJECT_HISTORY.md",
+      "bytes": 11499,
+      "sha256": "7c9208941e9cf4b63787904bf99c0c6160705a8691b406b8b4da1478bb3c82ef"
+    },
+    {
+      "path": "00_Documentations/PROJECT_REVIEW.md",
+      "bytes": 4769,
+      "sha256": "591b78ce883cc1e77b97afc0fb6b394e229fcf11e038d20cb097899b7118374f"
+    },
+    {
+      "path": "00_Documentations/VERSION_INDEX.md",
+      "bytes": 4140,
+      "sha256": "706c32d6d99708c59fec92c824aab2b4287d4ffcb63c7b3999b1dad17c519d69"
+    },
+    {
+      "path": "04_Media/sample-rate-dropdown-reference.png",
+      "bytes": 8795,
+      "sha256": "4ecf310ccb7153c4647e69736756a0164f3f8671e1f16307ef5087a156ed85c5"
+    },
+    {
+      "path": "05_Data/SELECTED_LOGS.md",
+      "bytes": 5928,
+      "sha256": "2dbfc70618734caf8b0aa7a7baaad553e10eddaefbd9ee24e901c13b4779c1f3"
+    },
+    {
+      "path": "05_Data/VALIDATION.md",
+      "bytes": 3219,
+      "sha256": "b77dea37087e9d6da815ed89ebe0760cd9d1e89f62b6b70cf7609c6246112397"
+    },
+    {
+      "path": "08_Software/mlx90614-webhid/mlx.html",
+      "bytes": 66751,
+      "sha256": "798a587ee3e26872c815b94e929cdc354bd5d25d3bb6a16e101cebb4eb01527d"
+    },
+    {
+      "path": "08_Software/mlx90614-webhid/README.md",
+      "bytes": 9798,
+      "sha256": "a5bc67a54b66cf8dffde08b4e3e2d9559b6dcc9765aab3e83a77f265f422f8c8"
+    },
+    {
+      "path": "08_Software/mlx90614-webhid/tools/Check-Html.ps1",
+      "bytes": 1119,
+      "sha256": "f62d417dfe122f714f15568f59cc4740192503c0281402efff4e7cd2c245eeb9"
+    },
+    {
+      "path": "08_Software/mlx90614-webhid/tools/check_html.mjs",
+      "bytes": 2364,
+      "sha256": "79e2dd46e1f5228e391da97b809ef0005b01901465d8c7e046544cb6f1901116"
+    },
+    {
+      "path": "08_Software/mlx90614-webhid/tools/test_diagnostics.mjs",
+      "bytes": 5008,
+      "sha256": "df3227d3fc12486210c347e4b18a870cf51cbdd88035766326c09017e98fb491"
+    },
+    {
+      "path": "99_Archive/webhid-history/01-first-singlefile.html",
+      "bytes": 36908,
+      "sha256": "13e493d9e2f8ad80984c0c34cb61070b90335dc9b287c77b734a3482636ef93a"
+    },
+    {
+      "path": "99_Archive/webhid-history/02-samples-tooltip.html",
+      "bytes": 44872,
+      "sha256": "af76787bf4334a25cfc7e666567bde19d32ac8b33b69d65cc78b88202ca14ae0"
+    },
+    {
+      "path": "99_Archive/webhid-history/03-dropdown-last-reading-baseline.html",
+      "bytes": 50997,
+      "sha256": "463e33449d486cde680637a82cac7b535fd9ccadccbbca20f82e700ad1e1728e"
+    },
+    {
+      "path": "99_Archive/webhid-history/04-logging-and-retry.html",
+      "bytes": 53838,
+      "sha256": "78709a20a4feb7072ba6bb1e389e45628fb84116908d6719202f435c686f4e35"
+    },
+    {
+      "path": "99_Archive/webhid-history/05-speed-set-retry.html",
+      "bytes": 54951,
+      "sha256": "db8e9d4b00e517974ff878821dcf274f11e8ad134c2b20a8a9fb78c4884d6a36"
+    },
+    {
+      "path": "99_Archive/webhid-history/06-skip-initial-cancel.html",
+      "bytes": 64072,
+      "sha256": "87095b9b0922ba9252fa3879a40d3c38caa50b12aa2634509a8ee7384cafa16c"
+    },
+    {
+      "path": "99_Archive/webhid-history/07-latest-soft-reset-recovery.html",
+      "bytes": 68661,
+      "sha256": "2b252a1eb651d16f144040758d6844ecb7548aabc9196ea3ce6319c24d6c2787"
+    },
+    {
+      "path": "AGENTS.md",
+      "bytes": 5507,
+      "sha256": "8e3223b3be5d13bf5ded6606431cd7f1fc98f09b5d769f0cb7aeb210afb15773"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 1067,
+      "sha256": "586691c075b17bf1f4afb9529cf8227f17a950b7e33fac793304b48276ff9fde"
+    },
+    {
+      "path": "README.md",
+      "bytes": 8618,
+      "sha256": "f9e95ad2d626023fb786d5e199fdbeb6f9a4beff0e2cff21f55eb8c100fff511"
+    }
+  ]
+}

@@ -1,0 +1,1159 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MLX90614 • MCP2221A • WebHID</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg-1: #08111f;
+      --bg-2: #0d1729;
+      --card: rgba(255, 255, 255, 0.08);
+      --card-strong: rgba(255, 255, 255, 0.12);
+      --card-border: rgba(255, 255, 255, 0.14);
+      --text: #f4f7fb;
+      --muted: #9fb1c9;
+      --accent: #89b4ff;
+      --accent-2: #79f0d1;
+      --danger: #ff7f95;
+      --warning: #ffc56f;
+      --shadow: 0 28px 60px rgba(0, 0, 0, 0.35);
+      --radius-xl: 30px;
+      --radius-lg: 24px;
+      --radius-md: 18px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(137, 180, 255, 0.18), transparent 34%),
+        radial-gradient(circle at top right, rgba(121, 240, 209, 0.16), transparent 28%),
+        linear-gradient(180deg, var(--bg-2), var(--bg-1));
+    }
+
+    body {
+      padding: 24px;
+    }
+
+    .app {
+      width: min(1220px, 100%);
+      margin: 0 auto;
+      display: grid;
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-xl);
+      backdrop-filter: blur(24px);
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      padding: 24px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .hero-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 18px;
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    h1, h2, h3, p { margin: 0; }
+
+    h1 {
+      font-size: clamp(30px, 4vw, 46px);
+      line-height: 0.98;
+      letter-spacing: -0.03em;
+    }
+
+    .hero-copy {
+      margin-top: 12px;
+      max-width: 70ch;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+
+    button {
+      appearance: none;
+      border: 0;
+      border-radius: 999px;
+      padding: 14px 18px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.16s ease, opacity 0.16s ease, background 0.16s ease;
+    }
+
+    button:hover:not(:disabled) { transform: translateY(-1px); }
+    button:disabled { opacity: 0.45; cursor: default; transform: none; }
+
+    .primary {
+      color: #07111f;
+      background: linear-gradient(135deg, var(--accent), #b3cbff);
+    }
+
+    .secondary {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+    }
+
+    .ghost {
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      font-weight: 600;
+    }
+
+    .status-row,
+    .chip-row,
+    .stats-row,
+    .stat-value-row,
+    .help-grid,
+    .layout,
+    .chart-header,
+    .chart-legend,
+    .log-header,
+    .footer-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .status-row { justify-content: space-between; }
+
+    .pill {
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 13px;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .pill.connected {
+      color: #051018;
+      background: linear-gradient(135deg, var(--accent-2), #bcffef);
+      border-color: transparent;
+    }
+
+    .pill.error {
+      color: white;
+      background: linear-gradient(135deg, #d9556c, #ff96a8);
+      border-color: transparent;
+    }
+
+    .pill.warn {
+      color: #2d1e00;
+      background: linear-gradient(135deg, #ffd27e, #ffeba8);
+      border-color: transparent;
+    }
+
+    .status-text {
+      color: var(--muted);
+      flex: 1 1 300px;
+      min-width: 280px;
+    }
+
+    .layout {
+      align-items: stretch;
+    }
+
+    .left-col {
+      flex: 0.95;
+      min-width: 300px;
+      display: grid;
+      gap: 20px;
+    }
+
+    .right-col {
+      flex: 1.45;
+      min-width: 340px;
+      display: grid;
+      gap: 20px;
+    }
+
+    .stats-card,
+    .help-card,
+    .chart-card,
+    .log-card {
+      padding: 22px;
+    }
+
+    .stats-row {
+      align-items: stretch;
+    }
+
+    .stat {
+      flex: 1;
+      min-width: 220px;
+      padding: 18px;
+      border-radius: var(--radius-lg);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+
+    .stat-value-row {
+      align-items: flex-end;
+      gap: 8px;
+    }
+
+    .stat-value {
+      font-size: clamp(54px, 8vw, 86px);
+      font-weight: 780;
+      line-height: 0.9;
+      letter-spacing: -0.05em;
+    }
+
+    .stat-value.small {
+      font-size: clamp(38px, 6vw, 58px);
+    }
+
+    .unit {
+      font-size: 24px;
+      color: var(--muted);
+      padding-bottom: 10px;
+    }
+
+    .mini-meta {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .help-grid {
+      align-items: stretch;
+    }
+
+    .help-item {
+      flex: 1;
+      min-width: 220px;
+      padding: 16px;
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .help-item h3 {
+      font-size: 15px;
+      margin-bottom: 8px;
+    }
+
+    .help-item p {
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 14px;
+    }
+
+    .chart-header {
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .chart-header p {
+      color: var(--muted);
+      margin-top: 6px;
+      line-height: 1.45;
+    }
+
+    .chart-wrap {
+      margin-top: 18px;
+      border-radius: 22px;
+      overflow: hidden;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015));
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 7;
+    }
+
+    .chart-legend {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 6px;
+    }
+
+    .dot-object { background: var(--accent); }
+    .dot-ambient { background: var(--accent-2); }
+
+    .log-header { justify-content: space-between; }
+
+    .log {
+      margin-top: 16px;
+      padding: 16px;
+      border-radius: 20px;
+      min-height: 160px;
+      max-height: 320px;
+      overflow: auto;
+      background: rgba(3, 10, 20, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      line-height: 1.55;
+      color: #d2e0f7;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .footer-row {
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .dim { color: var(--muted); }
+
+    @media (max-width: 920px) {
+      body { padding: 16px; }
+      .hero-top,
+      .status-row,
+      .chart-header,
+      .footer-row { flex-direction: column; align-items: stretch; }
+      .actions { justify-content: stretch; }
+      .actions button { flex: 1; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <section class="card hero">
+      <div class="hero-top">
+        <div>
+          <p class="eyebrow">Single-file browser app</p>
+          <h1>MLX90614 over MCP2221A in Chrome</h1>
+          <p class="hero-copy">
+            Click <strong>Connect</strong>, choose the MCP2221A HID device, and this page will talk to the MLX90614 directly through WebHID.
+            It reads ambient <code>0x06</code> and object <code>0x07</code> from the sensor, converts them to Celsius, and plots them live.
+          </p>
+        </div>
+        <div class="actions">
+          <button id="connectBtn" class="primary">Connect</button>
+          <button id="disconnectBtn" class="secondary" disabled>Disconnect</button>
+          <button id="clearLogBtn" class="ghost" type="button">Clear log</button>
+        </div>
+      </div>
+
+      <div class="status-row">
+        <div class="chip-row">
+          <span id="statusPill" class="pill">Not connected</span>
+          <span id="modePill" class="pill">Transport: unknown</span>
+          <span id="devicePill" class="pill">Device: none</span>
+        </div>
+        <div id="statusText" class="status-text">Ready. Open this file in Chrome or Edge, then click Connect.</div>
+      </div>
+    </section>
+
+    <section class="layout">
+      <div class="left-col">
+        <section class="card stats-card">
+          <div class="stats-row">
+            <article class="stat">
+              <div class="stat-label">Object temperature</div>
+              <div class="stat-value-row">
+                <div id="objectTemp" class="stat-value">--.-</div>
+                <div class="unit">°C</div>
+              </div>
+              <div class="mini-meta">Primary live value from MLX90614 RAM register <code>0x07</code>.</div>
+            </article>
+
+            <article class="stat">
+              <div class="stat-label">Ambient temperature</div>
+              <div class="stat-value-row">
+                <div id="ambientTemp" class="stat-value small">--.-</div>
+                <div class="unit">°C</div>
+              </div>
+              <div class="mini-meta">Sensor die temperature from RAM register <code>0x06</code>.</div>
+            </article>
+          </div>
+        </section>
+
+        <section class="card help-card">
+          <p class="eyebrow">Quick notes</p>
+          <div class="help-grid">
+            <article class="help-item">
+              <h3>Wiring</h3>
+              <p>MLX90614 SDA → MCP2221A SDA, SCL → SCL, VCC → sensor supply, GND → GND.</p>
+            </article>
+            <article class="help-item">
+              <h3>Speed</h3>
+              <p>This app configures the MCP2221A for a 100 kHz I2C clock, which is within the MLX90614 SMBus range.</p>
+            </article>
+            <article class="help-item">
+              <h3>Security</h3>
+              <p>If direct file open is blocked, serve it from <code>http://127.0.0.1</code> or <code>http://localhost</code>.</p>
+            </article>
+          </div>
+        </section>
+      </div>
+
+      <div class="right-col">
+        <section class="card chart-card">
+          <div class="chart-header">
+            <div>
+              <p class="eyebrow">Live graph</p>
+              <h2>Temperature history</h2>
+              <p>Object temperature is the main trace. Ambient is shown as a secondary line for context.</p>
+            </div>
+            <div class="chip-row">
+              <span id="samplePill" class="pill">2 Hz</span>
+              <span id="pointsPill" class="pill">0 samples</span>
+            </div>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="chartCanvas" width="1200" height="520"></canvas>
+          </div>
+          <div class="chart-legend">
+            <span><span class="legend-dot dot-object"></span>Object</span>
+            <span><span class="legend-dot dot-ambient"></span>Ambient</span>
+            <span class="dim">Newest point at the right edge.</span>
+          </div>
+        </section>
+
+        <section class="card log-card">
+          <div class="log-header">
+            <div>
+              <p class="eyebrow">Debug log</p>
+              <h2>Connection details</h2>
+            </div>
+            <span id="securePill" class="pill">Context: checking…</span>
+          </div>
+          <div id="log" class="log" aria-live="polite"></div>
+          <div class="footer-row" style="margin-top: 14px;">
+            <span>Vendor default: <code>0x04D8</code>, Product default: <code>0x00DD</code>.</span>
+            <span id="lastReadText">No samples yet.</span>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const MICROCHIP_VENDOR_ID = 0x04D8;
+    const MCP2221A_DEFAULT_PRODUCT_ID = 0x00DD;
+    const MLX90614_ADDRESS = 0x5A;
+    const MLX_RAM_AMBIENT = 0x06;
+    const MLX_RAM_OBJECT_1 = 0x07;
+    const I2C_CLOCK_HZ = 100000;
+    const SAMPLE_INTERVAL_MS = 500;
+    const MAX_POINTS = 240;
+    const INPUT_TIMEOUT_MS = 900;
+
+    const els = {
+      connectBtn: document.getElementById('connectBtn'),
+      disconnectBtn: document.getElementById('disconnectBtn'),
+      clearLogBtn: document.getElementById('clearLogBtn'),
+      statusPill: document.getElementById('statusPill'),
+      modePill: document.getElementById('modePill'),
+      devicePill: document.getElementById('devicePill'),
+      statusText: document.getElementById('statusText'),
+      objectTemp: document.getElementById('objectTemp'),
+      ambientTemp: document.getElementById('ambientTemp'),
+      samplePill: document.getElementById('samplePill'),
+      pointsPill: document.getElementById('pointsPill'),
+      securePill: document.getElementById('securePill'),
+      log: document.getElementById('log'),
+      lastReadText: document.getElementById('lastReadText'),
+      chartCanvas: document.getElementById('chartCanvas'),
+    };
+
+    const ctx = els.chartCanvas.getContext('2d');
+
+    const state = {
+      device: null,
+      transport: null,
+      polling: false,
+      inputQueue: [],
+      inputWaiters: [],
+      history: [],
+      lastReadAt: null,
+      inputHandler: null,
+    };
+
+    function nowStamp() {
+      return new Date().toLocaleTimeString();
+    }
+
+    function hex(value, width = 2) {
+      return '0x' + Number(value >>> 0).toString(16).toUpperCase().padStart(width, '0');
+    }
+
+    function sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    function log(message) {
+      els.log.textContent += `[${nowStamp()}] ${message}\n`;
+      els.log.scrollTop = els.log.scrollHeight;
+    }
+
+    function clearLog() {
+      els.log.textContent = '';
+      log('Log cleared.');
+    }
+
+    function setStatus(kind, pillText, text) {
+      els.statusPill.className = 'pill';
+      if (kind) els.statusPill.classList.add(kind);
+      els.statusPill.textContent = pillText;
+      els.statusText.textContent = text;
+    }
+
+    function setModeText(text) {
+      els.modePill.textContent = text;
+    }
+
+    function setDeviceText(text) {
+      els.devicePill.textContent = text;
+    }
+
+    function setTemps(objectC, ambientC) {
+      els.objectTemp.textContent = Number.isFinite(objectC) ? objectC.toFixed(1) : '--.-';
+      els.ambientTemp.textContent = Number.isFinite(ambientC) ? ambientC.toFixed(1) : '--.-';
+    }
+
+    function updateSampleMeta() {
+      els.samplePill.textContent = `${(1000 / SAMPLE_INTERVAL_MS).toFixed(0)} Hz`;
+      els.pointsPill.textContent = `${state.history.length} sample${state.history.length === 1 ? '' : 's'}`;
+      els.lastReadText.textContent = state.lastReadAt
+        ? `Last sample: ${new Date(state.lastReadAt).toLocaleTimeString()}`
+        : 'No samples yet.';
+    }
+
+    function addPoint(objectC, ambientC) {
+      state.history.push({ t: Date.now(), objectC, ambientC });
+      if (state.history.length > MAX_POINTS) state.history.shift();
+      state.lastReadAt = Date.now();
+      updateSampleMeta();
+      drawChart();
+    }
+
+    function crc8(bytes) {
+      let crc = 0x00;
+      for (const b of bytes) {
+        crc ^= b;
+        for (let i = 0; i < 8; i += 1) {
+          crc = (crc & 0x80) ? ((crc << 1) ^ 0x07) : (crc << 1);
+          crc &= 0xFF;
+        }
+      }
+      return crc;
+    }
+
+    function makePacket() {
+      return new Uint8Array(64);
+    }
+
+    function uniqueReportIds(reportDefs) {
+      const set = new Set();
+      for (const reportDef of reportDefs) set.add(reportDef.reportId ?? 0);
+      const ids = [...set];
+      ids.sort((a, b) => (a === 0 ? -1 : b === 0 ? 1 : a - b));
+      return ids;
+    }
+
+    function getModeCandidates(device) {
+      const collections = Array.isArray(device.collections) ? device.collections : [];
+      const inputIds = uniqueReportIds(collections.flatMap(c => c.inputReports || []));
+      const outputIds = uniqueReportIds(collections.flatMap(c => c.outputReports || []));
+      const featureIds = uniqueReportIds(collections.flatMap(c => c.featureReports || []));
+
+      const modes = [];
+      for (const outId of outputIds) {
+        for (const inId of inputIds) {
+          modes.push({
+            kind: 'output-input',
+            sendReportId: outId,
+            receiveReportId: inId,
+            label: `output ${hex(outId)} / input ${hex(inId)}`,
+          });
+        }
+      }
+      for (const reportId of featureIds) {
+        modes.push({
+          kind: 'feature',
+          reportId,
+          label: `feature ${hex(reportId)}`,
+        });
+      }
+
+      if (modes.length === 0) {
+        modes.push(
+          { kind: 'output-input', sendReportId: 0, receiveReportId: 0, label: 'guessed output 0 / input 0' },
+          { kind: 'feature', reportId: 0, label: 'guessed feature 0' },
+        );
+      }
+
+      return modes;
+    }
+
+    function inputBytesFromEvent(event) {
+      return new Uint8Array(event.data.buffer.slice(event.data.byteOffset, event.data.byteOffset + event.data.byteLength));
+    }
+
+    function queueInputReport(report) {
+      const waiterIndex = state.inputWaiters.findIndex(waiter => waiter.match(report));
+      if (waiterIndex >= 0) {
+        const waiter = state.inputWaiters.splice(waiterIndex, 1)[0];
+        clearTimeout(waiter.timer);
+        waiter.resolve(report);
+        return;
+      }
+      state.inputQueue.push(report);
+      if (state.inputQueue.length > 64) state.inputQueue.shift();
+    }
+
+    function waitForInputReport(match, timeoutMs = INPUT_TIMEOUT_MS) {
+      for (let i = 0; i < state.inputQueue.length; i += 1) {
+        const candidate = state.inputQueue[i];
+        if (match(candidate)) {
+          state.inputQueue.splice(i, 1);
+          return Promise.resolve(candidate);
+        }
+      }
+
+      return new Promise((resolve, reject) => {
+        const timer = setTimeout(() => {
+          const idx = state.inputWaiters.findIndex(waiter => waiter.reject === reject);
+          if (idx >= 0) state.inputWaiters.splice(idx, 1);
+          reject(new Error('Timed out waiting for HID input report.'));
+        }, timeoutMs);
+        state.inputWaiters.push({ match, resolve, reject, timer });
+      });
+    }
+
+    function attachInputListener(device) {
+      if (state.inputHandler) return;
+      state.inputHandler = event => {
+        const bytes = inputBytesFromEvent(event);
+        queueInputReport({ reportId: event.reportId, bytes });
+      };
+      device.addEventListener('inputreport', state.inputHandler);
+    }
+
+    function detachInputListener(device) {
+      if (!state.inputHandler || !device) return;
+      device.removeEventListener('inputreport', state.inputHandler);
+      state.inputHandler = null;
+      state.inputQueue = [];
+      for (const waiter of state.inputWaiters) clearTimeout(waiter.timer);
+      state.inputWaiters = [];
+    }
+
+    async function rawExchangeWithMode(device, mode, packet, expectedCommand, timeoutMs = INPUT_TIMEOUT_MS) {
+      if (mode.kind === 'output-input') {
+        attachInputListener(device);
+        const responsePromise = waitForInputReport(
+          report => report.reportId === mode.receiveReportId && report.bytes[0] === expectedCommand,
+          timeoutMs,
+        );
+        await device.sendReport(mode.sendReportId, packet);
+        const response = await responsePromise;
+        return response.bytes;
+      }
+
+      await device.sendFeatureReport(mode.reportId, packet);
+      const deadline = performance.now() + timeoutMs;
+      while (performance.now() < deadline) {
+        const dataView = await device.receiveFeatureReport(mode.reportId);
+        const bytes = new Uint8Array(dataView.buffer.slice(dataView.byteOffset, dataView.byteOffset + dataView.byteLength));
+        if (bytes.length === 0) {
+          await sleep(8);
+          continue;
+        }
+        if (bytes[0] === expectedCommand) return bytes;
+      }
+      throw new Error('Timed out waiting for HID feature report response.');
+    }
+
+    async function detectWorkingTransport(device) {
+      const candidates = getModeCandidates(device);
+      log(`HID candidates: ${candidates.map(m => m.label).join(' | ')}`);
+
+      const probe = makePacket();
+      probe[0] = 0x10;
+
+      for (const mode of candidates) {
+        try {
+          const response = await rawExchangeWithMode(device, mode, probe, 0x10, 700);
+          if (response[0] === 0x10) {
+            log(`Transport selected: ${mode.label}`);
+            return mode;
+          }
+        } catch (error) {
+          log(`Transport probe failed for ${mode.label}: ${error.message}`);
+        }
+      }
+
+      throw new Error('Could not find a working HID report transport for this MCP2221A interface.');
+    }
+
+    async function exchange(packet, expectedCommand = packet[0], timeoutMs = INPUT_TIMEOUT_MS) {
+      if (!state.device || !state.transport) throw new Error('No MCP2221A transport is active.');
+      return rawExchangeWithMode(state.device, state.transport, packet, expectedCommand, timeoutMs);
+    }
+
+    async function exchangeRetryBusy(packet, expectedCommand = packet[0], retries = 30) {
+      let lastResponse = null;
+      for (let attempt = 0; attempt < retries; attempt += 1) {
+        const response = await exchange(packet, expectedCommand);
+        lastResponse = response;
+        if (response[1] !== 0x01) return response;
+        await sleep(8);
+      }
+      throw new Error(`I2C engine stayed busy for command ${hex(packet[0])}. Last response: ${lastResponse ? hex(lastResponse[1]) : 'none'}`);
+    }
+
+    async function getStatus() {
+      const packet = makePacket();
+      packet[0] = 0x10;
+      const response = await exchange(packet, 0x10);
+      if (response[1] !== 0x00) {
+        throw new Error(`Status command failed with code ${hex(response[1])}.`);
+      }
+      return response;
+    }
+
+    async function cancelI2cTransfer() {
+      const packet = makePacket();
+      packet[0] = 0x10;
+      packet[2] = 0x10;
+      const response = await exchange(packet, 0x10);
+      await sleep(4);
+      log(`I2C cancel result: byte2=${hex(response[2])}`);
+      return response;
+    }
+
+    async function setI2CSpeed(hz = I2C_CLOCK_HZ) {
+      const divider = Math.max(1, Math.min(255, Math.round((12000000 / hz) - 2)));
+      const packet = makePacket();
+      packet[0] = 0x10;
+      packet[3] = 0x20;
+      packet[4] = divider;
+      const response = await exchange(packet, 0x10);
+      if (response[1] !== 0x00) {
+        throw new Error(`Set speed failed with code ${hex(response[1])}.`);
+      }
+      if (response[3] !== 0x20) {
+        throw new Error(`MCP2221A did not accept the new I2C speed. Status byte3=${hex(response[3])}.`);
+      }
+      log(`I2C speed set to ${hz} Hz using divider ${divider} (${hex(divider)}).`);
+      return divider;
+    }
+
+    async function waitForReadReady(expectedLength) {
+      for (let attempt = 0; attempt < 80; attempt += 1) {
+        const status = await getStatus();
+        const readPending = status[25];
+        const transferred = status[11] | (status[12] << 8);
+        const buffered = status[13];
+        if (readPending === 0 && (buffered >= expectedLength || transferred >= expectedLength)) {
+          return status;
+        }
+        await sleep(4);
+      }
+      throw new Error('Timed out waiting for I2C read completion.');
+    }
+
+    async function getI2cData(expectedLength) {
+      for (let attempt = 0; attempt < 40; attempt += 1) {
+        const packet = makePacket();
+        packet[0] = 0x40;
+        const response = await exchange(packet, 0x40);
+        if (response[1] === 0x41) {
+          throw new Error('MCP2221A reported an I2C data read error.');
+        }
+        if (response[1] !== 0x00) {
+          await sleep(4);
+          continue;
+        }
+        const count = response[3];
+        if (count === 127) {
+          throw new Error('I2C engine returned data count 127, indicating an invalid read buffer state.');
+        }
+        if (count >= expectedLength) {
+          return response.slice(4, 4 + expectedLength);
+        }
+        await sleep(4);
+      }
+      throw new Error(`Timed out waiting for ${expectedLength} I2C data byte(s).`);
+    }
+
+    async function i2cWrite(addr8, data, { noStop = false, repeatedStart = false } = {}) {
+      const packet = makePacket();
+      packet[0] = noStop ? 0x94 : (repeatedStart ? 0x92 : 0x90);
+      packet[1] = data.length & 0xFF;
+      packet[2] = (data.length >> 8) & 0xFF;
+      packet[3] = addr8 & 0xFF;
+      packet.set(data, 4);
+      const response = await exchangeRetryBusy(packet, packet[0]);
+      if (response[1] !== 0x00) {
+        throw new Error(`I2C write command ${hex(packet[0])} failed with code ${hex(response[1])}.`);
+      }
+      return response;
+    }
+
+    async function i2cReadStart(addr8, length, { repeatedStart = false } = {}) {
+      const packet = makePacket();
+      packet[0] = repeatedStart ? 0x93 : 0x91;
+      packet[1] = length & 0xFF;
+      packet[2] = (length >> 8) & 0xFF;
+      packet[3] = addr8 & 0xFF;
+      const response = await exchangeRetryBusy(packet, packet[0]);
+      if (response[1] !== 0x00) {
+        throw new Error(`I2C read start ${hex(packet[0])} failed with code ${hex(response[1])}.`);
+      }
+      return response;
+    }
+
+    function decodeMlxTemperature(lsb, msb) {
+      const raw = (lsb & 0xFF) | ((msb & 0xFF) << 8);
+      const error = Boolean(raw & 0x8000);
+      const value = raw & 0x7FFF;
+      return {
+        raw,
+        error,
+        celsius: (value * 0.02) - 273.15,
+      };
+    }
+
+    async function readMlxWord(registerAddress) {
+      const addrWrite = MLX90614_ADDRESS << 1;
+      const addrRead = (MLX90614_ADDRESS << 1) | 0x01;
+
+      await i2cWrite(addrWrite, Uint8Array.of(registerAddress), { noStop: true });
+      await i2cReadStart(addrRead, 3, { repeatedStart: true });
+      await waitForReadReady(3);
+      const data = await getI2cData(3);
+
+      const [lsb, msb, pec] = data;
+      const decoded = decodeMlxTemperature(lsb, msb);
+      const expectedPec = crc8([addrWrite, registerAddress, addrRead, lsb, msb]);
+      decoded.pec = pec;
+      decoded.pecOk = pec === expectedPec;
+      decoded.expectedPec = expectedPec;
+      return decoded;
+    }
+
+    async function sampleSensor() {
+      const ambient = await readMlxWord(MLX_RAM_AMBIENT);
+      const object = await readMlxWord(MLX_RAM_OBJECT_1);
+
+      if (ambient.error) throw new Error('Ambient temperature word reports the MLX90614 error flag.');
+      if (object.error) throw new Error('Object temperature word reports the MLX90614 error flag.');
+
+      if (!ambient.pecOk) {
+        log(`Ambient PEC mismatch: got ${hex(ambient.pec)}, expected ${hex(ambient.expectedPec)}.`);
+      }
+      if (!object.pecOk) {
+        log(`Object PEC mismatch: got ${hex(object.pec)}, expected ${hex(object.expectedPec)}.`);
+      }
+
+      setTemps(object.celsius, ambient.celsius);
+      addPoint(object.celsius, ambient.celsius);
+      return { object, ambient };
+    }
+
+    async function stopPolling() {
+      state.polling = false;
+      await sleep(0);
+    }
+
+    async function pollingLoop() {
+      state.polling = true;
+      while (state.polling && state.device) {
+        const started = performance.now();
+        try {
+          const result = await sampleSensor();
+          setStatus('connected', 'Connected', 'Reading live temperature data.');
+          log(`Read OK • object ${result.object.celsius.toFixed(2)} °C • ambient ${result.ambient.celsius.toFixed(2)} °C`);
+        } catch (error) {
+          setStatus('warn', 'Read error', error.message);
+          log(`Read error: ${error.message}`);
+          try {
+            await cancelI2cTransfer();
+          } catch (cancelError) {
+            log(`Cancel after read error failed: ${cancelError.message}`);
+          }
+        }
+        const elapsed = performance.now() - started;
+        await sleep(Math.max(50, SAMPLE_INTERVAL_MS - elapsed));
+      }
+    }
+
+    async function connect() {
+      if (!('hid' in navigator)) {
+        setStatus('error', 'WebHID unavailable', 'This browser does not expose navigator.hid. Use Chrome or Edge.');
+        return;
+      }
+
+      els.connectBtn.disabled = true;
+      setStatus('', 'Connecting…', 'Waiting for device selection.');
+
+      try {
+        const devices = await navigator.hid.requestDevice({
+          filters: [
+            { vendorId: MICROCHIP_VENDOR_ID, productId: MCP2221A_DEFAULT_PRODUCT_ID },
+            { vendorId: MICROCHIP_VENDOR_ID },
+          ],
+        });
+
+        if (!devices.length) {
+          setStatus('', 'Not connected', 'No HID device was selected.');
+          els.connectBtn.disabled = false;
+          return;
+        }
+
+        let selectedDevice = null;
+        let selectedTransport = null;
+        let selectedError = null;
+
+        for (const device of devices) {
+          try {
+            log(`Trying HID device: ${device.productName || 'Unnamed device'} (${hex(device.vendorId, 4)}:${hex(device.productId, 4)})`);
+            await device.open();
+            const transport = await detectWorkingTransport(device);
+            selectedDevice = device;
+            selectedTransport = transport;
+            break;
+          } catch (error) {
+            selectedError = error;
+            log(`Device failed during probe: ${error.message}`);
+            try { await device.close(); } catch (_) {}
+          }
+        }
+
+        if (!selectedDevice || !selectedTransport) {
+          throw selectedError || new Error('No compatible MCP2221A HID interface was found.');
+        }
+
+        state.device = selectedDevice;
+        state.transport = selectedTransport;
+        state.history = [];
+        state.lastReadAt = null;
+        updateSampleMeta();
+        drawChart();
+
+        setModeText(`Transport: ${selectedTransport.label}`);
+        setDeviceText(`Device: ${selectedDevice.productName || `${hex(selectedDevice.vendorId, 4)}:${hex(selectedDevice.productId, 4)}`}`);
+        setStatus('', 'Configuring…', 'Preparing MCP2221A I2C engine.');
+
+        await cancelI2cTransfer();
+        await setI2CSpeed(I2C_CLOCK_HZ);
+
+        const firstSample = await sampleSensor();
+        log(`Initial sample • object ${firstSample.object.celsius.toFixed(2)} °C • ambient ${firstSample.ambient.celsius.toFixed(2)} °C`);
+
+        setStatus('connected', 'Connected', 'Connected and sampling.');
+        els.disconnectBtn.disabled = false;
+        pollingLoop();
+      } catch (error) {
+        log(`Connect failed: ${error.message}`);
+        setStatus('error', 'Connect failed', error.message);
+        await disconnect(false);
+      } finally {
+        if (!state.device) {
+          els.connectBtn.disabled = false;
+        }
+      }
+    }
+
+    async function disconnect(resetStatus = true) {
+      await stopPolling();
+      if (state.device) {
+        detachInputListener(state.device);
+        try {
+          if (state.device.opened) await state.device.close();
+        } catch (error) {
+          log(`Close warning: ${error.message}`);
+        }
+      }
+      state.device = null;
+      state.transport = null;
+      state.inputQueue = [];
+      for (const waiter of state.inputWaiters) clearTimeout(waiter.timer);
+      state.inputWaiters = [];
+
+      els.connectBtn.disabled = false;
+      els.disconnectBtn.disabled = true;
+      setModeText('Transport: unknown');
+      setDeviceText('Device: none');
+      if (resetStatus) {
+        setStatus('', 'Not connected', 'Disconnected.');
+      }
+    }
+
+    function drawChart() {
+      const canvas = els.chartCanvas;
+      const width = canvas.width;
+      const height = canvas.height;
+      ctx.clearRect(0, 0, width, height);
+
+      const padding = { top: 28, right: 26, bottom: 42, left: 52 };
+      const plotW = width - padding.left - padding.right;
+      const plotH = height - padding.top - padding.bottom;
+
+      ctx.fillStyle = 'rgba(255,255,255,0.02)';
+      ctx.fillRect(0, 0, width, height);
+
+      if (state.history.length === 0) {
+        ctx.fillStyle = 'rgba(159,177,201,0.8)';
+        ctx.font = '20px Inter, system-ui, sans-serif';
+        ctx.fillText('No samples yet. Connect the MCP2221A to start plotting.', 60, height / 2);
+        return;
+      }
+
+      const values = state.history.flatMap(point => [point.objectC, point.ambientC]).filter(Number.isFinite);
+      const minValue = Math.min(...values);
+      const maxValue = Math.max(...values);
+      const lower = Math.floor((minValue - 1) * 2) / 2;
+      const upper = Math.ceil((maxValue + 1) * 2) / 2;
+      const span = Math.max(1, upper - lower);
+
+      ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+      ctx.lineWidth = 1;
+      for (let i = 0; i <= 4; i += 1) {
+        const y = padding.top + (plotH / 4) * i;
+        ctx.beginPath();
+        ctx.moveTo(padding.left, y);
+        ctx.lineTo(width - padding.right, y);
+        ctx.stroke();
+
+        const value = upper - (span / 4) * i;
+        ctx.fillStyle = 'rgba(159,177,201,0.85)';
+        ctx.font = '14px Inter, system-ui, sans-serif';
+        ctx.fillText(`${value.toFixed(1)}°`, 8, y + 5);
+      }
+
+      ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+      ctx.beginPath();
+      ctx.moveTo(padding.left, padding.top + plotH);
+      ctx.lineTo(width - padding.right, padding.top + plotH);
+      ctx.stroke();
+
+      const xForIndex = index => padding.left + (plotW * index) / Math.max(1, state.history.length - 1);
+      const yForValue = value => padding.top + plotH - ((value - lower) / span) * plotH;
+
+      function drawSeries(selector, strokeStyle, lineWidth, dash = []) {
+        ctx.save();
+        ctx.beginPath();
+        ctx.setLineDash(dash);
+        ctx.strokeStyle = strokeStyle;
+        ctx.lineWidth = lineWidth;
+        state.history.forEach((point, index) => {
+          const x = xForIndex(index);
+          const y = yForValue(selector(point));
+          if (index === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        });
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      drawSeries(p => p.ambientC, 'rgba(121,240,209,0.82)', 2.6, [10, 8]);
+      drawSeries(p => p.objectC, 'rgba(137,180,255,0.96)', 4);
+
+      const last = state.history[state.history.length - 1];
+      const lastX = xForIndex(state.history.length - 1);
+      const lastObjectY = yForValue(last.objectC);
+      ctx.fillStyle = 'rgba(137,180,255,1)';
+      ctx.beginPath();
+      ctx.arc(lastX, lastObjectY, 5.5, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = 'rgba(159,177,201,0.85)';
+      ctx.font = '14px Inter, system-ui, sans-serif';
+      ctx.fillText('oldest', padding.left, height - 14);
+      const newestText = `${last.objectC.toFixed(1)} °C now`;
+      const textWidth = ctx.measureText(newestText).width;
+      ctx.fillText(newestText, width - padding.right - textWidth, height - 14);
+    }
+
+    function bootStatus() {
+      const secure = window.isSecureContext;
+      const hidAvailable = 'hid' in navigator;
+
+      if (secure) {
+        els.securePill.className = 'pill connected';
+        els.securePill.textContent = 'Context: secure';
+      } else {
+        els.securePill.className = 'pill warn';
+        els.securePill.textContent = 'Context: not secure';
+      }
+
+      if (!hidAvailable) {
+        setStatus('error', 'WebHID unavailable', 'navigator.hid is missing. Use a current Chrome or Edge build.');
+      } else if (!secure) {
+        setStatus('warn', 'Potential issue', 'This page is not in a secure context. Try file://, localhost, or 127.0.0.1.');
+      } else {
+        setStatus('', 'Not connected', 'Ready. Click Connect to choose the MCP2221A HID interface.');
+      }
+
+      setModeText('Transport: unknown');
+      setDeviceText('Device: none');
+      updateSampleMeta();
+      drawChart();
+      log(`Page loaded. isSecureContext=${secure}. navigator.hid=${hidAvailable}.`);
+    }
+
+    navigator.hid?.addEventListener?.('disconnect', event => {
+      if (state.device && event.device === state.device) {
+        log('HID disconnect event received from browser.');
+        disconnect();
+      }
+    });
+
+    els.connectBtn.addEventListener('click', connect);
+    els.disconnectBtn.addEventListener('click', () => disconnect());
+    els.clearLogBtn.addEventListener('click', clearLog);
+
+    bootStatus();
+  </script>
+</body>
+</html>
