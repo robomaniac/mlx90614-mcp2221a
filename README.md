@@ -1,46 +1,38 @@
-# MLX90614 temperature monitor via MCP2221A
+# MLX90614 Temperature Monitor
 
-A single-file desktop Chrome/Edge app that reads object and ambient temperature from a Melexis MLX90614 through a Microchip MCP2221A USB/I2C bridge. WebHID is the browser interface; **MCP2221A** is the bridge part number. The public repository name is `mlx90614-mcp2221a` because it identifies both pieces of hardware.
+**[Open the temperature monitor](https://robomaniac.github.io/mlx90614-mcp2221a/)** — connect an MLX90614 through an MCP2221A and read temperatures directly in desktop Chrome or Edge.
 
-The dark interface includes Celsius readings, a live chart with mouse hover, 1/2/4/5/10 Hz requests, a custom rate dropdown, and bounded diagnostic logs. No browser runtime dependencies, CDN, backend, npm install, or build step are required.
+I wanted a simple way to see infrared temperature readings and a live graph without managing a Python HID installation. This app uses Chrome's WebHID API to talk to the sensor through a USB-to-I2C bridge. Everything runs in one HTML file.
 
-- [Open the live GitHub Pages app](https://robomaniac.github.io/mlx90614-mcp2221a/) — deployed HTML verified identical to the active file; checks recorded in [validation](05_Data/VALIDATION.md).
-- [Complete local setup, operation, recovery and testing](08_Software/mlx90614-webhid/README.md).
-- [GitHub publication and Pages maintenance](00_Documentations/GITHUB_PAGES.md).
-- [Review findings](00_Documentations/PROJECT_REVIEW.md), [protocol notes](00_Documentations/HARDWARE_AND_PROTOCOL.md), [test plan](00_Documentations/KNOWN_ISSUES_AND_TEST_PLAN.md).
+**Browser:** desktop Chrome / Edge · **Hardware:** MLX90614 + MCP2221A · **Updated:** 2026-10-10
 
-## Current status
+<p align="center">
+  <a href="04_Media/temperature-monitor.png"><img src="04_Media/temperature-monitor.png" width="900" alt="MLX90614 temperature monitor with object and ambient displays, rate selector, chart and connection controls"></a>
+</p>
 
-The user reports the existing [hosted app](https://jeromedemers.com/mlx.html) works. Its fetched HTML exactly matched historical revision 07 before this migration. The active revision preserves the interface and protocol but disables automatic USB reset, retains failed-read evidence, and distinguishes successful object/ambient pairs from attempted pairs. The edited revision requires hardware validation; static and simulated tests cannot establish sensor operation or a sustained 10 Hz success rate. See [selected historical logs](05_Data/SELECTED_LOGS.md).
+*Browser interface before connecting the sensor.*
 
-## Quick local start
+## Features
 
-Prerequisites: desktop Chrome or Edge, Python 3 for the local server, and Node.js **or installed desktop VS Code** for the checks. The Python server only serves the HTML; it does not communicate with the sensor.
+- Object and ambient temperature in **°C**, with a live chart and precise mouse hover.
+- **1, 2, 4, 5 and 10 Hz** sample-rate controls.
+- Remembered device permission for easier reconnecting.
+- Successful and attempted sample counts, with failed reads retained in the debug log.
+- One HTML file with embedded CSS and JavaScript; processing stays in your browser.
 
-1. In **VS Code > File > Open Folder**, open this repository. Choose **Terminal > New Terminal**, using **PowerShell**. For the current local checkout, enter:
+## Use it
 
-   ```powershell
-   Set-Location -LiteralPath 'C:\Nextcloud\01_Projects\2026-013_MLX90614-WebHID'
-   powershell -NoProfile -ExecutionPolicy Bypass -File .\08_Software\mlx90614-webhid\tools\Check-Html.ps1 -Diagnostics
-   ```
+1. Wire the sensor using the table below, then close other apps or tabs using the bridge. Open **[the app](https://robomaniac.github.io/mlx90614-mcp2221a/)** in desktop **Chrome or Edge**. You should see the interface above; stop if WebHID is unavailable.
+2. Select **2 Hz** and click **Connect**. Choose the MCP2221A in the device chooser if prompted; previously granted permission may be reused automatically.
+3. Expect changing object/ambient readings and growing chart points. Hover over the chart to inspect individual samples. The debug log should show an initial sample and periodic `Read OK` entries.
+4. Try other sample rates as needed. **10 Hz is a requested rate**; actual successful throughput depends on the hardware and read retries. Keep failed-read logs when troubleshooting.
+5. Click **Disconnect** before closing the tab. Reloading starts a fresh chart and log.
 
-   All checks should print `PASS`. Stop and correct any failure before connecting hardware. In a different checkout, change the first path to that checkout.
+For local editing, follow the [complete VS Code / PowerShell setup guide](08_Software/mlx90614-webhid/README.md#local-setup-and-operation). It includes exact check/server commands, expected results, restart instructions and cleanup. An existing local server can be reused after saving and reloading the HTML; there is no build or firmware-flash step.
 
-2. In the **same PowerShell terminal**, start the server:
+## Hardware
 
-   ```powershell
-   python -m http.server 8000 --bind 127.0.0.1 --directory .\08_Software\mlx90614-webhid
-   ```
-
-   Leave this terminal running. If Python is missing, install Python 3 or use the optional direct-file method in the [app guide](08_Software/mlx90614-webhid/README.md). If the port is occupied, reuse only a server you know serves this app, or stop that server before retrying.
-
-3. Open **Chrome or Edge** at `http://127.0.0.1:8000/mlx.html`. Close other clients using the bridge, select **2 Hz**, then click **Connect** and select MCP2221A if prompted. Expect changing object/ambient readings and chart points. Inspect the debug log for errors; successful connection alone does not prove readings.
-
-4. Click **Disconnect** before closing the tab. Return to the server terminal and press **Ctrl+C** to stop it. Reuse an existing correct server for subsequent tests; there is no build or flash step. After saving HTML changes, disconnect and reload the browser before reconnecting.
-
-On GitHub Pages, open the app link directly in Chrome/Edge and follow step 3. GitHub serves the HTML over HTTPS; the sensor remains connected to your own computer. GitHub's repository file preview does not run the app.
-
-## Detailed bill of materials
+### Detailed bill of materials
 
 | Qty | Component | Manufacturer / part | Relevant specifications |
 | --- | --- | --- | --- |
@@ -62,25 +54,36 @@ For the Adafruit #4471 reference board with **3.3 V logic**:
 
 The reference board's pull-ups are already fitted. Keep its logic jumper at **3.3 V**; the BAA sensor uses the 3 V supply variant. TO-39 pin numbers refer to the manufacturer's package drawing, not a breakout's header order. For a sensor module, confirm its supply input and header labels before using this mapping. See the [bridge pinout](https://learn.adafruit.com/circuitpython-libraries-on-any-computer-with-mcp2221/pinout) and [sensor pin description, page 6](https://www.melexis.com/-/media/files/documents/datasheets/mlx90614-datasheet-melexis.pdf#page=6).
 
-## Folder map
+## Troubleshooting
 
-| Path | Contents |
+If device access is unavailable, use desktop Chrome/Edge over HTTPS or the documented loopback server. Browser permission is tied to the page's origin, so moving between the live site and localhost can show the chooser again.
+
+For busy responses, PEC errors or HID timeouts, keep the debug log, close competing bridge clients and start at 2 Hz. Follow the [connection recovery procedure](08_Software/mlx90614-webhid/README.md#reuse-editing-and-restart) if readings do not resume. Automatic USB reset is disabled.
+
+Software checks and the live Pages deployment pass. The latest bridge changes still need hardware validation; see the [test results and remaining checks](05_Data/VALIDATION.md).
+
+## Project files
+
+| Folder | Contents |
 | --- | --- |
-| `00_Documentations/` | Review, protocol, history, issue/test plan and publication guide |
-| `04_Media/` | Cropped sample-rate control reference image |
-| `05_Data/` | Selected diagnostic logs, validation record and current SHA-256 manifest |
-| `08_Software/mlx90614-webhid/` | Active `mlx.html`, operating guide and development checks |
-| `99_Archive/webhid-history/` | Seven unchanged historical HTML snapshots, public provenance |
-| `99_Archive/original-handoff/` | Full verified original backup, local only and ignored |
-| `99_Archive/original-releases/` | Original ZIPs, local only and ignored |
-| `99_Archive/python-webapp/`, `99_Archive/early-webhid-prototype/` | Older alternatives, local only and ignored; not app dependencies |
-| `.github/workflows/pages.yml` | Checks source and deploys only the active HTML as site `index.html` |
-| `.vscode/tasks.json` | VS Code check and local-server tasks |
+| `08_Software/mlx90614-webhid/` | Active **`mlx.html`**, operating guide and check tools |
+| `00_Documentations/` | Hardware/protocol notes, troubleshooting and development guides |
+| `04_Media/` | Interface screenshots |
+| `05_Data/` | Diagnostic logs, validation results and SHA-256 manifest |
+| `99_Archive/webhid-history/` | Original HTML revisions for comparison |
 
-The numbered folders follow the user's existing Nextcloud convention. Unused categories are omitted. `.local/` is reserved for ignored helper binaries and temporary validation artifacts.
+## Guides
 
-## Provenance, privacy and license
+- [Setup, operation and recovery](08_Software/mlx90614-webhid/README.md).
+- [Hardware and protocol](00_Documentations/HARDWARE_AND_PROTOCOL.md).
+- [Known issues and hardware test plan](00_Documentations/KNOWN_ISSUES_AND_TEST_PLAN.md).
+- [Local checks, GitHub and Pages updates](00_Documentations/GITHUB_PAGES.md).
+- [Development history and revision comparisons](00_Documentations/VERSION_INDEX.md).
 
-Historical snapshots are immutable. The complete original handoff remains local; public Git includes only the curated app, guides, selected logs, cropped reference image and seven HTML snapshots. [Validation](05_Data/VALIDATION.md) records the publication review and its limits. Do not add credentials, private paths or confidential logs; review staged files before every push. The app uses browser-granted USB access and includes no analytics or network upload code.
+## License
 
-Released under [MIT](LICENSE). Manufacturer documentation and product names remain their owners' materials. The original source checksum and evidence are recorded in the [project review](00_Documentations/PROJECT_REVIEW.md).
+[MIT](LICENSE).
+
+## Author
+
+Jérôme Demers — [robomaniac](https://github.com/robomaniac).

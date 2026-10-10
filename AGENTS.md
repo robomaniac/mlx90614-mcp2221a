@@ -36,6 +36,12 @@ Reported VID/PID `0x04D8:0x00DD`; confirm other firmware separately. Default sen
 
 ## Checks, layout and publishing
 
+### Public README style
+
+Write the root README for people using the project. Follow the concise root-document convention and the author's public browser/hardware projects: live app link first, short purpose in the author's voice, an actual interface preview, useful features, numbered operation steps, component BOM with specifications and supplier/datasheet links, wiring, and clearly linked detailed guides. Use plain headings and retain this project's numbered folders.
+
+Keep agent handoff, migration/provenance analysis and full test records in their existing linked documents. Avoid third-person phrases such as "the user reports", assistant narration, shopping-list filler in the BOM, private local paths and unrelated professional requirements in the public introduction. Describe validation limits in ordinary project language and do not invent hardware results or component identities.
+
 Use the numbered layout shown in the main README. Run from repository root:
 
 ```powershell

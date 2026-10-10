@@ -70,24 +70,29 @@
       "sha256": "4ecf310ccb7153c4647e69736756a0164f3f8671e1f16307ef5087a156ed85c5"
     },
     {
+      "path": "04_Media/temperature-monitor.png",
+      "bytes": 329067,
+      "sha256": "af24e78592483127d1a5764b2e0c8b92d5e7cabfc819f76644b1a837b14e4acd"
+    },
+    {
       "path": "05_Data/SELECTED_LOGS.md",
       "bytes": 5928,
       "sha256": "2dbfc70618734caf8b0aa7a7baaad553e10eddaefbd9ee24e901c13b4779c1f3"
     },
     {
       "path": "05_Data/VALIDATION.md",
-      "bytes": 3910,
-      "sha256": "6c050193e7e75fdc812bc2e6758998ea4bfd75a10d360b2b3e901a97573490f0"
-    },
-    {
-      "path": "08_Software/mlx90614-webhid/mlx.html",
-      "bytes": 66751,
-      "sha256": "798a587ee3e26872c815b94e929cdc354bd5d25d3bb6a16e101cebb4eb01527d"
+      "bytes": 4260,
+      "sha256": "e13d79a7332951f6b524095c4bdf731db5e295e848dccf2c1b2de06c9e375586"
     },
     {
       "path": "08_Software/mlx90614-webhid/README.md",
       "bytes": 9798,
       "sha256": "a5bc67a54b66cf8dffde08b4e3e2d9559b6dcc9765aab3e83a77f265f422f8c8"
+    },
+    {
+      "path": "08_Software/mlx90614-webhid/mlx.html",
+      "bytes": 66751,
+      "sha256": "798a587ee3e26872c815b94e929cdc354bd5d25d3bb6a16e101cebb4eb01527d"
     },
     {
       "path": "08_Software/mlx90614-webhid/tools/Check-Html.ps1",
@@ -141,8 +146,8 @@
     },
     {
       "path": "AGENTS.md",
-      "bytes": 5507,
-      "sha256": "8e3223b3be5d13bf5ded6606431cd7f1fc98f09b5d769f0cb7aeb210afb15773"
+      "bytes": 6403,
+      "sha256": "5b0c0182349fad92839823cd50328576f171762dc2491976e941a4a720f5cbbe"
     },
     {
       "path": "LICENSE",
@@ -151,8 +156,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 7618,
-      "sha256": "7ebcaa1f261e3acc511d41ac5f84dff212f9c4cfdf0f99a9e363c19c43627873"
+      "bytes": 6090,
+      "sha256": "4486e2ac64afd3f2c806fe0f2e368355694203f3166dacfdd600f6e9e27379d7"
     }
   ]
 }
