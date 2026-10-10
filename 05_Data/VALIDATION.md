@@ -16,7 +16,9 @@ Date: **2026-10-09**. This record separates completed software/publication check
 | Chrome local smoke | PASS: edited HTML initializes over temporary loopback HTTP; browser exit 0, expected title/Connect/five rates, secure context and `navigator.hid=true`. No Connect click/USB operation occurred. Temporary server/profile cleaned up. |
 | Project links/configuration | Final Markdown, task JSON, workflow packaging and current manifest checked before initial commit |
 | Privacy review | Public candidates, selected logs, cropped image, original text and ZIP contents reviewed; no credential/private-key patterns or confidential content identified. Local backups/ZIPs/older apps/helper binaries excluded by ignore rules. |
-| GitHub / Pages | Prepared; initial publication and delivery verification in progress |
+| GitHub repository | PASS: [robomaniac/mlx90614-mcp2221a](https://github.com/robomaniac/mlx90614-mcp2221a) is PUBLIC with default branch main; reviewed files pushed using existing verified Git credentials in memory and a noreply commit identity |
+| GitHub Pages deployment | PASS: [initial validation and deploy jobs](https://github.com/robomaniac/mlx90614-mcp2221a/actions/runs/38032744375) succeeded; workflow publishing with HTTPS enforced |
+| Live Pages delivery | PASS: HTTP 200 from [public app](https://robomaniac.github.io/mlx90614-mcp2221a/), 66,751 bytes; SHA-256 `798a587ee3e26872c815b94e929cdc354bd5d25d3bb6a16e101cebb4eb01527d`, exact match to active HTML. Live Chrome initialization, Connect/five rates and secure WebHID checks passed; no USB operation occurred. |
 | Hardware after edits | **Pending**. No physical bridge/sensor session performed; no measured rate, reconnect reliability or accuracy claim. |
 
 The historical user's live-reading logs and current report that the original hosted site works are retained as user evidence. Neither proves the modified revision works with this hardware. The actual sensor breakout supply input and pull-ups remain unconfirmed.

@@ -17,7 +17,15 @@ These steps are for initial publication or maintenance. **Skip creation/login st
 
    The portable official GitHub CLI downloaded during setup is local-only under `.local/bin/gh.exe`. It is not distributed in Git. In another checkout with an installed `gh`, omit the alias. If absent, optionally install it in PowerShell with `winget install --id GitHub.cli --exact --source winget`, then open a new terminal and set the working directory again. Install Git if `git --version` fails before proceeding.
 
-2. Check the account:
+2. **For this prepared local checkout**, the ignored `.local/gh_command.py` helper can reuse the existing Windows Git credential without a new CLI login. It verifies the account is robomaniac and passes the credential only in memory. First check:
+
+   ```powershell
+   python .\.local\gh_command.py api user --jq .login
+   ```
+
+   Expect `robomaniac`. If it succeeds, replace each `gh` command in this guide with `python .\.local\gh_command.py`, in the same root terminal. For example, `gh repo view ...` becomes `python .\.local\gh_command.py repo view ...`. Do not repeat login in that case. The helper is local-only and is absent from fresh clones. If the helper or credential is unavailable, use ordinary CLI authentication below.
+
+   Check the CLI account:
 
    ```powershell
    gh auth status --hostname github.com

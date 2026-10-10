@@ -31,8 +31,8 @@
     },
     {
       "path": "00_Documentations/GITHUB_PAGES.md",
-      "bytes": 8586,
-      "sha256": "af1ab4dd743dbcad1ba7a1289bf32fec9bba6af3eb06695880dd582a51b40c00"
+      "bytes": 9325,
+      "sha256": "c9518687357acb80416b606422934a6543ff658760d3c8a0f9ab277acc63211c"
     },
     {
       "path": "00_Documentations/HARDWARE_AND_PROTOCOL.md",
@@ -76,8 +76,8 @@
     },
     {
       "path": "05_Data/VALIDATION.md",
-      "bytes": 3219,
-      "sha256": "b77dea37087e9d6da815ed89ebe0760cd9d1e89f62b6b70cf7609c6246112397"
+      "bytes": 3910,
+      "sha256": "6c050193e7e75fdc812bc2e6758998ea4bfd75a10d360b2b3e901a97573490f0"
     },
     {
       "path": "08_Software/mlx90614-webhid/mlx.html",
@@ -151,8 +151,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 8618,
-      "sha256": "f9e95ad2d626023fb786d5e199fdbeb6f9a4beff0e2cff21f55eb8c100fff511"
+      "bytes": 8647,
+      "sha256": "70801b66d6b889223624699c29d6cbb87fc03d0907aa17730d6dd39373ea0369"
     }
   ]
 }

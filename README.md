@@ -4,7 +4,7 @@ A single-file desktop Chrome/Edge app that reads object and ambient temperature 
 
 The dark interface includes Celsius readings, a live chart with mouse hover, 1/2/4/5/10 Hz requests, a custom rate dropdown, and bounded diagnostic logs. No browser runtime dependencies, CDN, backend, npm install, or build step are required.
 
-- [Open the GitHub Pages app](https://robomaniac.github.io/mlx90614-mcp2221a/) — deployment status is recorded in [validation](05_Data/VALIDATION.md).
+- [Open the GitHub Pages app](https://robomaniac.github.io/mlx90614-mcp2221a/) â€” deployment status is recorded in [validation](05_Data/VALIDATION.md).
 - [Complete local setup, operation, recovery and testing](08_Software/mlx90614-webhid/README.md).
 - [GitHub publication and Pages maintenance](00_Documentations/GITHUB_PAGES.md).
 - [Review findings](00_Documentations/PROJECT_REVIEW.md), [protocol notes](00_Documentations/HARDWARE_AND_PROTOCOL.md), [test plan](00_Documentations/KNOWN_ISSUES_AND_TEST_PLAN.md).
@@ -46,13 +46,13 @@ Quantities are for one sensor and one computer. A compatible substitute may work
 
 | Qty | Item / identification | Purpose and confirmed details | What remains to confirm |
 | --- | --- | --- | --- |
-| 1 | Melexis **MLX90614BAA**, marking supplied: `BAA7160B20` | Infrared thermometer; B = nominal 3 V supply, A = single zone, A = nominal 90° field of view. Chip operating VDD is **2.6–3.6 V**; factory SMBus address is normally `0x5A`. `7160B20` is traceability marking, not a breakout model. | Breakout supplier/model, regulator, module VIN tolerance and fitted pull-ups are unknown. Do not infer a module's 5 V compatibility from this marking. |
-| 1 | Microchip **MCP2221A** USB/I2C bridge; project reference: **Adafruit #4471** | Carries I2C over HID. Adafruit #4471 has USB-C, a 3.3 V regulator and default 3.3 V I2C pull-ups of about 5.1 kΩ. Project device reports VID/PID `04D8:00DD`. | Physical board identity and jumper settings have not been independently inspected. Check silkscreen before relying on this reference board's pinout. |
+| 1 | Melexis **MLX90614BAA**, marking supplied: `BAA7160B20` | Infrared thermometer; B = nominal 3 V supply, A = single zone, A = nominal 90Â° field of view. Chip operating VDD is **2.6â€“3.6 V**; factory SMBus address is normally `0x5A`. `7160B20` is traceability marking, not a breakout model. | Breakout supplier/model, regulator, module VIN tolerance and fitted pull-ups are unknown. Do not infer a module's 5 V compatibility from this marking. |
+| 1 | Microchip **MCP2221A** USB/I2C bridge; project reference: **Adafruit #4471** | Carries I2C over HID. Adafruit #4471 has USB-C, a 3.3 V regulator and default 3.3 V I2C pull-ups of about 5.1 kÎ©. Project device reports VID/PID `04D8:00DD`. | Physical board identity and jumper settings have not been independently inspected. Check silkscreen before relying on this reference board's pinout. |
 | 1 | USB **data** cable, computer connector to bridge connector | Powers/enumerates the bridge; a charge-only cable will not carry HID. USB-C is the connector on the reference #4471 board. | Actual bridge connector and computer port. |
 | 4 | Jumper connections: supply, ground, SDA, SCL | Connect a compatible **3.3 V supply** to confirmed sensor VDD, common GND, SDA to SDA and SCL to SCL. Keep wiring short. | Actual module pin labels and VIN versus VDD distinction. Follow the module's documentation; stop if unknown. |
-| 0–1 | Breadboard / suitable connector | Optional mechanical connection for a breakout or correctly identified bare sensor pins. | Package pinout and assembly method. |
-| 0–2 | I2C pull-up resistors | Conditional: needed only if compatible pull-ups are absent or inadequate. The reference #4471 already provides pull-ups. | Existing parallel pull-ups and bus voltage; do not add resistors blindly. |
-| 0–1 | Local supply bypass capacitor | Conditional for a bare sensor: follow Melexis's application circuit. A breakout may already include it. | Actual board schematic and fitted capacitor; no value is assumed here. |
+| 0â€“1 | Breadboard / suitable connector | Optional mechanical connection for a breakout or correctly identified bare sensor pins. | Package pinout and assembly method. |
+| 0â€“2 | I2C pull-up resistors | Conditional: needed only if compatible pull-ups are absent or inadequate. The reference #4471 already provides pull-ups. | Existing parallel pull-ups and bus voltage; do not add resistors blindly. |
+| 0â€“1 | Local supply bypass capacitor | Conditional for a bare sensor: follow Melexis's application circuit. A breakout may already include it. | Actual board schematic and fitted capacitor; no value is assumed here. |
 | 1 | Desktop computer, Chrome/Edge, USB port | Local WebHID host. No flashed firmware or serial terminal is required for this app. | Browser WebHID support and OS device permissions. |
 
 Sources: [Melexis MLX90614 datasheet](https://www.melexis.com/-/media/files/documents/datasheets/mlx90614-datasheet-melexis.pdf), [Adafruit #4471](https://www.adafruit.com/product/4471), [reference board pinout and pull-ups](https://learn.adafruit.com/circuitpython-libraries-on-any-computer-with-mcp2221/pinout). The sensor marking identifies the chip variant, but does not establish the breakout's wiring or supply tolerance. This is a personal experiment, not an accuracy or medical validation.
