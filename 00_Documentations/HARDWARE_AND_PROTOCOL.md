@@ -16,14 +16,16 @@
 
 ### Wiring
 
-```text
-PC USB  ->  Adafruit MCP2221A (#4471)
-                  |        |        |        |
-                 SDA      SCL      GND      VCC (appropriate breakout supply)
-                  |        |        |        |
-                 SDA      SCL      GND      VIN/VCC
-                   Melexis MLX90614 sensor/breakout
-```
+Reference wiring for **Adafruit MCP2221A #4471 at 3.3 V logic**:
+
+| Bridge board pin | MLX90614 signal | Bare TO-39 pin |
+| --- | --- | --- |
+| 3V (regulated 3.3 V) | VDD | 3 |
+| GND | VSS / ground | 4 |
+| SDA | SDA / PWM | 2 |
+| SCL | SCL / Vz | 1 |
+
+Use the [Melexis package drawing and pin description, page 6](https://www.melexis.com/-/media/files/documents/datasheets/mlx90614-datasheet-melexis.pdf#page=6) for bare-pin orientation. A sensor breakout's header order may differ; confirm its supply input and signal labels. The [Adafruit board pinout](https://learn.adafruit.com/circuitpython-libraries-on-any-computer-with-mcp2221/pinout) identifies `3V` as the regulator output and the logic jumper setting.
 
 I2C requires **SDA pull-up and SCL pull-up** to a supply compatible with **both** devices' logic levels. Existing breakouts may provide these resistors; inspect the actual board(s) before adding another pair. The chip marking identifies a 2.6–3.6 V MLX90614BAA. A confirmed Adafruit #4471 reference board provides default 3.3 V pull-ups of about 5.1 kΩ; actual board/module wiring and jumper settings remain unconfirmed. See the root BOM and its manufacturer references. Avoid assuming the bare MLX90614 and breakout share the same voltage tolerance.
 

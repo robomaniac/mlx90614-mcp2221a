@@ -36,8 +36,8 @@
     },
     {
       "path": "00_Documentations/HARDWARE_AND_PROTOCOL.md",
-      "bytes": 9575,
-      "sha256": "01b6a174c1c2ca6439b76c321bdc20b4d609e96d6aec1551050816ad758b4af5"
+      "bytes": 9962,
+      "sha256": "99c737e525a2702ffcc2ac8cd5ada14ecf99a0ac46959a0f8169c7846ac1405e"
     },
     {
       "path": "00_Documentations/KNOWN_ISSUES_AND_TEST_PLAN.md",
@@ -151,8 +151,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 8662,
-      "sha256": "8e134ece1de269e07abf8934da342e2d69c3077c5d969f850ef1230aa8dd98ec"
+      "bytes": 7618,
+      "sha256": "7ebcaa1f261e3acc511d41ac5f84dff212f9c4cfdf0f99a9e363c19c43627873"
     }
   ]
 }

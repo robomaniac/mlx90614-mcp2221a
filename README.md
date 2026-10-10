@@ -42,20 +42,25 @@ On GitHub Pages, open the app link directly in Chrome/Edge and follow step 3. Gi
 
 ## Detailed bill of materials
 
-Quantities are for one sensor and one computer. A compatible substitute may work; confirm its voltage and pull-ups first. No purchase prices are assumed.
-
-| Qty | Item / identification | Purpose and confirmed details | What remains to confirm |
+| Qty | Component | Manufacturer / part | Relevant specifications |
 | --- | --- | --- | --- |
-| 1 | Melexis **MLX90614BAA**, marking supplied: `BAA7160B20` | Infrared thermometer; B = nominal 3 V supply, A = single zone, A = nominal 90° field of view. Chip operating VDD is **2.6–3.6 V**; factory SMBus address is normally `0x5A`. `7160B20` is traceability marking, not a breakout model. | Breakout supplier/model, regulator, module VIN tolerance and fitted pull-ups are unknown. Do not infer a module's 5 V compatibility from this marking. |
-| 1 | Microchip **MCP2221A** USB/I2C bridge; project reference: **Adafruit #4471** | Carries I2C over HID. Adafruit #4471 has USB-C, a 3.3 V regulator and default 3.3 V I2C pull-ups of about 5.1 kΩ. Project device reports VID/PID `04D8:00DD`. | Physical board identity and jumper settings have not been independently inspected. Check silkscreen before relying on this reference board's pinout. |
-| 1 | USB **data** cable, computer connector to bridge connector | Powers/enumerates the bridge; a charge-only cable will not carry HID. USB-C is the connector on the reference #4471 board. | Actual bridge connector and computer port. |
-| 4 | Jumper connections: supply, ground, SDA, SCL | Connect a compatible **3.3 V supply** to confirmed sensor VDD, common GND, SDA to SDA and SCL to SCL. Keep wiring short. | Actual module pin labels and VIN versus VDD distinction. Follow the module's documentation; stop if unknown. |
-| 0–1 | Breadboard / suitable connector | Optional mechanical connection for a breakout or correctly identified bare sensor pins. | Package pinout and assembly method. |
-| 0–2 | I2C pull-up resistors | Conditional: needed only if compatible pull-ups are absent or inadequate. The reference #4471 already provides pull-ups. | Existing parallel pull-ups and bus voltage; do not add resistors blindly. |
-| 0–1 | Local supply bypass capacitor | Conditional for a bare sensor: follow Melexis's application circuit. A breakout may already include it. | Actual board schematic and fitted capacitor; no value is assumed here. |
-| 1 | Desktop computer, Chrome/Edge, USB port | Local WebHID host. No flashed firmware or serial terminal is required for this app. | Browser WebHID support and OS device permissions. |
+| 1 | Infrared temperature sensor | **Melexis MLX90614BAA**; supplied marking `BAA7160B20` | TO-39 package; single zone; **90° FOV**; **2.6–3.6 V VDD**; SMBus address **`0x5A`**; **0.02 °C digital resolution** |
+| 1 | USB-to-I2C bridge board | **Microchip MCP2221A**; reference breakout: [**Adafruit #4471**](https://www.adafruit.com/product/4471) | I2C commands over HID; project bus **100 kHz**. Reference board includes a **3.3 V regulator** and **5.1 kΩ SDA/SCL pull-ups**, with logic set to 3.3 V by default. |
 
-Sources: [Melexis MLX90614 datasheet](https://www.melexis.com/-/media/files/documents/datasheets/mlx90614-datasheet-melexis.pdf), [Adafruit #4471](https://www.adafruit.com/product/4471), [reference board pinout and pull-ups](https://learn.adafruit.com/circuitpython-libraries-on-any-computer-with-mcp2221/pinout). The sensor marking identifies the chip variant, but does not establish the breakout's wiring or supply tolerance. This is a personal experiment, not an accuracy or medical validation.
+`BAA` identifies the sensor variant; `7160B20` is the lot marking. The exact sensor breakout model and full ordering code are not established. Adafruit #4471 is the reference bridge board from the project history; the physical board model has not been confirmed. Sensor specifications and marking are documented in the [Melexis datasheet](https://www.melexis.com/-/media/files/documents/datasheets/mlx90614-datasheet-melexis.pdf).
+
+### Wiring
+
+For the Adafruit #4471 reference board with **3.3 V logic**:
+
+| Bridge board pin | Sensor signal | Bare MLX90614 TO-39 pin |
+| --- | --- | --- |
+| **3V** (regulated 3.3 V) | VDD | **3** |
+| **GND** | VSS / ground | **4** |
+| **SDA** | SDA / PWM | **2** |
+| **SCL** | SCL / Vz | **1** |
+
+The reference board's pull-ups are already fitted. Keep its logic jumper at **3.3 V**; the BAA sensor uses the 3 V supply variant. TO-39 pin numbers refer to the manufacturer's package drawing, not a breakout's header order. For a sensor module, confirm its supply input and header labels before using this mapping. See the [bridge pinout](https://learn.adafruit.com/circuitpython-libraries-on-any-computer-with-mcp2221/pinout) and [sensor pin description, page 6](https://www.melexis.com/-/media/files/documents/datasheets/mlx90614-datasheet-melexis.pdf#page=6).
 
 ## Folder map
 
