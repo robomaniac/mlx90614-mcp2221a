@@ -1,4 +1,4 @@
-"""Separate terminal demo: native HIDAPI/Cython, absolute deadlines, CSV evidence."""
+"""Native HIDAPI/Cython demo: paced or unpaced acquisition, with CSV evidence."""
 from collections import Counter, deque
 from datetime import datetime, timezone
 from decimal import Decimal
@@ -49,17 +49,19 @@ class SimulatedSensor:
         pass
 
 
-FIELDS = ("mode", "slot", "scheduled_s", "start_s", "finish_s", "start_lateness_ms",
+FIELDS = ("mode", "scheduling", "slot", "scheduled_s", "start_s", "finish_s", "start_lateness_ms",
           "acquisition_ms", "successful_interval_ms", "object_c", "ambient_c",
           "object_raw", "ambient_raw", "repeated_raw_pair", "hid_exchanges",
           "status", "error_code", "error", "recovery_error")
 
 
 def acquire(sensor, native, args, path):
-    period = round(1_000_000_000 / args.hz)
+    unpaced = args.unpaced
+    scheduling = "UNPACED" if unpaced else "PACED"
+    period = None if unpaced else round(1_000_000_000 / args.hz)
     duration = round(args.seconds * 1_000_000_000)
     # Count requested samples independently of nanosecond period rounding.
-    slots = math.ceil(Decimal(str(args.seconds)) * Decimal(str(args.hz)))
+    slots = None if unpaced else math.ceil(Decimal(str(args.seconds)) * Decimal(str(args.hz)))
     latency, lateness, intervals = (deque(maxlen=10000) for _ in range(3))
     errors = Counter()
     attempts = successes = failures = interrupted_pairs = missed = repeated = slot = 0
@@ -75,20 +77,23 @@ def acquire(sensor, native, args, path):
         end = origin + duration
         next_display = origin
         try:
-            while slot < slots:
-                planned = origin + slot * period
-                while (remaining := planned - time.perf_counter_ns()) > 0:
-                    time.sleep(remaining / 1_000_000_000)
+            while unpaced or slot < slots:
+                planned = None if unpaced else origin + slot * period
+                if not unpaced:
+                    while (remaining := planned - time.perf_counter_ns()) > 0:
+                        time.sleep(remaining / 1_000_000_000)
                 start = time.perf_counter_ns()
                 if start >= end:
-                    missed += slots - slot
+                    if not unpaced:
+                        missed += slots - slot
                     break
                 attempts += 1
                 before = sensor.exchanges
                 row = dict.fromkeys(FIELDS, "")
-                row.update(mode=mode, slot=slot, scheduled_s=(planned - origin) / 1e9,
+                row.update(mode=mode, scheduling=scheduling, slot=slot,
+                           scheduled_s="" if unpaced else (planned - origin) / 1e9,
                            start_s=(start - origin) / 1e9,
-                           start_lateness_ms=(start - planned) / 1e6, status="ok")
+                           start_lateness_ms="" if unpaced else (start - planned) / 1e6, status="ok")
                 try:
                     obj, ambient, object_raw, ambient_raw = sensor.read_pair()
                     finish = time.perf_counter_ns()
@@ -129,21 +134,26 @@ def acquire(sensor, native, args, path):
                 row.update(finish_s=(finish - origin) / 1e9, acquisition_ms=(finish - start) / 1e6,
                            hid_exchanges=sensor.exchanges - before)
                 latency.append(row["acquisition_ms"])
-                lateness.append(row["start_lateness_ms"])
+                if not unpaced:
+                    lateness.append(row["start_lateness_ms"])
                 writer.writerow(row)
                 now = time.perf_counter_ns()
                 if now >= next_display or row["status"] == "error":
                     stream.flush()
                     display = f" object={last_values[0]:.2f} C ambient={last_values[1]:.2f} C" if last_values else ""
-                    print(f"{mode} attempts={attempts} valid={successes} missed_slots={missed}" + display, flush=True)
+                    timing_display = " scheduling=UNPACED" if unpaced else f" missed_slots={missed}"
+                    print(f"{mode} attempts={attempts} valid={successes}" + timing_display + display, flush=True)
                     next_display = now + 1_000_000_000
                 if fatal or interrupted:
                     break
-                new_slot = min(slots, next_slot(origin, period, slot + 1, time.perf_counter_ns()))
-                missed += new_slot - slot - 1
-                slot = new_slot
+                if unpaced:
+                    slot += 1
+                else:
+                    new_slot = min(slots, next_slot(origin, period, slot + 1, time.perf_counter_ns()))
+                    missed += new_slot - slot - 1
+                    slot = new_slot
             # Include the whole requested measurement window in the rate denominator.
-            if not fatal and not interrupted:
+            if not unpaced and not fatal and not interrupted:
                 while (remaining := end - time.perf_counter_ns()) > 0:
                     time.sleep(remaining / 1_000_000_000)
         except KeyboardInterrupt:
@@ -151,9 +161,11 @@ def acquire(sensor, native, args, path):
             print("Stopped with Ctrl+C; saving completed measurements.")
         elapsed = (time.perf_counter_ns() - origin) / 1e9
     summary = {
-        "mode": mode, "requested_hz": args.hz, "requested_seconds": args.seconds,
+        "mode": mode, "scheduling": scheduling,
+        "requested_hz": None if unpaced else args.hz, "requested_seconds": args.seconds,
         "elapsed_seconds": round(elapsed, 6), "attempts": attempts, "valid_pairs": successes,
-        "failed_pairs": failures, "interrupted_pairs": interrupted_pairs, "missed_slots": missed,
+        "failed_pairs": failures, "interrupted_pairs": interrupted_pairs,
+        "missed_slots": None if unpaced else missed,
         "successful_pairs_per_second": round(successes / elapsed, 4) if elapsed else 0,
         "repeated_raw_pairs": repeated, "errors": dict(errors), "interrupted": interrupted,
         "fatal_transport_error": fatal, "timing_window_pairs": len(latency),
@@ -162,6 +174,8 @@ def acquire(sensor, native, args, path):
         "sensor_address": args.address, "register_budget_ms": args.timeout_ms,
         "timestamp_definition": "Host monotonic acquisition start/end; not sensor conversion timestamps.",
         "freshness_note": "Identical raw words can reflect a steady temperature or repeated sensor data.",
+        "scheduling_note": "No target period/deadlines; starts after the preceding attempt and host output." if unpaced
+                           else "Absolute target deadlines; elapsed slots are skipped without catch-up bursts.",
     }
     with path.with_suffix(".summary.json").open("x", encoding="utf-8") as stream:
         json.dump(summary, stream, indent=2)
@@ -175,7 +189,9 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--list", action="store_true", help="Enumerate matching HID devices without opening them.")
     parser.add_argument("--simulate", action="store_true", help="Artificial data; no USB access.")
-    parser.add_argument("--hz", type=float, default=10, help="Requested pair rate, 0.1 to 200 Hz; default 10. High rates are stress tests.")
+    timing = parser.add_mutually_exclusive_group()
+    timing.add_argument("--hz", type=float, default=10, help="Requested pair rate, 0.1 to 200 Hz; default 10. High rates are stress tests.")
+    timing.add_argument("--unpaced", action="store_true", help="No target-period wait; start the next pair after the preceding attempt.")
     parser.add_argument("--seconds", type=float, default=30, help="Run duration in seconds; default 30.")
     parser.add_argument("--address", type=lambda value: int(value, 0), default=0x5A, help="7-bit address; default 0x5A.")
     parser.add_argument("--timeout-ms", type=int, default=100, help="Per-register transaction budget; default 100 ms.")
@@ -183,16 +199,17 @@ def main():
     parser.add_argument("--csv", type=Path, help="New CSV file; an existing file is never overwritten.")
     parser.add_argument("--trace", action="store_true", help="Print HID TX/RX bytes; affects timing.")
     args = parser.parse_args()
-    if not math.isfinite(args.hz) or not .1 <= args.hz <= 200:
+    if not args.unpaced and (not math.isfinite(args.hz) or not .1 <= args.hz <= 200):
         parser.error("--hz must be finite and between 0.1 and 200.")
     if not math.isfinite(args.seconds) or args.seconds <= 0:
         parser.error("--seconds must be finite and positive.")
     if not 0x08 <= args.address <= 0x77 or not 1 <= args.timeout_ms <= 5000:
         parser.error("Use a non-reserved 7-bit address and --timeout-ms between 1 and 5000.")
-    if args.list and args.simulate:
-        parser.error("Choose --list or --simulate.")
+    if args.list and (args.simulate or args.unpaced):
+        parser.error("Choose --list or an acquisition mode.")
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S_%fZ")
-    path = args.csv or Path(__file__).resolve().parent / "output" / f"{'simulated' if args.simulate else 'hardware'}_{stamp}.csv"
+    run_label = ('simulated' if args.simulate else 'hardware') + ('_unpaced' if args.unpaced else '')
+    path = args.csv or Path(__file__).resolve().parent / "output" / f"{run_label}_{stamp}.csv"
     if not args.list and (path.exists() or path.with_suffix(".summary.json").exists()):
         parser.error("Output already exists. Choose a new --csv filename.")
     try:

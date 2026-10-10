@@ -157,7 +157,7 @@ class SchedulingTests(unittest.TestCase):
     def test_percentiles_are_reported(self):
         self.assertEqual(demo.distribution(range(1, 101)), {"p50": 50, "p95": 95, "p99": 99, "max": 100})
 
-    def run_fake(self, failure, work_ns, cancel_failure=None, hz=10, seconds=.4):
+    def run_fake(self, failure, work_ns, cancel_failure=None, hz=10, seconds=.4, unpaced=False):
         clock = [0]
         class Sensor:
             exchanges = 0
@@ -174,7 +174,8 @@ class SchedulingTests(unittest.TestCase):
                 if cancel_failure:
                     raise cancel_failure
         sensor = Sensor()
-        args = SimpleNamespace(hz=hz, seconds=seconds, simulate=True, address=0x5A, timeout_ms=100)
+        args = SimpleNamespace(hz=hz, seconds=seconds, unpaced=unpaced,
+                               simulate=True, address=0x5A, timeout_ms=100)
         def sleep(seconds):
             clock[0] += round(seconds * 1e9)
         with TemporaryDirectory() as directory:
@@ -250,6 +251,51 @@ class SchedulingTests(unittest.TestCase):
                 self.assertEqual(summary["attempts"], expected)
                 self.assertEqual(summary["missed_slots"], 0)
                 self.assertEqual(summary["elapsed_seconds"], seconds)
+
+    def test_unpaced_starts_each_pair_after_the_previous_finishes(self):
+        result, rows, summary, _ = self.run_fake(None, 12_000_000, hz=100, seconds=.1, unpaced=True)
+        self.assertEqual(result, 0)
+        self.assertEqual(summary["attempts"], 9)
+        self.assertEqual(summary["valid_pairs"], 9)
+        self.assertEqual(summary["elapsed_seconds"], .108)
+        self.assertAlmostEqual(summary["successful_pairs_per_second"], 83.3333, places=4)
+        self.assertEqual([int(row["slot"]) for row in rows], list(range(9)))
+        for previous, current in zip(rows, rows[1:]):
+            self.assertEqual(previous["finish_s"], current["start_s"])
+        self.assertEqual(summary["scheduling"], "UNPACED")
+        self.assertIsNone(summary["requested_hz"])
+        self.assertIsNone(summary["missed_slots"])
+        self.assertTrue(all(value is None for value in summary["start_lateness_ms"].values()))
+        self.assertTrue(all(row["scheduled_s"] == row["start_lateness_ms"] == "" for row in rows))
+
+    def test_unpaced_preserves_read_failure_and_recovery_evidence(self):
+        result, rows, summary, sensor = self.run_fake(
+            native.ReadError("PEC", "bad PEC"), 12_000_000, seconds=.1, unpaced=True)
+        self.assertEqual(result, 1)
+        self.assertEqual(summary["attempts"], 9)
+        self.assertEqual(summary["failed_pairs"], 1)
+        self.assertEqual(summary["valid_pairs"], 8)
+        self.assertEqual(summary["errors"], {"PEC": 1})
+        self.assertEqual(rows[0]["status"], "error")
+        self.assertEqual(rows[0]["object_c"], "")
+        self.assertEqual(sensor.cancels, 1)
+        self.assertIsNone(summary["missed_slots"])
+
+    def test_unpaced_failed_cancellation_stops_and_preserves_both_errors(self):
+        result, rows, summary, sensor = self.run_fake(
+            native.ReadError("I2C_DATA", "bad data reply"), 12_000_000,
+            native.ReadError("CANCEL", "unexpected cancellation reply", True),
+            seconds=.1, unpaced=True)
+        self.assertEqual(result, 1)
+        self.assertEqual(summary["attempts"], 1)
+        self.assertEqual(summary["valid_pairs"], 0)
+        self.assertEqual(summary["failed_pairs"], 1)
+        self.assertEqual(summary["errors"], {"I2C_DATA": 1, "RECOVERY_CANCEL": 1})
+        self.assertTrue(summary["fatal_transport_error"])
+        self.assertEqual(rows[0]["status"], "error")
+        self.assertIn("CANCEL", rows[0]["recovery_error"])
+        self.assertEqual(sensor.cancels, 1)
+        self.assertIsNone(summary["missed_slots"])
 
 
 if __name__ == "__main__":

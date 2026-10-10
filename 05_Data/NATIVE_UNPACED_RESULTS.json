@@ -1,0 +1,280 @@
+{
+  "recorded_on": "2026-10-10",
+  "source_base_commit": "eae2c0e5236850b841994489298cb138290b9dfd",
+  "tested_source_sha256": {
+    "08_Software/mlx90614-hidapi-demo/demo.py": "c8d71bec729696fc0c25e6b9574fd961847ef800952b71e543284a34612293ce",
+    "08_Software/mlx90614-hidapi-demo/Run-Demo.ps1": "b1dd47947d4eaf8b243efdac02b51190eeb38689bf1155a8b94970309197f1b4",
+    "08_Software/mlx90614-hidapi-demo/mcp2221_native.pyx": "f03721aaaef8c711cc542fb46790215b7dbc2944068f8c85ba0d1006041a77f6"
+  },
+  "conditions": "Sequential runs, same wiring, native Cython/HIDAPI, 100 kHz, exclusive bridge access, no USB soft reset.",
+  "runs": [
+    {
+      "csv_file": "hardware_unpaced_20261010T185650_997656Z.csv",
+      "csv_sha256": "bc04703a7c39be2715c9941a8e2523161b5a6dfbfea10b27268c1374e5f6109d",
+      "summary_file": "hardware_unpaced_20261010T185650_997656Z.summary.json",
+      "summary_sha256": "f9136efd93037a83313fe7790409d1a98e985265ce2beb2dd702ca56dc32e139",
+      "original_summary": {
+        "mode": "HARDWARE",
+        "scheduling": "UNPACED",
+        "requested_hz": null,
+        "requested_seconds": 30.0,
+        "elapsed_seconds": 14.9061,
+        "attempts": 1241,
+        "valid_pairs": 1240,
+        "failed_pairs": 1,
+        "interrupted_pairs": 0,
+        "missed_slots": null,
+        "successful_pairs_per_second": 83.1874,
+        "repeated_raw_pairs": 1138,
+        "errors": {
+          "I2C_DATA": 1,
+          "RECOVERY_CANCEL": 1
+        },
+        "interrupted": false,
+        "fatal_transport_error": true,
+        "timing_window_pairs": 1241,
+        "acquisition_ms": {
+          "p50": 11.9631,
+          "p95": 12.0268,
+          "p99": 12.1536,
+          "max": 12.9823
+        },
+        "start_lateness_ms": {
+          "p50": null,
+          "p95": null,
+          "p99": null,
+          "max": null
+        },
+        "successful_interval_ms": {
+          "p50": 11.9998,
+          "p95": 12.0659,
+          "p99": 12.2,
+          "max": 28.0616
+        },
+        "i2c_hz": 100000,
+        "sensor_address": 90,
+        "register_budget_ms": 100,
+        "timestamp_definition": "Host monotonic acquisition start/end; not sensor conversion timestamps.",
+        "freshness_note": "Identical raw words can reflect a steady temperature or repeated sensor data.",
+        "scheduling_note": "No target period/deadlines; starts after the preceding attempt and host output."
+      },
+      "counts_from_csv": {
+        "attempts": 1241,
+        "valid_pairs": 1240,
+        "failed_pairs": 1,
+        "interrupted_pairs": 0
+      },
+      "hid_exchanges_per_valid_pair": [
+        6
+      ],
+      "inter_acquisition_gap_ms": {
+        "p50": 0.0359,
+        "p95": 0.0702,
+        "p99": 0.1034,
+        "max": 16.4682
+      },
+      "error_rows": [
+        {
+          "slot": "1240",
+          "acquisition_ms": "5.9918",
+          "hid_exchanges": "4",
+          "error_code": "I2C_DATA",
+          "error": "reg=0x06 reply=40 41 25 7f 00 00 00 00",
+          "recovery_error": "CANCEL: Cancellation failed: 10 00 00 00 00 00 00 00 00 03 00 00 00 00 76 00 b5 00 10 28 40 60 01 01 00 00"
+        }
+      ]
+    },
+    {
+      "csv_file": "hardware_20261010T185839_364812Z.csv",
+      "csv_sha256": "9db1a399837d993de35f3f61a098333dba21234ecd096dfb0325419d956215ba",
+      "summary_file": "hardware_20261010T185839_364812Z.summary.json",
+      "summary_sha256": "4b5f16b4f1d9e0d1e17ea421f75b8bbfbeec6895b740daef9cd57bf44da50807",
+      "original_summary": {
+        "mode": "HARDWARE",
+        "scheduling": "PACED",
+        "requested_hz": 100.0,
+        "requested_seconds": 30.0,
+        "elapsed_seconds": 30.000179,
+        "attempts": 1500,
+        "valid_pairs": 1500,
+        "failed_pairs": 0,
+        "interrupted_pairs": 0,
+        "missed_slots": 1500,
+        "successful_pairs_per_second": 49.9997,
+        "repeated_raw_pairs": 1297,
+        "errors": {},
+        "interrupted": false,
+        "fatal_transport_error": false,
+        "timing_window_pairs": 1500,
+        "acquisition_ms": {
+          "p50": 11.8726,
+          "p95": 12.5887,
+          "p99": 12.9399,
+          "max": 14.9863
+        },
+        "start_lateness_ms": {
+          "p50": 0.4443,
+          "p95": 0.7937,
+          "p99": 0.934,
+          "max": 1.5864
+        },
+        "successful_interval_ms": {
+          "p50": 19.9989,
+          "p95": 20.9713,
+          "p99": 21.3663,
+          "max": 23.0959
+        },
+        "i2c_hz": 100000,
+        "sensor_address": 90,
+        "register_budget_ms": 100,
+        "timestamp_definition": "Host monotonic acquisition start/end; not sensor conversion timestamps.",
+        "freshness_note": "Identical raw words can reflect a steady temperature or repeated sensor data.",
+        "scheduling_note": "Absolute target deadlines; elapsed slots are skipped without catch-up bursts."
+      },
+      "counts_from_csv": {
+        "attempts": 1500,
+        "valid_pairs": 1500,
+        "failed_pairs": 0,
+        "interrupted_pairs": 0
+      },
+      "hid_exchanges_per_valid_pair": [
+        6
+      ],
+      "inter_acquisition_gap_ms": {
+        "p50": 8.1601,
+        "p95": 8.5383,
+        "p99": 8.7383,
+        "max": 9.1601
+      },
+      "error_rows": []
+    },
+    {
+      "csv_file": "hardware_unpaced_20261010T185938_746514Z.csv",
+      "csv_sha256": "ff68041c30a490098f8a78da914750bd161850492a7d4f67d592967b63e87a53",
+      "summary_file": "hardware_unpaced_20261010T185938_746514Z.summary.json",
+      "summary_sha256": "d8774c56a10993098c98ee915dfcd6f789a7a653c244f040004f493a4176d334",
+      "original_summary": {
+        "mode": "HARDWARE",
+        "scheduling": "UNPACED",
+        "requested_hz": null,
+        "requested_seconds": 30.0,
+        "elapsed_seconds": 30.001258,
+        "attempts": 2482,
+        "valid_pairs": 2482,
+        "failed_pairs": 0,
+        "interrupted_pairs": 0,
+        "missed_slots": null,
+        "successful_pairs_per_second": 82.7299,
+        "repeated_raw_pairs": 2214,
+        "errors": {},
+        "interrupted": false,
+        "fatal_transport_error": false,
+        "timing_window_pairs": 2482,
+        "acquisition_ms": {
+          "p50": 11.9641,
+          "p95": 12.0384,
+          "p99": 12.9785,
+          "max": 31.9012
+        },
+        "start_lateness_ms": {
+          "p50": null,
+          "p95": null,
+          "p99": null,
+          "max": null
+        },
+        "successful_interval_ms": {
+          "p50": 12.0002,
+          "p95": 12.0735,
+          "p99": 13.0048,
+          "max": 31.9386
+        },
+        "i2c_hz": 100000,
+        "sensor_address": 90,
+        "register_budget_ms": 100,
+        "timestamp_definition": "Host monotonic acquisition start/end; not sensor conversion timestamps.",
+        "freshness_note": "Identical raw words can reflect a steady temperature or repeated sensor data.",
+        "scheduling_note": "No target period/deadlines; starts after the preceding attempt and host output."
+      },
+      "counts_from_csv": {
+        "attempts": 2482,
+        "valid_pairs": 2482,
+        "failed_pairs": 0,
+        "interrupted_pairs": 0
+      },
+      "hid_exchanges_per_valid_pair": [
+        6
+      ],
+      "inter_acquisition_gap_ms": {
+        "p50": 0.0361,
+        "p95": 0.0736,
+        "p99": 0.1096,
+        "max": 1.5746
+      },
+      "error_rows": []
+    },
+    {
+      "csv_file": "hardware_unpaced_20261010T190040_648656Z.csv",
+      "csv_sha256": "076bfb24f6c5e22f53efd5fa3e37e829fc1ea0d04ee038db3222e523c5cc8750",
+      "summary_file": "hardware_unpaced_20261010T190040_648656Z.summary.json",
+      "summary_sha256": "eba3373a1f9c2b37ebd6ec7407e13af7825f71584e8652e65dd423a5776bd7fd",
+      "original_summary": {
+        "mode": "HARDWARE",
+        "scheduling": "UNPACED",
+        "requested_hz": null,
+        "requested_seconds": 60.0,
+        "elapsed_seconds": 60.010436,
+        "attempts": 4993,
+        "valid_pairs": 4993,
+        "failed_pairs": 0,
+        "interrupted_pairs": 0,
+        "missed_slots": null,
+        "successful_pairs_per_second": 83.2022,
+        "repeated_raw_pairs": 4459,
+        "errors": {},
+        "interrupted": false,
+        "fatal_transport_error": false,
+        "timing_window_pairs": 4993,
+        "acquisition_ms": {
+          "p50": 11.9625,
+          "p95": 12.2295,
+          "p99": 12.818,
+          "max": 13.924
+        },
+        "start_lateness_ms": {
+          "p50": null,
+          "p95": null,
+          "p99": null,
+          "max": null
+        },
+        "successful_interval_ms": {
+          "p50": 12.0,
+          "p95": 12.2891,
+          "p99": 12.9142,
+          "max": 14.0405
+        },
+        "i2c_hz": 100000,
+        "sensor_address": 90,
+        "register_budget_ms": 100,
+        "timestamp_definition": "Host monotonic acquisition start/end; not sensor conversion timestamps.",
+        "freshness_note": "Identical raw words can reflect a steady temperature or repeated sensor data.",
+        "scheduling_note": "No target period/deadlines; starts after the preceding attempt and host output."
+      },
+      "counts_from_csv": {
+        "attempts": 4993,
+        "valid_pairs": 4993,
+        "failed_pairs": 0,
+        "interrupted_pairs": 0
+      },
+      "hid_exchanges_per_valid_pair": [
+        6
+      ],
+      "inter_acquisition_gap_ms": {
+        "p50": 0.0377,
+        "p95": 0.1261,
+        "p99": 0.152,
+        "max": 0.5213
+      },
+      "error_rows": []
+    }
+  ]
+}

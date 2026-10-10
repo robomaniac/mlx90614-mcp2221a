@@ -1,11 +1,11 @@
 # Native MLX90614 hardware timing
 
-On **2026-10-10**, the separate [Cython + HIDAPI demo](../08_Software/mlx90614-hidapi-demo/README.md) completed real MLX90614 object/ambient reads, then increased the request to **100 Hz to find the timing failure**. Initial 2/10/20 Hz trials had zero errors or misses. The later sweep found occasional misses around 65–75 Hz, substantial misses at 80 Hz, and every other slot skipped at 100 Hz. **60 Hz completed 3,600/3,600 pairs over one minute with zero misses.** These results apply to the native demo; the edited browser transport was not tested against it.
+On **2026-10-10**, the separate [Cython + HIDAPI demo](../08_Software/mlx90614-hidapi-demo/README.md) completed real MLX90614 object/ambient reads, increased the request to **100 Hz to find the paced timing failure**, then removed the scheduled wait in a separate unpaced mode. **60 Hz completed 3,600/3,600 pairs over one minute with zero missed paced deadlines. Unpaced acquisition later completed 4,993/4,993 over one minute at 83.20 pairs/s**, with an earlier failed unpaced trial retained below. These results apply to the native demo; the edited browser transport was not tested against it.
 
 ## Conditions
 
 - Windows x64, CPython 3.11.15, Cython 3.3.0, HIDAPI 0.15.0; existing compiled extension reused.
-- Initial trial source commit: `f6c742c29b59c60126378fdf1e0d3b084e9098cf`. Sweep source fingerprints and base commit are retained in [sweep evidence](NATIVE_RATE_SWEEP.json); the Python window count and request limit changed during the sweep, with the native transport unchanged.
+- Initial trial source commit: `f6c742c29b59c60126378fdf1e0d3b084e9098cf`. Paced sweep source is preserved in commit `eae2c0e5236850b841994489298cb138290b9dfd` with fingerprints in [sweep evidence](NATIVE_RATE_SWEEP.json). Later unpaced source fingerprints are recorded separately; the native transport remains unchanged.
 - One MCP2221A bridge client; other readers stopped. Same wiring throughout the sequential tests.
 - Verified **100 kHz** bus, divider **118**, sensor address **0x5A**, ambient register **0x06**, object register **0x07**; per-register budget **100 ms**.
 - PEC and sensor error-bit validation enabled; a valid pair requires both temperatures to pass. No hidden sample retries, fixed inter-register pause or USB soft reset.
@@ -51,6 +51,32 @@ The shorter 70 Hz trial was clean, but its longer repeat missed four slots. One 
 
 \* The initial 30 Hz summary reported one missed slot despite all 900 nominal slots being present. Rounding the 33,333,333.333… ns period to an integer caused the old window formula to create a 901st deadline just before the end. Window counting now uses the nominal duration multiplied by rate, independently of the rounded period. A fake-clock regression covers 30, 70, 3.3 and 2.5 Hz. Original CSV/summary files are preserved; the public evidence explicitly retains the original count and its correction.
 
+## Unpaced acquisition: no target period
+
+The later Python/launcher change adds `-Unpaced` / `--unpaced`. It starts the next pair after the previous attempt and host output, without sleeping for a target-period deadline. The ordinary `-Hz` mode retains its absolute deadlines and skip behavior. Neither mode overlaps HID/I2C transactions or changes the 100 kHz bus.
+
+| Mode / trial | Requested window (s) | Actual elapsed (s) | Valid / attempted pairs | Failed pairs | Valid pairs/s | Missed slots |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Unpaced, first trial, stopped on error | 30 | 14.906100 | 1,240 / 1,241 | 1 | 83.1874 | N/A |
+| Paced 100 Hz control | 30 | 30.000179 | 1,500 / 1,500 | 0 | 49.9997 | 1,500 |
+| Unpaced, repeat | 30 | 30.001258 | 2,482 / 2,482 | 0 | 82.7299 | N/A |
+| Unpaced, longer repeat | 60 | 60.010436 | 4,993 / 4,993 | 0 | 83.2022 | N/A |
+
+The first unpaced trial failed at ambient register `0x06` with:
+
+```text
+I2C_DATA: reg=0x06 reply=40 41 25 7f 00 00 00 00
+RECOVERY_CANCEL: Cancellation failed: 10 00 00 00 00 00 00 00 00 03 00 00 00 00 76 00 b5 00 10 28 40 60 01 01 00 00
+```
+
+The failed row and both errors are retained. The demo stopped after the cancellation response failed validation. Without USB reset, the subsequent paced control and two unpaced repeats completed. This does not prove the intermittent failure is fixed or establish its cause; cancellation response interpretation and repeatability require a separate discriminating test. A regression test verifies that failed recovery stops unpaced acquisition and retains the original read error.
+
+The one-minute unpaced run had **12.0000 ms median completion interval**, p95 **12.2891 ms**, maximum **14.0405 ms**. Acquisition median was **11.9625 ms**, p95 **12.2295 ms**, maximum **13.9240 ms**. Median host gap from one acquisition finishing to the next starting was **0.0377 ms**, compared with **8.1601 ms** in the paced 100 Hz control. Removing the scheduled wait therefore improves throughput without reducing the measured USB/I2C acquisition time to below 10 ms.
+
+There are no scheduled deadlines in unpaced mode. `requested_hz`, `missed_slots` and lateness percentiles are `null`, and CSV scheduled-time/lateness cells are blank. They must not be reported as zero misses or exact timing. An attempt started before the window ends completes before exit, so actual elapsed time may be slightly longer than the request. CSV/output and host scheduling still add overhead. All successful pairs used six HID exchanges.
+
+The one-minute unpaced run repeated the previous raw pair 4,459 times. Faster reads do not establish faster independent sensor conversions. The failed first run and shorter repeat's 31.9386 ms maximum interval also prevent a general reliability or constant-interval claim. [Unpaced/control evidence](NATIVE_UNPACED_RESULTS.json) contains every original summary, CSV hashes, errors, source fingerprints and calculated host-gap percentiles.
+
 ## Additional runs and interruption accounting
 
 | Requested rate | Elapsed seconds | Valid / attempted pairs | Read errors | Interrupted pairs | Missed slots | Valid pairs/s |
@@ -80,7 +106,7 @@ The following trials succeeded. This establishes recovery for the observed state
 
 ## Evidence and limits
 
-[Initial machine-readable evidence](NATIVE_HARDWARE_RESULTS.json) and [rate-sweep evidence](NATIVE_RATE_SWEEP.json) retain the original summaries, independently counted CSV statuses/slots, source filenames and SHA-256 hashes. Raw CSVs and matching summaries remain local under `08_Software/mlx90614-hidapi-demo/output/` and are excluded from Git. Public evidence omits device serial numbers, HID paths and private filesystem paths.
+[Initial machine-readable evidence](NATIVE_HARDWARE_RESULTS.json), [paced rate-sweep evidence](NATIVE_RATE_SWEEP.json) and [unpaced/control evidence](NATIVE_UNPACED_RESULTS.json) retain original summaries, independently counted CSV statuses/slots, source filenames and SHA-256 hashes. Raw CSVs and matching summaries remain local under `08_Software/mlx90614-hidapi-demo/output/` and are excluded from Git. Public evidence omits device serial numbers, HID paths and private filesystem paths.
 
 **20 successful read pairs/s does not establish 20 independent sensor conversions/s.** The completed 20 Hz trial repeated the preceding raw object/ambient pair 399 times; the stopped run repeated it 280 times. A steady temperature and rereading stored sensor data can both produce identical words. Host monotonic acquisition timestamps are not sensor conversion timestamps, and the two registers are read sequentially.
 

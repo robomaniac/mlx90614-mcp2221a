@@ -2,12 +2,14 @@ param(
     [ValidateRange(0.1, 200)] [double]$Hz = 10,
     [ValidateRange(0.01, 86400)] [double]$Seconds = 30,
     [switch]$Simulate,
+    [switch]$Unpaced,
     [switch]$List,
     [switch]$Trace,
     [int]$DeviceIndex = -1,
     [string]$Csv = ''
 )
 $ErrorActionPreference = 'Stop'
+if ($Unpaced -and $PSBoundParameters.ContainsKey('Hz')) { throw 'Choose -Unpaced or -Hz, not both.' }
 Push-Location -LiteralPath $PSScriptRoot
 try {
     $demoPython = Join-Path $PSScriptRoot '.venv/Scripts/python.exe'
@@ -29,8 +31,9 @@ try {
         & $demoPython build_native.py
         if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
     }
-    $demoArguments = @('demo.py', '--hz', $Hz.ToString([Globalization.CultureInfo]::InvariantCulture),
-                       '--seconds', $Seconds.ToString([Globalization.CultureInfo]::InvariantCulture))
+    $demoArguments = @('demo.py', '--seconds', $Seconds.ToString([Globalization.CultureInfo]::InvariantCulture))
+    if ($Unpaced) { $demoArguments += '--unpaced' }
+    else { $demoArguments += @('--hz', $Hz.ToString([Globalization.CultureInfo]::InvariantCulture)) }
     if ($Simulate) { $demoArguments += '--simulate' }
     if ($List) { $demoArguments += '--list' }
     if ($Trace) { $demoArguments += '--trace' }

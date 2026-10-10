@@ -2,7 +2,7 @@
 
 A separate terminal experiment for measuring acquisition timing with the **same MLX90614 + MCP2221A**. The bridge transport and PEC decoder compile from `mcp2221_native.pyx`; USB calls use the native [Cython HIDAPI binding](https://github.com/trezor/cython-hidapi). The existing [single-file browser app](../mlx90614-webhid/README.md) remains available.
 
-The demo prints temperatures once per second and saves every attempted object/ambient pair to CSV. It uses absolute monotonic deadlines, skips elapsed polling slots instead of issuing catch-up bursts, and reports successful throughput, latency and timing variation. Requests from **0.1 to 200 Hz** are accepted so the timing limit can be tested. A requested polling rate is not a guaranteed sensor refresh rate or precise real-time timing.
+The demo prints temperatures once per second and saves every attempted object/ambient pair to CSV. Its default paced mode uses absolute monotonic deadlines, skips elapsed polling slots instead of issuing catch-up bursts, and reports successful throughput, latency and timing variation. Requests from **0.1 to 200 Hz** are accepted so the timing limit can be tested. A separate **unpaced mode removes the target-period wait** and starts the next pair after the previous attempt and host output. Neither mode guarantees fresh sensor conversions or precise real-time timing.
 
 ## Run on Windows
 
@@ -65,18 +65,55 @@ To repeat this optional experiment, use **PowerShell at the repository root**, a
 
    Target 3,600 valid pairs, zero failed/interrupted pairs and zero missed slots. This collects new evidence; the observed clean run is not a guarantee under different desktop load or longer durations. Use the [recorded boundary tests](../../05_Data/NATIVE_HARDWARE_TESTS.md#repeat-the-rate-sweep) to reproduce the finer comparisons.
 
+## Remove the scheduled wait
+
+At a requested 100 Hz, each roughly 12 ms read misses the 10 ms deadline. Paced mode waits for the next available slot around 20 ms, limiting throughput to about 50 pairs/s. **Unpaced mode removes that scheduled wait**, while retaining serial HID/I2C transactions and all validation/error evidence.
+
+This is an experimental maximum-throughput mode: one initial trial stopped after an `I2C_DATA` error and an unexpected cancellation response. Later trials completed 2,482/2,482 valid pairs over 30 seconds and **4,993/4,993 over one minute, at 83.20 pairs/s**, without read errors. The failure's cause remains unknown. See the [full comparison, including the failed trial](../../05_Data/NATIVE_HARDWARE_TESTS.md#unpaced-acquisition-no-target-period).
+
+1. Open **PowerShell at the repository root** after the setup above. Connect the existing bridge; disconnect/close browser sensor tabs and stop other bridge readers. Start a short run using the same environment:
+
+   ```powershell
+   powershell -NoProfile -ExecutionPolicy Bypass -File .\08_Software\mlx90614-hidapi-demo\Run-Demo.ps1 -Unpaced -Seconds 30
+   ```
+
+   Expect `HARDWARE`, `scheduling=UNPACED`, valid-pair counts and a new `hardware_unpaced_...csv`. There is no target pair count. `requested_hz`, `missed_slots` and lateness percentiles are `null` because no deadlines are scheduled. Inspect actual successful rate, acquisition time, intervals and errors. Stop and retain the CSV if a read/recovery error occurs; use the recovery section before repeating. Do not combine `-Unpaced` with `-Hz`.
+2. If the short run completes without read errors, collect a longer measurement:
+
+   ```powershell
+   powershell -NoProfile -ExecutionPolicy Bypass -File .\08_Software\mlx90614-hidapi-demo\Run-Demo.ps1 -Unpaced -Seconds 60
+   ```
+
+   This measures repeatability, without claiming longer-run reliability from a short pass. Each pair finishes before the next starts. The final pair may finish slightly after the requested window; actual elapsed time is used in throughput. CSV writes and terminal output remain on the acquisition thread. A shorter target period does not shorten the measured USB/I2C transaction time.
+3. Return to ordinary scheduled sampling with the same launcher, for example:
+
+   ```powershell
+   powershell -NoProfile -ExecutionPolicy Bypass -File .\08_Software\mlx90614-hidapi-demo\Run-Demo.ps1 -Hz 60 -Seconds 60
+   ```
+
+   Expect `"scheduling": "PACED"` in the JSON summary and real missed-slot/lateness measurements. No native rebuild, environment recreation, bus-speed change or USB reset is needed to switch modes.
+4. Optional: check the unpaced launcher without opening hardware, in that same terminal:
+
+   ```powershell
+   powershell -NoProfile -ExecutionPolicy Bypass -File .\08_Software\mlx90614-hidapi-demo\Run-Demo.ps1 -Simulate -Unpaced -Seconds 1
+   ```
+
+   Expect `SIMULATED`, `scheduling=UNPACED` and artificial readings. Stop on setup/import errors. Simulation does not establish hardware throughput or reproduce the observed I2C failure.
+
 ## Read the results
 
 Each run creates a new CSV and a matching `.summary.json`. Existing files are never overwritten. These measurements and compiled products are ignored by Git.
 
 | Field | Meaning |
 | --- | --- |
+| `scheduling` | `PACED` uses requested deadlines; `UNPACED` starts the next attempt without a target-period wait |
+| `slot` | Scheduled slot number in paced mode; sequential attempt index in unpaced mode |
 | `successful_pairs_per_second` | Valid complete object/ambient pairs divided by actual run duration, including the full requested window on a normal finish |
 | `attempts` | Every initiated pair; equals `valid_pairs + failed_pairs + interrupted_pairs`; no hidden temperature-read retry |
 | `failed_pairs` | Pairs rejected because of a read error; remains counted if Ctrl+C interrupts subsequent error recovery |
 | `interrupted_pairs` | Pairs stopped by Ctrl+C during acquisition, without a completed read-error result |
-| `missed_slots` | Polling deadlines skipped when acquisition/recovery/output takes too long; these are separate from attempted reads that failed |
-| `start_lateness_ms` | Host acquisition start minus its scheduled deadline; p50/p95/p99/max quantify scheduling variation |
+| `missed_slots` | Polling deadlines skipped when acquisition/recovery/output takes too long; separate from read failures. `null` in unpaced mode, where no deadlines exist. |
+| `start_lateness_ms` | Host acquisition start minus its scheduled deadline; p50/p95/p99/max quantify scheduling variation. Blank in unpaced CSVs and `null` in summaries. |
 | `acquisition_ms` | Host time spent acquiring the pair, excluding subsequent error recovery and terminal output |
 | `successful_interval_ms` | Time between completion of successive valid pairs, including gaps caused by failures |
 | `object_raw`, `ambient_raw` | Validated sensor words; both are blank when the pair is rejected |
@@ -90,10 +127,11 @@ Timing percentiles cover the latest **10,000 attempts/intervals**; counts and CS
 | Change | Purpose and limit |
 | --- | --- |
 | Native Cython transport + HIDAPI | Avoid browser lifecycle/timer restrictions; desktop OS and USB delays still apply |
-| Absolute deadlines | Avoid accumulated drift from sleeping a full interval after each read; overdue slots are counted and skipped |
+| Absolute deadlines in paced mode | Avoid accumulated drift from sleeping a full interval after each read; overdue slots are counted and skipped |
+| Optional unpaced mode | Remove target-period waiting to measure maximum throughput; no scheduled deadlines or constant-interval guarantee |
 | Direct `0x40` data retrieval after repeated-start | Shorter acquisition path: **six** HID exchanges per valid pair in the recorded hardware runs, versus at least eight in the current browser code path; pending/partial data adds exchanges. A matched browser timing comparison is still needed. |
 | No fixed pause between registers | Reduce host-added delay; no promise of faster fresh sensor data |
-| One attempt per scheduled pair | Expose errors and latency rather than hiding them behind retries; nonfatal failure triggers one I2C cancellation before the next slot |
+| One attempt per pair | Expose errors and latency rather than hiding them behind retries; nonfatal failure triggers one I2C cancellation before the next attempt |
 | Stop on a missing/malformed HID reply | Avoid allowing a late matching-command reply to contaminate later readings |
 
 The bus stays at **100 kHz**, using divider `118` and verifying it. No `0x70` USB reset, sensor EEPROM change, GPIO change or UART configuration is issued. SMBus PEC and the sensor's error bit are checked before accepting a pair. The [MLX90614 specification](https://www.melexis.com/-/media/files/documents/datasheets/mlx90614-datasheet-melexis.pdf) limits the bus to 100 kHz; filtering determines refresh/settling. Cython does not change those limits. HID read waits use the per-register budget, but OS-level writes/scheduling do not provide a hard real-time deadline.
@@ -119,7 +157,7 @@ From **PowerShell at the repository root**, after first setup:
 & .\08_Software\mlx90614-hidapi-demo\.venv\Scripts\python.exe -m unittest discover -s .\08_Software\mlx90614-hidapi-demo -p test_demo.py -v
 ```
 
-Expect all 20 tests `OK`. Fake HID reports and a fake clock test PEC rejection, complete-pair accounting, packet layout, reset prevention, missed slots, retained failures, interruption during acquisition/recovery and correct window counts when the requested period cannot be represented as an integer number of nanoseconds. These tests do not contact the sensor.
+Expect all 23 tests `OK`. Fake HID reports and a fake clock test PEC rejection, complete-pair accounting, packet layout, reset prevention, missed slots, retained failures, interruption during acquisition/recovery, correct window counts, unpaced acquisition without target-period waits and stopping after failed cancellation. These tests do not contact the sensor.
 
 For manual setup/build, in the same PowerShell window starting at the repository root:
 
@@ -152,6 +190,6 @@ The next launcher invocation performs setup/build again because those generated 
 
 ## Validation
 
-Native Windows x64 build/import, 20 fake-device protocol/scheduler tests, a simulated timing run and real sensor runs passed. On 2026-10-10, initial hardware trials returned **20/20 pairs at 2 Hz**, **300/300 at 10 Hz**, and **600/600 at 20 Hz**, with zero read errors or missed slots at 100 kHz. Subsequent tests increased the request to **100 Hz**, exposed real timing misses, and verified **60 Hz over one minute with zero misses**. That run's acquisition p95 was **12.28 ms** and start lateness p95 **0.59 ms**. See the [hardware results, startup evidence and limits](../../05_Data/NATIVE_HARDWARE_TESTS.md).
+Native Windows x64 build/import, 23 fake-device protocol/scheduler tests, simulated timing runs and real sensor runs are checked. On 2026-10-10, initial hardware trials returned **20/20 pairs at 2 Hz**, **300/300 at 10 Hz**, and **600/600 at 20 Hz**, with zero read errors or missed slots at 100 kHz. The paced sweep increased the request to 100 Hz, exposed real timing misses, and verified 60 Hz over one minute with zero misses. The later unpaced comparison reached **83.20 valid pairs/s over one minute**; an initial unpaced trial failed and remains recorded. See the [hardware results, startup evidence and limits](../../05_Data/NATIVE_HARDWARE_TESTS.md).
 
-These 10–60-second trials demonstrate complete validated reads on the tested setup and characterize missed deadlines. Longer-run reliability, independent sensor-conversion rate, temperature accuracy and a matched WebHID comparison remain untested. This Python/Cython demo runs locally and cannot execute on GitHub Pages. The interruption/window-counter corrections and higher request limit change Python/launcher behavior only; the existing environment and native extension can be reused.
+These 10–60-second trials characterize complete validated reads, missed paced deadlines and an intermittent unpaced failure. Longer-run reliability, independent sensor-conversion rate, temperature accuracy and a matched WebHID comparison remain untested. This Python/Cython demo runs locally and cannot execute on GitHub Pages. Scheduling/reporting changes are in Python and the launcher; the existing environment and native extension can be reused.
