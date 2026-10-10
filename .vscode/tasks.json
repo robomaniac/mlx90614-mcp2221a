@@ -44,6 +44,16 @@
         "reveal": "always",
         "panel": "dedicated"
       }
+    },
+    {
+      "label": "Open Qwiic thermocouple dashboard",
+      "type": "process",
+      "command": "powershell",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}/08_Software/qwiic-thermocouple/Start-Monitor.ps1", "-Connect"],
+      "options": {"cwd": "${workspaceFolder}"},
+      "problemMatcher": [],
+      "isBackground": true,
+      "presentation": {"reveal": "always", "panel": "dedicated"}
     }
   ]
 }

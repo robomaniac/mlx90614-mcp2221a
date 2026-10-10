@@ -16,38 +16,38 @@
     },
     {
       "path": ".github/workflows/hidapi-demo.yml",
-      "bytes": 1120,
-      "sha256": "b878d461c34a85c10672e8f7288485784dbc1f2474541ce574accdccdd7afd21"
+      "bytes": 1460,
+      "sha256": "2e5f8835507c26f0b77ec20d07f1a725ae782cd94a0063db230d735a8eadfdb6"
     },
     {
       "path": ".github/workflows/pages.yml",
-      "bytes": 1164,
-      "sha256": "f164c7fa52d8c1beb4ab7ab281745097a62f484b0002dda488188c4893dc86e8"
+      "bytes": 1324,
+      "sha256": "3af27c989f15289e0d4b0d51f6b8add230d880295b3a14eb182504315b4a2f0f"
     },
     {
       "path": ".gitignore",
-      "bytes": 903,
-      "sha256": "ee329d14c779db8f35ddcb1e4b947ff3735a4dfd04fa2836a54926da3a6f627c"
+      "bytes": 942,
+      "sha256": "f7f5d2f779e58618b65c7e0ed8aa63c4df0de7fbc33ab3cbaedf62eb6dfd78eb"
     },
     {
       "path": ".vscode/tasks.json",
-      "bytes": 1072,
-      "sha256": "23ef01388595663b2536ca45471323a6cdce1dc3980ee431ed34b8c711f5a646"
+      "bytes": 1514,
+      "sha256": "1e53fd468d00cf582eb5408f0c5b9d96349aab5cc442ca64387460396db433ae"
     },
     {
       "path": "00_Documentations/GITHUB_PAGES.md",
-      "bytes": 9479,
-      "sha256": "b50329f9312a47bf968c23c5779e856e1399ec8237987332f616d98a3e41ed53"
+      "bytes": 9740,
+      "sha256": "ae3fb54544d3995d2e2f5491a93646766973ec3651d1008042aadd63ecebe5ea"
     },
     {
       "path": "00_Documentations/HARDWARE_AND_PROTOCOL.md",
-      "bytes": 9962,
-      "sha256": "99c737e525a2702ffcc2ac8cd5ada14ecf99a0ac46959a0f8169c7846ac1405e"
+      "bytes": 10429,
+      "sha256": "a03053d5fa835b0daaffda61c746eb8a74dcda81c4e3c0e58d7c8d6eccb9eae3"
     },
     {
       "path": "00_Documentations/KNOWN_ISSUES_AND_TEST_PLAN.md",
-      "bytes": 15557,
-      "sha256": "fa70d1109dc864fc1399a2645a2f5dc00173942795fea463fe1b081b71f0fb8c"
+      "bytes": 16962,
+      "sha256": "00e358be966458384c67c5580588e3a83e901034d134bfd89157432f478e28a2"
     },
     {
       "path": "00_Documentations/NEXT_ASSISTANT_PROMPT.md",
@@ -68,6 +68,16 @@
       "path": "00_Documentations/VERSION_INDEX.md",
       "bytes": 4140,
       "sha256": "706c32d6d99708c59fec92c824aab2b4287d4ffcb63c7b3999b1dad17c519d69"
+    },
+    {
+      "path": "04_Media/qwiic-thermocouple-disconnected.png",
+      "bytes": 324662,
+      "sha256": "ceff495b87f1336f3717977d6eabb7c657e46e91167122fdb68a6b7e0e0a9524"
+    },
+    {
+      "path": "04_Media/qwiic-thermocouple-live.png",
+      "bytes": 348705,
+      "sha256": "409786464def6ae9c084b510c6b8fdebcfa5c1b4d53598b453d0dbd6454d9a64"
     },
     {
       "path": "04_Media/sample-rate-dropdown-reference.png",
@@ -100,14 +110,24 @@
       "sha256": "b062bbb0bf61929cdad147d618295f26cd23d77eae02f35e02ecf4d4880e3445"
     },
     {
+      "path": "05_Data/QWIIC_THERMOCOUPLE_RESULTS.json",
+      "bytes": 10663,
+      "sha256": "d9985b9aa5393862921b87dc48972a1d674e5d7188e12cfff68b8571bea487b3"
+    },
+    {
+      "path": "05_Data/QWIIC_THERMOCOUPLE_TESTS.md",
+      "bytes": 7750,
+      "sha256": "025273cfe08fa398826816a99042c86a0bf61304da74fa05b71d706d10017910"
+    },
+    {
       "path": "05_Data/SELECTED_LOGS.md",
       "bytes": 5928,
       "sha256": "2dbfc70618734caf8b0aa7a7baaad553e10eddaefbd9ee24e901c13b4779c1f3"
     },
     {
       "path": "05_Data/VALIDATION.md",
-      "bytes": 8547,
-      "sha256": "d7f4ae5459554ee545b417386b3249477a40e1ffc13b81336b506f509c648ca6"
+      "bytes": 10023,
+      "sha256": "7dc17cafa34e3ead7333b5db656406a6bb59ba7dbb9dce2e45b41c1b121213e2"
     },
     {
       "path": "08_Software/mlx90614-hidapi-demo/README.md",
@@ -170,6 +190,46 @@
       "sha256": "df3227d3fc12486210c347e4b18a870cf51cbdd88035766326c09017e98fb491"
     },
     {
+      "path": "08_Software/qwiic-thermocouple/Check-UI.ps1",
+      "bytes": 778,
+      "sha256": "24bc8096c0e35b1dccf196defff1379e97ac2e66b3cb55e708d1988a9a3c1af1"
+    },
+    {
+      "path": "08_Software/qwiic-thermocouple/README.md",
+      "bytes": 11515,
+      "sha256": "eee2860b674441bec729efa71a9e933701a07cc45ff8d8db1bee39ab70cd02ce"
+    },
+    {
+      "path": "08_Software/qwiic-thermocouple/Start-Monitor.ps1",
+      "bytes": 977,
+      "sha256": "22517a2cb07c8730457bce7d3105591f2adbb93f223c5daedf5a4244c8413035"
+    },
+    {
+      "path": "08_Software/qwiic-thermocouple/check_ui.mjs",
+      "bytes": 2800,
+      "sha256": "cf9e6cf33555c8c2c5af94495f793ee4edd59e1d9df96b83098ecce45c2aed4b"
+    },
+    {
+      "path": "08_Software/qwiic-thermocouple/monitor.py",
+      "bytes": 12133,
+      "sha256": "435d3754ce72927aa9f1450aba1dd8dc5c54c68a3f9f2f4e9009517f77f2d0c7"
+    },
+    {
+      "path": "08_Software/qwiic-thermocouple/sensor.py",
+      "bytes": 5007,
+      "sha256": "21075bc966f71f6a9749fa7f3a4b87f4894f0e4f000dc7c257999e984bd94d4e"
+    },
+    {
+      "path": "08_Software/qwiic-thermocouple/test_sensor.py",
+      "bytes": 6074,
+      "sha256": "52a8d6246537fd653b5e2675c8fe9f03c64a8f27e90e3125410a61fab4e16e2f"
+    },
+    {
+      "path": "08_Software/qwiic-thermocouple/thermocouple.html",
+      "bytes": 33454,
+      "sha256": "21f5f0c62b98e5911d53ba82f36312d09cc42903a5b2122c091105298f7f0ea4"
+    },
+    {
       "path": "99_Archive/webhid-history/01-first-singlefile.html",
       "bytes": 36908,
       "sha256": "13e493d9e2f8ad80984c0c34cb61070b90335dc9b287c77b734a3482636ef93a"
@@ -216,8 +276,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 7112,
-      "sha256": "c5ff39714f70dbd2ada07a342925c4209759708bb17240f3cf71280ede5d686c"
+      "bytes": 7732,
+      "sha256": "c75346e685db9ba6616a65c16123408f0f16e1a0c154e63b0290174274542436"
     }
   ]
 }

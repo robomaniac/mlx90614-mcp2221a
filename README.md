@@ -32,6 +32,8 @@ For local editing, follow the [complete VS Code / PowerShell setup guide](08_Sof
 
 For a native timing experiment, try the separate [Cython + HIDAPI demo](08_Software/mlx90614-hidapi-demo/README.md). It records every attempted pair to CSV and measures successful rate, latency and missed polling slots. Hardware trials completed **60 Hz over one minute with zero missed scheduled slots**; experimental [unpaced acquisition](08_Software/mlx90614-hidapi-demo/README.md#remove-the-scheduled-wait) reached **83.20 validated pairs/s over one minute**. An earlier unpaced failure is retained in the [results and limits](05_Data/NATIVE_HARDWARE_TESTS.md#unpaced-acquisition-no-target-period). Its Windows launcher handles setup/build; run it with the browser disconnected.
 
+For contact temperature, open the separate **[Qwiic thermocouple monitor](https://robomaniac.github.io/mlx90614-mcp2221a/thermocouple.html)** for the **SparkFun MCP9600**. It adds probe/board temperatures, a hoverable graph and CSV export. The [native dashboard guide and detailed BOM](08_Software/qwiic-thermocouple/README.md) explain the shared Cython/HIDAPI environment and direct WebHID option.
+
 ## Hardware
 
 ### Detailed bill of materials
@@ -70,6 +72,7 @@ Software checks and the live Pages deployment pass. The edited browser transport
 | --- | --- |
 | `08_Software/mlx90614-webhid/` | Active **`mlx.html`**, operating guide and check tools |
 | `08_Software/mlx90614-hidapi-demo/` | Separate native transport, terminal timing demo, CSV logging and Windows launcher |
+| `08_Software/qwiic-thermocouple/` | MCP9600 contact-temperature dashboard, native reader, single-file WebHID app and BOM |
 | `00_Documentations/` | Hardware/protocol notes, troubleshooting and development guides |
 | `04_Media/` | Interface screenshots |
 | `05_Data/` | Diagnostic logs, validation results and SHA-256 manifest |
@@ -80,6 +83,7 @@ Software checks and the live Pages deployment pass. The edited browser transport
 - [Setup, operation and recovery](08_Software/mlx90614-webhid/README.md).
 - [Cython + HIDAPI timing experiment](08_Software/mlx90614-hidapi-demo/README.md).
 - [Native hardware timing results](05_Data/NATIVE_HARDWARE_TESTS.md).
+- [Qwiic thermocouple setup, BOM and timing limits](08_Software/qwiic-thermocouple/README.md).
 - [Hardware and protocol](00_Documentations/HARDWARE_AND_PROTOCOL.md).
 - [Known issues and hardware test plan](00_Documentations/KNOWN_ISSUES_AND_TEST_PLAN.md).
 - [Local checks, GitHub and Pages updates](00_Documentations/GITHUB_PAGES.md).

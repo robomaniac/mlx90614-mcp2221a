@@ -1,5 +1,13 @@
 # Known issues and next discriminating tests
 
+## Latest native rerun and MCP9600 addition (2026-10-10)
+
+The requested one-minute MLX90614 unpaced rerun completed **4,999 valid pairs from 5,000 attempts**, 83.3126 pairs/s. The first pair failed PEC (`ef3916`, received `0x16`, expected `0x3F`); the failure remained counted and the process returned exit code 1. Subsequent reads worked after the existing single I2C cancellation. This is another observed validation failure, not evidence of its cause or a fix.
+
+The newly connected SparkFun Qwiic chip returned MCP9600 ID **`0x4014`** at **`0x60`**, configured Type K, 18-bit, filter off, continuous conversion. A separate dashboard/driver was added without editing the MLX90614 HTML or compiled transport. Native hardware/UI trials passed with errors retained, serial bridge ownership, disconnect awaiting the in-flight read and two reconnects. Direct WebHID has fake-protocol/UI coverage; its hardware check remains pending. See the [test record](../05_Data/QWIIC_THERMOCOUPLE_TESTS.md).
+
+Next MCP9600 checks: a direct WebHID physical session; measured probe response against a known temperature reference; longer native logging; unplug/replug and actual input-range fault behavior. The physical probe type and SparkFun connector variant remain unconfirmed. No sensor configuration writes or USB reset were performed. Do not infer new conversions from the latched update flag or repeated raw words.
+
 > **Migration update — 2026-10-09:** The fetched `https://jeromedemers.com/mlx.html` exactly matched historical revision 07, and the user reports it works. Active `08_Software/mlx90614-webhid/mlx.html` now blocks automatic USB reset and retains read-error/attempt evidence. Hardware validation of these edits is pending. See [current review](PROJECT_REVIEW.md) and [validation](../05_Data/VALIDATION.md). Earlier sections describe the original development history.
 
 ## Executive recommendation

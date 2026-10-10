@@ -1,6 +1,6 @@
 # Public GitHub repository and Pages
 
-Target: **`robomaniac/mlx90614-mcp2221a`**, public, MIT, branch **`main`**. Site: `https://robomaniac.github.io/mlx90614-mcp2221a/`. See [validation](../05_Data/VALIDATION.md) for the actual publication status. The workflow runs syntax/simulated checks and packages only active `mlx.html` as `index.html`; docs, ZIPs and historical snapshots are not site assets.
+Target: **`robomaniac/mlx90614-mcp2221a`**, public, MIT, branch **`main`**. Site: `https://robomaniac.github.io/mlx90614-mcp2221a/`. See [validation](../05_Data/VALIDATION.md) for the actual publication status. The workflow checks and packages active `mlx.html` as `index.html` and the separate MCP9600 dashboard as `thermocouple.html`; docs, native server code, ZIPs and historical snapshots are not site assets. Each browser app remains one self-contained HTML file.
 
 These steps are for initial publication or maintenance. **Skip creation/login steps already completed.** Do not recreate a repository, overwrite another remote or repeat login if the correct account is already authenticated. Git and GitHub CLI are publishing tools; neither is required to use the website.
 
@@ -46,6 +46,7 @@ These steps are for initial publication or maintenance. **Skip creation/login st
 
    ```powershell
    powershell -NoProfile -ExecutionPolicy Bypass -File .\08_Software\mlx90614-webhid\tools\Check-Html.ps1 -Diagnostics
+   powershell -NoProfile -ExecutionPolicy Bypass -File .\08_Software\qwiic-thermocouple\Check-UI.ps1
    git status --short --untracked-files=all
    ```
 
@@ -59,7 +60,7 @@ These steps are for initial publication or maintenance. **Skip creation/login st
 2. Stage the explicit curated paths; inspect every staged change for credentials, private URLs, personal filesystem paths and confidential logs:
 
    ```powershell
-   git add -- README.md AGENTS.md LICENSE .gitignore .gitattributes .github/workflows/pages.yml .vscode/tasks.json 00_Documentations 04_Media 05_Data 08_Software/mlx90614-webhid 99_Archive/webhid-history
+   git add -- README.md AGENTS.md LICENSE .gitignore .gitattributes .github/workflows .vscode/tasks.json 00_Documentations 04_Media 05_Data 08_Software/mlx90614-webhid 08_Software/mlx90614-hidapi-demo 08_Software/qwiic-thermocouple 99_Archive/webhid-history
    git diff --cached --check
    git diff --cached --stat
    git ls-files

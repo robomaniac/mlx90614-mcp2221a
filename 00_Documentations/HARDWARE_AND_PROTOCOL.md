@@ -1,5 +1,7 @@
 # Hardware, protocol, code map, and extensibility
 
+The separate [SparkFun Qwiic MCP9600 monitor](../08_Software/qwiic-thermocouple/README.md) now supports a second sensor family. Its connected chip was identified as `0x4014` at address `0x60`. It uses big-endian signed words at 0.0625 °C/LSB, with no MLX90614 PEC. The [hardware/UI record](../05_Data/QWIIC_THERMOCOUPLE_TESTS.md) separates native measurements from simulated direct WebHID checks. The original infrared app and its historical sources are preserved.
+
 > **Migration update — 2026-10-09:** The fetched `https://jeromedemers.com/mlx.html` exactly matched historical revision 07, and the user reports it works. Active `08_Software/mlx90614-webhid/mlx.html` now blocks automatic USB reset and retains read-error/attempt evidence. Hardware validation of these edits is pending. See [current review](PROJECT_REVIEW.md) and [validation](../05_Data/VALIDATION.md). Earlier sections describe the original development history.
 
 ## Current hardware

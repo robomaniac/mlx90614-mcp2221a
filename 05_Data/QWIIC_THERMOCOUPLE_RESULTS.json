@@ -1,0 +1,356 @@
+{
+  "recorded_on": "2026-10-10",
+  "source_base_commit": "91fb835e231b5fa4b019a44d88b37bcabf7a8927",
+  "tested_source_sha256": {
+    "08_Software/qwiic-thermocouple/sensor.py": "21075bc966f71f6a9749fa7f3a4b87f4894f0e4f000dc7c257999e984bd94d4e",
+    "08_Software/qwiic-thermocouple/monitor.py": "435d3754ce72927aa9f1450aba1dd8dc5c54c68a3f9f2f4e9009517f77f2d0c7",
+    "08_Software/qwiic-thermocouple/thermocouple.html": "21f5f0c62b98e5911d53ba82f36312d09cc42903a5b2122c091105298f7f0ea4",
+    "08_Software/qwiic-thermocouple/Start-Monitor.ps1": "22517a2cb07c8730457bce7d3105591f2adbb93f223c5daedf5a4244c8413035",
+    "08_Software/mlx90614-hidapi-demo/demo.py": "c8d71bec729696fc0c25e6b9574fd961847ef800952b71e543284a34612293ce",
+    "08_Software/mlx90614-hidapi-demo/mcp2221_native.pyx": "f03721aaaef8c711cc542fb46790215b7dbc2944068f8c85ba0d1006041a77f6"
+  },
+  "conditions": "Existing native Cython/HIDAPI environment and extension reused, same MCP2221A, 100 kHz, serial exclusive access. No USB reset or sensor configuration writes.",
+  "probe": {
+    "address": "0x60",
+    "i2c_hz": 100000,
+    "usb_reset": false,
+    "device_id": "4014",
+    "sensor_config_raw": "00",
+    "device_config_raw": "00",
+    "sensor_status_raw": "4f",
+    "hot_raw": "016a",
+    "hot_c": 22.625,
+    "cold_raw": "0185",
+    "cold_c": 24.3125
+  },
+  "native_runs": [
+    {
+      "csv_file": "thermocouple_20261010T200132_116866Z.csv",
+      "csv_sha256": "533265330dca337e8e07875bd195601c0e7aa402a9fa3029b5bc9144d3ed4011",
+      "attempts": 86,
+      "valid_pairs": 86,
+      "failed_pairs": 0,
+      "elapsed_seconds": 36.961,
+      "successful_pairs_per_second": 2.3268,
+      "polling": "2 Hz initially, then 4 Hz during chart checks",
+      "info": {
+        "model": "MCP9600",
+        "device_id": "4014",
+        "address": 96,
+        "thermocouple_type": "K",
+        "adc_bits": 18,
+        "conversion_ms": 320,
+        "filter": 0,
+        "cold_resolution_c": 0.0625,
+        "power_mode": 0,
+        "sensor_config": 0,
+        "device_config": 0,
+        "i2c_hz": 100000
+      },
+      "acquisition_ms": {
+        "p50": 23.9556,
+        "p95": 24.428,
+        "p99": 25.5655,
+        "max": 25.5655
+      },
+      "first_reading": {
+        "sequence": 1,
+        "timestamp_ms": 1791662492141,
+        "status": "ok",
+        "hot_c": 22.5,
+        "cold_c": 23.75,
+        "hot_raw": "0168",
+        "cold_raw": "017C",
+        "sensor_status": 79,
+        "acquisition_ms": 24.2026,
+        "error_code": "",
+        "error": ""
+      },
+      "last_reading": {
+        "sequence": 86,
+        "timestamp_ms": 1791662528894,
+        "status": "ok",
+        "hot_c": 22.5625,
+        "cold_c": 23.6875,
+        "hot_raw": "0169",
+        "cold_raw": "017B",
+        "sensor_status": 79,
+        "acquisition_ms": 23.8469,
+        "error_code": "",
+        "error": ""
+      }
+    },
+    {
+      "csv_file": "thermocouple_20261010T200210_938594Z.csv",
+      "csv_sha256": "04005f16207e213b1a9ec5bfee4891212890020fb128b84a3b0dc8b9d52c754f",
+      "attempts": 13,
+      "valid_pairs": 13,
+      "failed_pairs": 0,
+      "elapsed_seconds": 3.147,
+      "successful_pairs_per_second": 4.1309,
+      "polling": "4 Hz reconnect",
+      "info": {
+        "model": "MCP9600",
+        "device_id": "4014",
+        "address": 96,
+        "thermocouple_type": "K",
+        "adc_bits": 18,
+        "conversion_ms": 320,
+        "filter": 0,
+        "cold_resolution_c": 0.0625,
+        "power_mode": 0,
+        "sensor_config": 0,
+        "device_config": 0,
+        "i2c_hz": 100000
+      },
+      "acquisition_ms": {
+        "p50": 23.7796,
+        "p95": 24.1818,
+        "p99": 24.1818,
+        "max": 24.1818
+      },
+      "first_reading": {
+        "sequence": 1,
+        "timestamp_ms": 1791662530963,
+        "status": "ok",
+        "hot_c": 22.5625,
+        "cold_c": 23.6875,
+        "hot_raw": "0169",
+        "cold_raw": "017B",
+        "sensor_status": 79,
+        "acquisition_ms": 23.6983,
+        "error_code": "",
+        "error": ""
+      },
+      "last_reading": {
+        "sequence": 13,
+        "timestamp_ms": 1791662533968,
+        "status": "ok",
+        "hot_c": 22.4375,
+        "cold_c": 23.6875,
+        "hot_raw": "0167",
+        "cold_raw": "017B",
+        "sensor_status": 79,
+        "acquisition_ms": 23.7948,
+        "error_code": "",
+        "error": ""
+      }
+    },
+    {
+      "csv_file": "thermocouple_20261010T200214_783115Z.csv",
+      "csv_sha256": "9f62b554b3150bdb3cff6972ea18653d78e695892de9ceb911cb78fb4621ffae",
+      "attempts": 13,
+      "valid_pairs": 13,
+      "failed_pairs": 0,
+      "elapsed_seconds": 3.153,
+      "successful_pairs_per_second": 4.1231,
+      "polling": "4 Hz reconnect",
+      "info": {
+        "model": "MCP9600",
+        "device_id": "4014",
+        "address": 96,
+        "thermocouple_type": "K",
+        "adc_bits": 18,
+        "conversion_ms": 320,
+        "filter": 0,
+        "cold_resolution_c": 0.0625,
+        "power_mode": 0,
+        "sensor_config": 0,
+        "device_config": 0,
+        "i2c_hz": 100000
+      },
+      "acquisition_ms": {
+        "p50": 23.9367,
+        "p95": 24.5792,
+        "p99": 24.5792,
+        "max": 24.5792
+      },
+      "first_reading": {
+        "sequence": 1,
+        "timestamp_ms": 1791662534808,
+        "status": "ok",
+        "hot_c": 22.4375,
+        "cold_c": 23.6875,
+        "hot_raw": "0167",
+        "cold_raw": "017B",
+        "sensor_status": 79,
+        "acquisition_ms": 24.2207,
+        "error_code": "",
+        "error": ""
+      },
+      "last_reading": {
+        "sequence": 13,
+        "timestamp_ms": 1791662537816,
+        "status": "ok",
+        "hot_c": 22.5625,
+        "cold_c": 23.75,
+        "hot_raw": "0169",
+        "cold_raw": "017C",
+        "sensor_status": 79,
+        "acquisition_ms": 24.5792,
+        "error_code": "",
+        "error": ""
+      }
+    }
+  ],
+  "native_ui_checks": {
+    "title": true,
+    "native_transport": true,
+    "actual_hardware": true,
+    "unauthorized_connect_rejected": true,
+    "freeze_keeps_acquiring": true,
+    "hover_exact_values": true,
+    "clear_preserves_csv": true,
+    "csv_button_download": true,
+    "mobile_no_horizontal_overflow": true,
+    "disconnect_awaits_reader": true,
+    "graceful_server_shutdown": true,
+    "native_address_control_hidden": true,
+    "reconnects": 2,
+    "js_exceptions": [],
+    "runs": [
+      {
+        "attempts": 86,
+        "valid": 86,
+        "failed": 0,
+        "info": {
+          "model": "MCP9600",
+          "device_id": "4014",
+          "address": 96,
+          "thermocouple_type": "K",
+          "adc_bits": 18,
+          "conversion_ms": 320,
+          "filter": 0,
+          "cold_resolution_c": 0.0625,
+          "power_mode": 0,
+          "sensor_config": 0,
+          "device_config": 0,
+          "i2c_hz": 100000
+        }
+      },
+      {
+        "attempts": 13,
+        "valid": 13,
+        "failed": 0,
+        "info": {
+          "model": "MCP9600",
+          "device_id": "4014",
+          "address": 96,
+          "thermocouple_type": "K",
+          "adc_bits": 18,
+          "conversion_ms": 320,
+          "filter": 0,
+          "cold_resolution_c": 0.0625,
+          "power_mode": 0,
+          "sensor_config": 0,
+          "device_config": 0,
+          "i2c_hz": 100000
+        }
+      },
+      {
+        "attempts": 13,
+        "valid": 13,
+        "failed": 0,
+        "info": {
+          "model": "MCP9600",
+          "device_id": "4014",
+          "address": 96,
+          "thermocouple_type": "K",
+          "adc_bits": 18,
+          "conversion_ms": 320,
+          "filter": 0,
+          "cold_resolution_c": 0.0625,
+          "power_mode": 0,
+          "sensor_config": 0,
+          "device_config": 0,
+          "i2c_hz": 100000
+        }
+      }
+    ]
+  },
+  "simulated_webhid_ui_checks": {
+    "mode": "SIMULATED_WEBHID_UI",
+    "negative_temperature": true,
+    "prior_permission_reused": true,
+    "disconnect_awaits_reader": true,
+    "reconnect": true,
+    "input_fault_stops": true,
+    "failure_retained_in_csv": true,
+    "no_usb_reset": true,
+    "js_exceptions": []
+  },
+  "mlx90614_unpaced_rerun": {
+    "csv_file": "hardware_unpaced_20261010T194637_599055Z.csv",
+    "csv_sha256": "216a366d580131fb3a0f64e42965f5cb9a403f893b1189ad2df39712a717be3d",
+    "summary_file": "hardware_unpaced_20261010T194637_599055Z.summary.json",
+    "summary_sha256": "b0f7e8ea88c652a4cb84815f74a7c858424edcb693ad1d3012dc04c074e8ad44",
+    "original_summary": {
+      "mode": "HARDWARE",
+      "scheduling": "UNPACED",
+      "requested_hz": null,
+      "requested_seconds": 60.0,
+      "elapsed_seconds": 60.002925,
+      "attempts": 5000,
+      "valid_pairs": 4999,
+      "failed_pairs": 1,
+      "interrupted_pairs": 0,
+      "missed_slots": null,
+      "successful_pairs_per_second": 83.3126,
+      "repeated_raw_pairs": 4462,
+      "errors": {
+        "PEC": 1
+      },
+      "interrupted": false,
+      "fatal_transport_error": false,
+      "timing_window_pairs": 5000,
+      "acquisition_ms": {
+        "p50": 11.9581,
+        "p95": 12.0178,
+        "p99": 12.1369,
+        "max": 12.9806
+      },
+      "start_lateness_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null,
+        "max": null
+      },
+      "successful_interval_ms": {
+        "p50": 12.0,
+        "p95": 12.0602,
+        "p99": 12.1872,
+        "max": 13.0203
+      },
+      "i2c_hz": 100000,
+      "sensor_address": 90,
+      "register_budget_ms": 100,
+      "timestamp_definition": "Host monotonic acquisition start/end; not sensor conversion timestamps.",
+      "freshness_note": "Identical raw words can reflect a steady temperature or repeated sensor data.",
+      "scheduling_note": "No target period/deadlines; starts after the preceding attempt and host output."
+    },
+    "error_rows": [
+      {
+        "mode": "HARDWARE",
+        "scheduling": "UNPACED",
+        "slot": "0",
+        "scheduled_s": "",
+        "start_s": "9e-07",
+        "finish_s": "0.0060799",
+        "start_lateness_ms": "",
+        "acquisition_ms": "6.079",
+        "successful_interval_ms": "",
+        "object_c": "",
+        "ambient_c": "",
+        "object_raw": "",
+        "ambient_raw": "",
+        "repeated_raw_pair": "",
+        "hid_exchanges": "4",
+        "status": "error",
+        "error_code": "PEC",
+        "error": "reg=0x06 raw=ef3916 PEC=0x16 expected=0x3F",
+        "recovery_error": ""
+      }
+    ]
+  },
+  "limits": "Short native hardware/UI trials, no reference-temperature comparison or fresh-conversion timestamp measurement. Direct WebHID UI used fake reports; physical WebHID thermocouple test pending."
+}
