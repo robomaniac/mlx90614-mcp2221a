@@ -40,3 +40,6 @@ Thumbs.db
 08_Software/mlx90614-hidapi-demo/output/
 08_Software/mlx90614-hidapi-demo/*.pyd
 08_Software/mlx90614-hidapi-demo/*.so
+08_Software/mlx90614-hidapi-demo/*.pdb
+08_Software/mlx90614-hidapi-demo/*.lib
+08_Software/mlx90614-hidapi-demo/*.exp

@@ -26,8 +26,8 @@
     },
     {
       "path": ".gitignore",
-      "bytes": 786,
-      "sha256": "3623b0b0119c81088ca3929cf377db6481ee9995178dab7d4f376c10d100e792"
+      "bytes": 903,
+      "sha256": "ee329d14c779db8f35ddcb1e4b947ff3735a4dfd04fa2836a54926da3a6f627c"
     },
     {
       "path": ".vscode/tasks.json",
@@ -108,16 +108,6 @@
       "path": "08_Software/mlx90614-hidapi-demo/demo.py",
       "bytes": 12499,
       "sha256": "a0dfe851ea3d9a2bf5530b747dab06f8e3a17131f8c6447b2e68844cd2636d09"
-    },
-    {
-      "path": "08_Software/mlx90614-hidapi-demo/mcp2221_native.cp311-win_amd64.pdb",
-      "bytes": 1380352,
-      "sha256": "c1abfd2af3be7bb97eabbb86629605528934b2700f6397d77f2dd5f56d96649c"
-    },
-    {
-      "path": "08_Software/mlx90614-hidapi-demo/mcp2221_native.lib",
-      "bytes": 1702,
-      "sha256": "9610e70a15fe4846143826abd44c5edd565ea0879c3d864f49c38ef84faf3a38"
     },
     {
       "path": "08_Software/mlx90614-hidapi-demo/mcp2221_native.pyx",
