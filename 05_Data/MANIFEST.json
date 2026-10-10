@@ -36,8 +36,8 @@
     },
     {
       "path": "00_Documentations/GITHUB_PAGES.md",
-      "bytes": 9325,
-      "sha256": "c9518687357acb80416b606422934a6543ff658760d3c8a0f9ab277acc63211c"
+      "bytes": 9479,
+      "sha256": "b50329f9312a47bf968c23c5779e856e1399ec8237987332f616d98a3e41ed53"
     },
     {
       "path": "00_Documentations/HARDWARE_AND_PROTOCOL.md",
@@ -46,8 +46,8 @@
     },
     {
       "path": "00_Documentations/KNOWN_ISSUES_AND_TEST_PLAN.md",
-      "bytes": 11374,
-      "sha256": "4330b61ba5cbf8329845e978c1f39819fa6f922370de6b37a23a80c97cb19889"
+      "bytes": 12529,
+      "sha256": "a4f67ee6204fcf4ab338320de7c2a4948bfba57e9aff1be31933d12df06f82f7"
     },
     {
       "path": "00_Documentations/NEXT_ASSISTANT_PROMPT.md",
@@ -80,19 +80,29 @@
       "sha256": "af24e78592483127d1a5764b2e0c8b92d5e7cabfc819f76644b1a837b14e4acd"
     },
     {
+      "path": "05_Data/NATIVE_HARDWARE_RESULTS.json",
+      "bytes": 9157,
+      "sha256": "62126d288037682e135c6624311ee8162da7e0465e79c34a91e4760c8f9fb173"
+    },
+    {
+      "path": "05_Data/NATIVE_HARDWARE_TESTS.md",
+      "bytes": 6473,
+      "sha256": "8daa844af10ef89791655d9216b4ee127672af80333e00b07638cf6a819cfb49"
+    },
+    {
       "path": "05_Data/SELECTED_LOGS.md",
       "bytes": 5928,
       "sha256": "2dbfc70618734caf8b0aa7a7baaad553e10eddaefbd9ee24e901c13b4779c1f3"
     },
     {
       "path": "05_Data/VALIDATION.md",
-      "bytes": 5157,
-      "sha256": "b58c2ab232311be42f2b49fdd943af69df583137d7480f9e9a1d1497e2e21b7b"
+      "bytes": 6383,
+      "sha256": "b4d9e3f36a01e79d2cc5672ffd330072ca2b6d4cbdb927571fbcad2076e1f52f"
     },
     {
       "path": "08_Software/mlx90614-hidapi-demo/README.md",
-      "bytes": 11293,
-      "sha256": "8da73b80b1b3045fe70566f72834eaaaf80e43b9c095037ba642be1401763c33"
+      "bytes": 12373,
+      "sha256": "92bdf458ff329ef81c02f29dcfdb9033ea193a9d3935ba108030f5b9c87c5449"
     },
     {
       "path": "08_Software/mlx90614-hidapi-demo/Run-Demo.ps1",
@@ -106,8 +116,8 @@
     },
     {
       "path": "08_Software/mlx90614-hidapi-demo/demo.py",
-      "bytes": 12499,
-      "sha256": "a0dfe851ea3d9a2bf5530b747dab06f8e3a17131f8c6447b2e68844cd2636d09"
+      "bytes": 12635,
+      "sha256": "cafba6b4531edcd439f01bb382b4ec74effa11696bcd717423b954b0d7ba0642"
     },
     {
       "path": "08_Software/mlx90614-hidapi-demo/mcp2221_native.pyx",
@@ -121,13 +131,13 @@
     },
     {
       "path": "08_Software/mlx90614-hidapi-demo/test_demo.py",
-      "bytes": 9173,
-      "sha256": "91b86c583910bfb8317e04588d722711921aae4bff91b078c4574aba58bd3ca3"
+      "bytes": 10659,
+      "sha256": "342e9932e7d07079ef6e490376e0f1b7d0bf1ba8352387e45b107364568b2c09"
     },
     {
       "path": "08_Software/mlx90614-webhid/README.md",
-      "bytes": 9798,
-      "sha256": "a5bc67a54b66cf8dffde08b4e3e2d9559b6dcc9765aab3e83a77f265f422f8c8"
+      "bytes": 9863,
+      "sha256": "dc72b9421ea5b9cb28baa7aa6d7b65fd8eb6ef693125d16bb3a843016be7b518"
     },
     {
       "path": "08_Software/mlx90614-webhid/mlx.html",
@@ -196,8 +206,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 6603,
-      "sha256": "ec57933bc59dc38bd04cc01c884bb7500c6bed3adb9c58259678cde09dab1714"
+      "bytes": 6879,
+      "sha256": "07769f361fdfadbbcb9675dcfc378eaf853f3fcdb232c20b93b1722cbe8dfda7"
     }
   ]
 }

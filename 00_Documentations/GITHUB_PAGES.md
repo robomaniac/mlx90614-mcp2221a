@@ -6,10 +6,10 @@ These steps are for initial publication or maintenance. **Skip creation/login st
 
 ## Prerequisites and authentication
 
-1. Open **VS Code > Terminal > New Terminal > PowerShell**, at this checkout's root. Run in the same terminal:
+1. Open **VS Code > File > Open Folder** and select the repository root (containing the main `README.md` and `08_Software`), then **Terminal > New Terminal > PowerShell**. Run in that same terminal:
 
    ```powershell
-   Set-Location -LiteralPath 'C:\Nextcloud\01_Projects\2026-013_MLX90614-WebHID'
+   if (-not (Test-Path -LiteralPath .\08_Software\mlx90614-webhid\mlx.html)) { throw 'Open a terminal at the repository root before continuing.' }
    git --version
    Set-Alias -Name gh -Value (Resolve-Path -LiteralPath .\.local\bin\gh.exe).Path
    gh --version

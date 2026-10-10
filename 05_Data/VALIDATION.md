@@ -1,6 +1,6 @@
 # Validation record
 
-Date: **2026-10-09**. This record separates completed software/publication checks from sensor tests requiring hardware.
+Updated: **2026-10-10**. This record separates software/publication checks, measured native-demo hardware results and browser tests still awaiting hardware validation.
 
 | Check | Result and evidence |
 | --- | --- |
@@ -20,12 +20,15 @@ Date: **2026-10-09**. This record separates completed software/publication check
 | GitHub Pages deployment | PASS: [initial validation and deploy jobs](https://github.com/robomaniac/mlx90614-mcp2221a/actions/runs/38032744375) succeeded; workflow publishing with HTTPS enforced |
 | Live Pages delivery | PASS: HTTP 200 from [public app](https://robomaniac.github.io/mlx90614-mcp2221a/), 66,751 bytes; SHA-256 `798a587ee3e26872c815b94e929cdc354bd5d25d3bb6a16e101cebb4eb01527d`, exact match to active HTML. Live Chrome initialization, Connect/five rates and secure WebHID checks passed; no USB operation occurred. |
 | README refresh (2026-10-10) | Public browser-app/hardware-library examples and existing folder guidance reviewed. Root README rewritten for project users; actual disconnected-interface screenshot captured and inspected, with no private information or invented sensor readings. Documentation links, UTF-8, privacy patterns and manifest rechecked. |
-| Hardware after edits | **Pending**. No physical bridge/sensor session performed; no measured rate, reconnect reliability or accuracy claim. |
-| Separate native demo (2026-10-10) | PASS: Windows x64 CPython 3.11.15, Cython 3.3.0, HIDAPI 0.15.0 and portable Zig 0.15.2 build/import. All 17 fake-HID/scheduler tests passed, including PEC/error-bit rejection, reset guard, retained failures, overrun counting and a regression check for full-window rate calculation. |
+| Browser hardware after edits | **Pending**. No physical bridge/sensor session using the edited browser HTML; its measured rate, reconnect reliability and accuracy remain unverified. Native-demo results below do not validate browser transport. |
+| Separate native demo (2026-10-10) | PASS: Windows x64 CPython 3.11.15, Cython 3.3.0, HIDAPI 0.15.0 and portable Zig 0.15.2 build/import. All 19 fake-HID/scheduler tests passed, including PEC/error-bit rejection, reset guard, retained failures, overrun counting, full-window rate calculation and interrupted acquisition/recovery accounting. |
 | Native demo launcher/simulation | PASS: PowerShell launcher set up/reused its environment and ran a five-second 20 Hz simulation: 100 valid artificial pairs, zero failures/missed slots, 19.9973 pairs/s, start-lateness p95 0.7377 ms. These are host/simulation measurements, not sensor results. |
-| Native demo device visibility | PASS: HIDAPI enumerated one matching MCP2221 USB-I2C/UART Combo (`04D8:00DD`) without opening it or issuing I2C commands. Sensor timing tests await exclusive access; see the [native demo guide](../08_Software/mlx90614-hidapi-demo/README.md). |
+| Native demo device visibility | PASS: HIDAPI enumerated one matching MCP2221 USB-I2C/UART Combo (`04D8:00DD`) without exposing serial numbers or device paths. Subsequent controlled hardware runs opened the bridge with exclusive access; see the [native demo guide](../08_Software/mlx90614-hidapi-demo/README.md). |
+| Native startup recovery | First startup stopped with SCL low, SDA high, pending zero and divider 118. One explicit I2C cancellation was followed by high lines and successful reads; no USB soft reset occurred. Original cause remains unknown. Raw status evidence is in the [hardware record](NATIVE_HARDWARE_TESTS.md). |
+| Native sensor throughput | PASS in short trials: 20/20 valid pairs over 10 seconds at 2 Hz; 300/300 and 600/600 over 30 seconds at 10 and 20 Hz. Zero read failures and missed slots. At 20 Hz: 19.9997 valid pairs/s, acquisition p95 12.2658 ms, start lateness p95 0.7282 ms. Bus 100 kHz; PEC and error-bit checks enabled. No independent sensor-refresh or long-run guarantee. |
+| Additional runs and Ctrl+C reporting | CSV confirmed 20/20 at 2 Hz and 474 valid/one interrupted pair at 20 Hz, with zero read-error rows. Original interrupted summary reported one failure; Python reporting corrected to separate `interrupted_pairs`, with two regression tests passing. Raw files preserved. |
 
-The historical user's live-reading logs and current report that the original hosted site works are retained as user evidence. Neither proves the modified revision works with this hardware. The actual sensor breakout supply input and pull-ups remain unconfirmed.
+Historical browser logs and the working original hosted site do not prove the modified browser revision works with this hardware. Native measurements apply to the separate Cython/HIDAPI transport. The actual sensor breakout supply input and pull-ups remain unconfirmed.
 
 Repeat software checks from **PowerShell at the repository root**:
 

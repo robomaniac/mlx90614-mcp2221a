@@ -30,7 +30,7 @@ I wanted a simple way to see infrared temperature readings and a live graph with
 
 For local editing, follow the [complete VS Code / PowerShell setup guide](08_Software/mlx90614-webhid/README.md#local-setup-and-operation). It includes exact check/server commands, expected results, restart instructions and cleanup. An existing local server can be reused after saving and reloading the HTML; there is no build or firmware-flash step.
 
-For a native timing experiment, try the separate [Cython + HIDAPI demo](08_Software/mlx90614-hidapi-demo/README.md). It records every attempted pair to CSV and measures successful rate, read latency and missed polling slots. Its Windows launcher handles setup/build; run it with the browser disconnected.
+For a native timing experiment, try the separate [Cython + HIDAPI demo](08_Software/mlx90614-hidapi-demo/README.md). It records every attempted pair to CSV and measures successful rate, read latency and missed polling slots. A [30-second hardware trial](05_Data/NATIVE_HARDWARE_TESTS.md) completed 600/600 validated pairs at 20 Hz with zero read errors or missed slots. Its Windows launcher handles setup/build; run it with the browser disconnected.
 
 ## Hardware
 
@@ -62,7 +62,7 @@ If device access is unavailable, use desktop Chrome/Edge over HTTPS or the docum
 
 For busy responses, PEC errors or HID timeouts, keep the debug log, close competing bridge clients and start at 2 Hz. Follow the [connection recovery procedure](08_Software/mlx90614-webhid/README.md#reuse-editing-and-restart) if readings do not resume. Automatic USB reset is disabled.
 
-Software checks and the live Pages deployment pass. The latest bridge changes still need hardware validation; see the [test results and remaining checks](05_Data/VALIDATION.md).
+Software checks and the live Pages deployment pass. The edited browser transport still needs hardware validation; the separate native demo has measured short-run results. See the [test results and remaining checks](05_Data/VALIDATION.md).
 
 ## Project files
 
@@ -79,6 +79,7 @@ Software checks and the live Pages deployment pass. The latest bridge changes st
 
 - [Setup, operation and recovery](08_Software/mlx90614-webhid/README.md).
 - [Cython + HIDAPI timing experiment](08_Software/mlx90614-hidapi-demo/README.md).
+- [Native hardware timing results](05_Data/NATIVE_HARDWARE_TESTS.md).
 - [Hardware and protocol](00_Documentations/HARDWARE_AND_PROTOCOL.md).
 - [Known issues and hardware test plan](00_Documentations/KNOWN_ISSUES_AND_TEST_PLAN.md).
 - [Local checks, GitHub and Pages updates](00_Documentations/GITHUB_PAGES.md).

@@ -10,10 +10,9 @@ Local serving requires Python 3. Checks require Node.js or installed desktop Vis
 
 ## Local setup and operation
 
-1. Open **Visual Studio Code > File > Open Folder** and select the repository root. Open **Terminal > New Terminal** and select **PowerShell**. These commands assume the current checkout; change the first path if you cloned elsewhere:
+1. Open **Visual Studio Code > File > Open Folder** and select the repository root (the folder containing the main `README.md` and `08_Software`). Open **Terminal > New Terminal** and select **PowerShell**. The new terminal starts in that folder. Confirm the location and prerequisites:
 
    ```powershell
-   Set-Location -LiteralPath 'C:\Nextcloud\01_Projects\2026-013_MLX90614-WebHID'
    Get-Location
    Test-Path .\08_Software\mlx90614-webhid\mlx.html
    python --version
@@ -70,7 +69,7 @@ Revision 03 is a comparison candidate preceding the user's high-rate logs. Revis
 1. Keep the loopback server from local setup running. Open a **second VS Code PowerShell terminal** at the repository root and copy the immutable baseline to an ignored experiment folder:
 
    ```powershell
-   Set-Location -LiteralPath 'C:\Nextcloud\01_Projects\2026-013_MLX90614-WebHID'
+   if (-not (Test-Path -LiteralPath .\99_Archive\webhid-history\03-dropdown-last-reading-baseline.html)) { throw 'Open a terminal at the repository root before continuing.' }
    New-Item -ItemType Directory -Force -Path .\08_Software\mlx90614-webhid\.local-test | Out-Null
    Copy-Item -LiteralPath .\99_Archive\webhid-history\03-dropdown-last-reading-baseline.html -Destination .\08_Software\mlx90614-webhid\.local-test\baseline.html
    Get-FileHash -Algorithm SHA256 -LiteralPath .\08_Software\mlx90614-webhid\.local-test\baseline.html

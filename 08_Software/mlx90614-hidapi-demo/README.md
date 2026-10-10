@@ -39,7 +39,7 @@ Prerequisites: the existing sensor wiring, **x64 CPython 3.10+** with developmen
 
    Compare successful pairs per second, failed pairs, missed slots and interval percentiles. The requested counts are 300 and 600; they are targets. More polls do not establish more independent sensor conversions. An unchanged raw word can also mean temperature stayed constant.
 
-Press **Ctrl+C** to stop a run. Completed rows and a summary are retained; the HID handle closes before exit. Exit code `0` means no failed pairs, `1` means a read/setup failure occurred, `2` means invalid arguments or incomplete setup, and `130` means interrupted. Missed slots remain visible even if every attempted read succeeded.
+Press **Ctrl+C** to stop a run. Completed rows and a summary are retained; the HID handle closes before exit. A pair stopped during acquisition has CSV status `interrupted` and increments `interrupted_pairs`, separately from read failures. An interruption between pairs sets `interrupted` without adding an attempted pair. Exit code `0` means no failed pairs, `1` means a read/setup failure occurred, `2` means invalid arguments or incomplete setup, and `130` means interrupted. Missed slots remain visible even if every attempted read succeeded.
 
 ## Read the results
 
@@ -48,7 +48,9 @@ Each run creates a new CSV and a matching `.summary.json`. Existing files are ne
 | Field | Meaning |
 | --- | --- |
 | `successful_pairs_per_second` | Valid complete object/ambient pairs divided by actual run duration, including the full requested window on a normal finish |
-| `attempts`, `failed_pairs` | Every initiated pair, including incomplete or rejected pairs; no hidden temperature-read retry |
+| `attempts` | Every initiated pair; equals `valid_pairs + failed_pairs + interrupted_pairs`; no hidden temperature-read retry |
+| `failed_pairs` | Pairs rejected because of a read error; remains counted if Ctrl+C interrupts subsequent error recovery |
+| `interrupted_pairs` | Pairs stopped by Ctrl+C during acquisition, without a completed read-error result |
 | `missed_slots` | Polling deadlines skipped when acquisition/recovery/output takes too long; these are separate from attempted reads that failed |
 | `start_lateness_ms` | Host acquisition start minus its scheduled deadline; p50/p95/p99/max quantify scheduling variation |
 | `acquisition_ms` | Host time spent acquiring the pair, excluding subsequent error recovery and terminal output |
@@ -65,7 +67,7 @@ Timing percentiles cover the latest **10,000 attempts/intervals**; counts and CS
 | --- | --- |
 | Native Cython transport + HIDAPI | Avoid browser lifecycle/timer restrictions; desktop OS and USB delays still apply |
 | Absolute deadlines | Avoid accumulated drift from sleeping a full interval after each read; overdue slots are counted and skipped |
-| Direct `0x40` data retrieval after repeated-start | Try a shorter acquisition path: at least **six** HID exchanges per pair, versus at least eight in the current browser path; pending/partial data adds exchanges. This is an experiment requiring hardware validation. |
+| Direct `0x40` data retrieval after repeated-start | Shorter acquisition path: **six** HID exchanges per valid pair in the recorded hardware runs, versus at least eight in the current browser code path; pending/partial data adds exchanges. A matched browser timing comparison is still needed. |
 | No fixed pause between registers | Reduce host-added delay; no promise of faster fresh sensor data |
 | One attempt per scheduled pair | Expose errors and latency rather than hiding them behind retries; nonfatal failure triggers one I2C cancellation before the next slot |
 | Stop on a missing/malformed HID reply | Avoid allowing a late matching-command reply to contaminate later readings |
@@ -93,7 +95,7 @@ From **PowerShell at the repository root**, after first setup:
 & .\08_Software\mlx90614-hidapi-demo\.venv\Scripts\python.exe -m unittest discover -s .\08_Software\mlx90614-hidapi-demo -p test_demo.py -v
 ```
 
-Expect all tests `OK`. Fake HID reports and a fake clock test PEC rejection, complete-pair accounting, packet layout, reset prevention, missed slots and retained failures. These tests do not contact the sensor.
+Expect all 19 tests `OK`. Fake HID reports and a fake clock test PEC rejection, complete-pair accounting, packet layout, reset prevention, missed slots, retained failures and interruption during acquisition/recovery. These tests do not contact the sensor.
 
 For manual setup/build, in the same PowerShell window starting at the repository root:
 
@@ -126,4 +128,6 @@ The next launcher invocation performs setup/build again because those generated 
 
 ## Validation
 
-Native Windows x64 build/import, fake-device protocol/scheduler tests, a simulated timing run and HID enumeration are checked locally. Sensor throughput and timing improvements require the controlled hardware runs above; enumeration alone is not a temperature-read test. This Python/Cython demo runs locally and cannot execute on GitHub Pages.
+Native Windows x64 build/import, 19 fake-device protocol/scheduler tests, a simulated timing run and real sensor runs passed. On 2026-10-10, completed hardware trials returned **20/20 pairs at 2 Hz**, **300/300 at 10 Hz**, and **600/600 at 20 Hz**, with zero read errors or missed slots at 100 kHz. The 20 Hz trial lasted 30 seconds; acquisition p95 was **12.27 ms** and start lateness p95 **0.73 ms**. See the [hardware results, startup evidence and limits](../../05_Data/NATIVE_HARDWARE_TESTS.md).
+
+These short trials demonstrate complete validated reads on the tested setup. Long-run reliability, independent sensor-conversion rate, temperature accuracy and a matched WebHID comparison remain untested. This Python/Cython demo runs locally and cannot execute on GitHub Pages. The interruption-counter correction changes Python reporting only; the existing environment and native extension can be reused.

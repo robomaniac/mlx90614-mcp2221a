@@ -60,7 +60,7 @@ def acquire(sensor, native, args, path):
     slots = (duration + period - 1) // period
     latency, lateness, intervals = (deque(maxlen=10000) for _ in range(3))
     errors = Counter()
-    attempts = successes = missed = repeated = slot = 0
+    attempts = successes = failures = interrupted_pairs = missed = repeated = slot = 0
     last_success = last_raw = last_values = None
     interrupted = fatal = False
     mode = "SIMULATED" if args.simulate else "HARDWARE"
@@ -103,6 +103,7 @@ def acquire(sensor, native, args, path):
                     last_success, last_raw, last_values = finish, raw_pair, (obj, ambient)
                 except native.ReadError as error:
                     finish = time.perf_counter_ns()
+                    failures += 1
                     errors[error.code] += 1
                     row.update(status="error", error_code=error.code, error=str(error))
                     print(f"ERROR slot={slot} {error.code}: {error}", file=sys.stderr, flush=True)
@@ -120,6 +121,7 @@ def acquire(sensor, native, args, path):
                             interrupted = True
                 except KeyboardInterrupt:
                     finish = time.perf_counter_ns()
+                    interrupted_pairs += 1
                     row.update(status="interrupted", error_code="INTERRUPTED", error="Stopped during acquisition.")
                     interrupted = True
                 row.update(finish_s=(finish - origin) / 1e9, acquisition_ms=(finish - start) / 1e6,
@@ -149,7 +151,7 @@ def acquire(sensor, native, args, path):
     summary = {
         "mode": mode, "requested_hz": args.hz, "requested_seconds": args.seconds,
         "elapsed_seconds": round(elapsed, 6), "attempts": attempts, "valid_pairs": successes,
-        "failed_pairs": attempts - successes, "missed_slots": missed,
+        "failed_pairs": failures, "interrupted_pairs": interrupted_pairs, "missed_slots": missed,
         "successful_pairs_per_second": round(successes / elapsed, 4) if elapsed else 0,
         "repeated_raw_pairs": repeated, "errors": dict(errors), "interrupted": interrupted,
         "fatal_transport_error": fatal, "timing_window_pairs": len(latency),

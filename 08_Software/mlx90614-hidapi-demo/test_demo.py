@@ -157,7 +157,7 @@ class SchedulingTests(unittest.TestCase):
     def test_percentiles_are_reported(self):
         self.assertEqual(demo.distribution(range(1, 101)), {"p50": 50, "p95": 95, "p99": 99, "max": 100})
 
-    def run_fake(self, failure, work_ns):
+    def run_fake(self, failure, work_ns, cancel_failure=None):
         clock = [0]
         class Sensor:
             exchanges = 0
@@ -171,6 +171,8 @@ class SchedulingTests(unittest.TestCase):
                 return 30, 24, 15158, 14858
             def cancel(self):
                 self.cancels += 1
+                if cancel_failure:
+                    raise cancel_failure
         sensor = Sensor()
         args = SimpleNamespace(hz=10, seconds=.4, simulate=True, address=0x5A, timeout_ms=100)
         def sleep(seconds):
@@ -192,6 +194,33 @@ class SchedulingTests(unittest.TestCase):
         self.assertEqual(rows[0]["object_c"], "")
         self.assertEqual(summary["failed_pairs"], 1)
         self.assertEqual(summary["valid_pairs"], 3)
+        self.assertEqual(sensor.cancels, 1)
+
+    def test_interrupted_acquisition_is_separate_from_read_failures(self):
+        result, rows, summary, sensor = self.run_fake(KeyboardInterrupt(), 1_000_000)
+        self.assertEqual(result, 130)
+        self.assertEqual(summary["attempts"], 1)
+        self.assertEqual(summary["valid_pairs"], 0)
+        self.assertEqual(summary["failed_pairs"], 0)
+        self.assertEqual(summary["interrupted_pairs"], 1)
+        self.assertEqual(summary["errors"], {})
+        self.assertTrue(summary["interrupted"])
+        self.assertEqual(rows[0]["status"], "interrupted")
+        self.assertEqual(rows[0]["object_c"], "")
+        self.assertEqual(sensor.cancels, 0)
+
+    def test_interrupted_recovery_preserves_the_original_read_failure(self):
+        result, rows, summary, sensor = self.run_fake(
+            native.ReadError("PEC", "bad PEC"), 1_000_000, KeyboardInterrupt())
+        self.assertEqual(result, 130)
+        self.assertEqual(summary["attempts"], 1)
+        self.assertEqual(summary["valid_pairs"], 0)
+        self.assertEqual(summary["failed_pairs"], 1)
+        self.assertEqual(summary["interrupted_pairs"], 0)
+        self.assertEqual(summary["errors"], {"PEC": 1})
+        self.assertTrue(summary["interrupted"])
+        self.assertEqual(rows[0]["status"], "error")
+        self.assertIn("INTERRUPTED", rows[0]["recovery_error"])
         self.assertEqual(sensor.cancels, 1)
 
     def test_fatal_timeout_stops_without_cancel_or_further_reads(self):
