@@ -30,6 +30,8 @@ I wanted a simple way to see infrared temperature readings and a live graph with
 
 For local editing, follow the [complete VS Code / PowerShell setup guide](08_Software/mlx90614-webhid/README.md#local-setup-and-operation). It includes exact check/server commands, expected results, restart instructions and cleanup. An existing local server can be reused after saving and reloading the HTML; there is no build or firmware-flash step.
 
+For a native timing experiment, try the separate [Cython + HIDAPI demo](08_Software/mlx90614-hidapi-demo/README.md). It records every attempted pair to CSV and measures successful rate, read latency and missed polling slots. Its Windows launcher handles setup/build; run it with the browser disconnected.
+
 ## Hardware
 
 ### Detailed bill of materials
@@ -67,6 +69,7 @@ Software checks and the live Pages deployment pass. The latest bridge changes st
 | Folder | Contents |
 | --- | --- |
 | `08_Software/mlx90614-webhid/` | Active **`mlx.html`**, operating guide and check tools |
+| `08_Software/mlx90614-hidapi-demo/` | Separate native transport, terminal timing demo, CSV logging and Windows launcher |
 | `00_Documentations/` | Hardware/protocol notes, troubleshooting and development guides |
 | `04_Media/` | Interface screenshots |
 | `05_Data/` | Diagnostic logs, validation results and SHA-256 manifest |
@@ -75,6 +78,7 @@ Software checks and the live Pages deployment pass. The latest bridge changes st
 ## Guides
 
 - [Setup, operation and recovery](08_Software/mlx90614-webhid/README.md).
+- [Cython + HIDAPI timing experiment](08_Software/mlx90614-hidapi-demo/README.md).
 - [Hardware and protocol](00_Documentations/HARDWARE_AND_PROTOCOL.md).
 - [Known issues and hardware test plan](00_Documentations/KNOWN_ISSUES_AND_TEST_PLAN.md).
 - [Local checks, GitHub and Pages updates](00_Documentations/GITHUB_PAGES.md).

@@ -98,6 +98,14 @@ Usually normal if the page has moved to another **origin** or permission was cle
 
 Code review found that Disconnect does not fully await an in-flight sample before closing HID. A final error or race during rapid reconnect is possible, but no hardware result establishes it as a cause. Keep this separate from the startup hypotheses. Record errors immediately after Disconnect and whether rapid reconnect differs from reconnect after a settled shutdown; defer transport changes until evidence warrants them.
 
+## Separate native timing experiment (2026-10-10)
+
+The [Cython + HIDAPI demo](../08_Software/mlx90614-hidapi-demo/README.md) is an additional experiment requested after the browser migration. It does not replace the active HTML or establish a fix for startup/read failures. Its transport compiles to a native extension, uses HIDAPI, retains PEC/error-bit validation, and keeps the verified 100 kHz setting. It never issues USB soft reset.
+
+The discriminating test is the same hardware at 2/10/20 requested Hz with **one bridge client**, recording valid pairs/s, failed pairs, missed slots, start lateness and acquisition-time percentiles. Its shorter `0x94 → 0x93 → 0x40` path and lack of a fixed inter-register pause are intentional experimental differences. The demo stops on missing/malformed HID replies rather than reusing a potentially stale response, and counts nonfatal failed pairs before one I2C cancellation. No hidden sample retries are performed.
+
+Windows native build/import, 17 fake-device/scheduler tests, a five-second 20 Hz simulation and HID enumeration passed. Hardware timing comparison is pending exclusive bridge access. Simulation produced 100 valid artificial pairs, zero missed slots and approximately 20 pairs/s; this does not demonstrate sensor throughput or accept/rule out any hardware hypothesis. Sensor output refresh and host polling remain distinct.
+
 ## Fill-in template for the next session
 
 ```text

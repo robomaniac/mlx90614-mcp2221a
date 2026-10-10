@@ -1,6 +1,6 @@
 {
   "name": "MLX90614 MCP2221A temperature monitor",
-  "reviewed_on": "2026-10-09",
+  "reviewed_on": "2026-10-10",
   "canonical_entrypoint": "08_Software/mlx90614-webhid/mlx.html",
   "canonical_entrypoint_status": "USB reset blocked; diagnostics corrected; edited hardware validation pending",
   "comparison_baseline": "99_Archive/webhid-history/03-dropdown-last-reading-baseline.html",
@@ -15,14 +15,19 @@
       "sha256": "76f112e37044451a351787fc148a7428b4b08bc2afffe86c1107e3483d8ac4c9"
     },
     {
+      "path": ".github/workflows/hidapi-demo.yml",
+      "bytes": 968,
+      "sha256": "64e517402b9eebde3e89cf6b9b1d5ec74c1a289acc2864113fe867a6b03e1a94"
+    },
+    {
       "path": ".github/workflows/pages.yml",
       "bytes": 1164,
       "sha256": "f164c7fa52d8c1beb4ab7ab281745097a62f484b0002dda488188c4893dc86e8"
     },
     {
       "path": ".gitignore",
-      "bytes": 558,
-      "sha256": "bae3a6ead7329d94eb8f62c2f30709b6835e1d696c4e27a4bdad541065ac12b3"
+      "bytes": 786,
+      "sha256": "3623b0b0119c81088ca3929cf377db6481ee9995178dab7d4f376c10d100e792"
     },
     {
       "path": ".vscode/tasks.json",
@@ -41,8 +46,8 @@
     },
     {
       "path": "00_Documentations/KNOWN_ISSUES_AND_TEST_PLAN.md",
-      "bytes": 9985,
-      "sha256": "8caebd0307f1a0e778eb26741ea5f29f406da8f3a380407bc12cea31809dc842"
+      "bytes": 11374,
+      "sha256": "4330b61ba5cbf8329845e978c1f39819fa6f922370de6b37a23a80c97cb19889"
     },
     {
       "path": "00_Documentations/NEXT_ASSISTANT_PROMPT.md",
@@ -81,8 +86,53 @@
     },
     {
       "path": "05_Data/VALIDATION.md",
-      "bytes": 4260,
-      "sha256": "e13d79a7332951f6b524095c4bdf731db5e295e848dccf2c1b2de06c9e375586"
+      "bytes": 5157,
+      "sha256": "b58c2ab232311be42f2b49fdd943af69df583137d7480f9e9a1d1497e2e21b7b"
+    },
+    {
+      "path": "08_Software/mlx90614-hidapi-demo/README.md",
+      "bytes": 11293,
+      "sha256": "8da73b80b1b3045fe70566f72834eaaaf80e43b9c095037ba642be1401763c33"
+    },
+    {
+      "path": "08_Software/mlx90614-hidapi-demo/Run-Demo.ps1",
+      "bytes": 1992,
+      "sha256": "9627f5ac8cef385293d5f250e3793961d348523faa31b02e5f68f9620eb0f856"
+    },
+    {
+      "path": "08_Software/mlx90614-hidapi-demo/build_native.py",
+      "bytes": 2622,
+      "sha256": "fcbd5e026fe968aebfd61a2cd5816ed95c9ee285656e94c5559aa1ecba21c51b"
+    },
+    {
+      "path": "08_Software/mlx90614-hidapi-demo/demo.py",
+      "bytes": 12499,
+      "sha256": "a0dfe851ea3d9a2bf5530b747dab06f8e3a17131f8c6447b2e68844cd2636d09"
+    },
+    {
+      "path": "08_Software/mlx90614-hidapi-demo/mcp2221_native.cp311-win_amd64.pdb",
+      "bytes": 1380352,
+      "sha256": "c1abfd2af3be7bb97eabbb86629605528934b2700f6397d77f2dd5f56d96649c"
+    },
+    {
+      "path": "08_Software/mlx90614-hidapi-demo/mcp2221_native.lib",
+      "bytes": 1702,
+      "sha256": "9610e70a15fe4846143826abd44c5edd565ea0879c3d864f49c38ef84faf3a38"
+    },
+    {
+      "path": "08_Software/mlx90614-hidapi-demo/mcp2221_native.pyx",
+      "bytes": 6123,
+      "sha256": "f03721aaaef8c711cc542fb46790215b7dbc2944068f8c85ba0d1006041a77f6"
+    },
+    {
+      "path": "08_Software/mlx90614-hidapi-demo/requirements.txt",
+      "bytes": 70,
+      "sha256": "356d951f5dc7171cff830e79bc62cf934f98f49ddcb20a9fa17c02bdd97fb03c"
+    },
+    {
+      "path": "08_Software/mlx90614-hidapi-demo/test_demo.py",
+      "bytes": 9173,
+      "sha256": "91b86c583910bfb8317e04588d722711921aae4bff91b078c4574aba58bd3ca3"
     },
     {
       "path": "08_Software/mlx90614-webhid/README.md",
@@ -156,8 +206,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 6090,
-      "sha256": "4486e2ac64afd3f2c806fe0f2e368355694203f3166dacfdd600f6e9e27379d7"
+      "bytes": 6603,
+      "sha256": "ec57933bc59dc38bd04cc01c884bb7500c6bed3adb9c58259678cde09dab1714"
     }
   ]
 }

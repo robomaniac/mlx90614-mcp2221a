@@ -35,3 +35,8 @@ _site/
 .DS_Store
 Thumbs.db
 *.log
+# Native demo build products and measurement files stay local
+08_Software/mlx90614-hidapi-demo/.native-build/
+08_Software/mlx90614-hidapi-demo/output/
+08_Software/mlx90614-hidapi-demo/*.pyd
+08_Software/mlx90614-hidapi-demo/*.so

@@ -1,0 +1,33 @@
+name: Check Cython HIDAPI demo
+
+on:
+  push:
+    paths:
+      - '08_Software/mlx90614-hidapi-demo/**'
+      - '.github/workflows/hidapi-demo.yml'
+  pull_request:
+    paths:
+      - '08_Software/mlx90614-hidapi-demo/**'
+      - '.github/workflows/hidapi-demo.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  native-demo:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+          architecture: x64
+      - name: Build and simulate with the Windows launcher
+        run: ./08_Software/mlx90614-hidapi-demo/Run-Demo.ps1 -Simulate -Hz 20 -Seconds 1
+      - name: Check fake-HID protocol and scheduler
+        run: ./08_Software/mlx90614-hidapi-demo/.venv/Scripts/python.exe -W error::ResourceWarning -m unittest discover -s ./08_Software/mlx90614-hidapi-demo -p test_demo.py -v
