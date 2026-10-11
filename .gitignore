@@ -44,3 +44,4 @@ Thumbs.db
 08_Software/mlx90614-hidapi-demo/*.lib
 08_Software/mlx90614-hidapi-demo/*.exp
 08_Software/qwiic-thermocouple/output/
+08_Software/temperature-logger/output/

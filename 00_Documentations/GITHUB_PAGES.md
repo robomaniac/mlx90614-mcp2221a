@@ -60,7 +60,7 @@ These steps are for initial publication or maintenance. **Skip creation/login st
 2. Stage the explicit curated paths; inspect every staged change for credentials, private URLs, personal filesystem paths and confidential logs:
 
    ```powershell
-   git add -- README.md AGENTS.md LICENSE .gitignore .gitattributes .github/workflows .vscode/tasks.json 00_Documentations 04_Media 05_Data 08_Software/mlx90614-webhid 08_Software/mlx90614-hidapi-demo 08_Software/qwiic-thermocouple 99_Archive/webhid-history
+   git add -- README.md AGENTS.md LICENSE .gitignore .gitattributes .github/workflows .vscode/tasks.json 00_Documentations 04_Media 05_Data 08_Software/mlx90614-webhid 08_Software/mlx90614-hidapi-demo 08_Software/qwiic-thermocouple 08_Software/temperature-logger 99_Archive/webhid-history design-qa.md
    git diff --cached --check
    git diff --cached --stat
    git ls-files
@@ -131,6 +131,8 @@ These steps are for initial publication or maintenance. **Skip creation/login st
    Both hashes must match after the intended commit finishes deployment. If they differ, check the successful run's commit, browser cache and CDN delay. A byte match validates delivery, not USB sensor operation. Remove the temporary copy with `Remove-Item -LiteralPath .\.local\deployed-index.html` after checking.
 
 ## Later updates and rollback
+
+The workflow packages [Temperature Logger](https://robomaniac.github.io/mlx90614-mcp2221a/logger.html) as `logger.html`, alongside infrared `index.html` and the original MCP9600 `thermocouple.html`. Pages uses the single-file WebHID app; Cython/HIDAPI stays local. Use the [browser/native setup guide](../08_Software/temperature-logger/README.md). The logger’s Guide link opens its documentation on GitHub.
 
 1. Reuse the existing authenticated account/remote and correct local server. Save the HTML, disconnect/reload/reconnect for local testing, then repeat checks and stage/review only intended changes. Inspect `git diff --cached` before pushing.
 2. Commit and push to `main` with a descriptive message. The push automatically runs Pages; use the run-list/watch commands above. There is no HTML build step on your computer and no need to repeat repository creation or authentication.

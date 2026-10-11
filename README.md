@@ -4,7 +4,7 @@
 
 I wanted a simple way to see infrared temperature readings and a live graph without managing a Python HID installation. This app uses Chrome's WebHID API to talk to the sensor through a USB-to-I2C bridge. Everything runs in one HTML file.
 
-**Browser:** desktop Chrome / Edge · **Hardware:** MLX90614 + MCP2221A · **Updated:** 2026-10-10
+**Browser:** desktop Chrome / Edge · **Hardware:** MLX90614 + MCP2221A · **Updated:** 2026-10-11
 
 <p align="center">
   <a href="04_Media/temperature-monitor.png"><img src="04_Media/temperature-monitor.png" width="900" alt="MLX90614 temperature monitor with object and ambient displays, rate selector, chart and connection controls"></a>
@@ -35,6 +35,8 @@ For local editing, follow the [complete VS Code / PowerShell setup guide](08_Sof
 For a native timing experiment, try the separate [Cython + HIDAPI demo](08_Software/mlx90614-hidapi-demo/README.md). It records every attempted pair to CSV and measures successful rate, latency and missed polling slots. Hardware trials completed **60 Hz over one minute with zero missed scheduled slots**; experimental [unpaced acquisition](08_Software/mlx90614-hidapi-demo/README.md#remove-the-scheduled-wait) reached **83.20 validated pairs/s over one minute**. An earlier unpaced failure is retained in the [results and limits](05_Data/NATIVE_HARDWARE_TESTS.md#unpaced-acquisition-no-target-period). Its Windows launcher handles setup/build; run it with the browser disconnected.
 
 For contact temperature, open the separate **[Qwiic thermocouple monitor](https://robomaniac.github.io/mlx90614-mcp2221a/thermocouple.html)** for the **SparkFun MCP9600**. It adds probe/board temperatures, a hoverable graph and CSV export. The [native dashboard guide and detailed BOM](08_Software/qwiic-thermocouple/README.md) explain the shared Cython/HIDAPI environment and direct WebHID option.
+
+For recording experiments, open the **[Temperature Logger](https://robomaniac.github.io/mlx90614-mcp2221a/logger.html)**. It adds **red high / blue low alarms with distinct sounds**, graph limit lines and alarm markers, **CSV export, named channels, °C/°F, and one shared 250 ms–24 hour sample/record interval**. Optional Qwiic OpenLog support saves the same rows to microSD. Short native SD trials passed at **2 Hz and 4 Hz**; the 4 Hz trial saved **34 valid rows with zero read errors**, and all **4,148 SD bytes matched the PC CSV**. Missing-SD recovery also passed without a USB reset or power cycle. The [logger guide](08_Software/temperature-logger/README.md) includes the BOM, browser and native setup, alarms, SD firmware requirements and measured limits. Both original dashboards remain available.
 
 ## Hardware
 
@@ -75,6 +77,7 @@ Software checks and the live Pages deployment pass. The edited browser transport
 | `08_Software/mlx90614-webhid/` | Active **`mlx.html`**, operating guide and check tools |
 | `08_Software/mlx90614-hidapi-demo/` | Separate native transport, terminal timing demo, CSV logging and Windows launcher |
 | `08_Software/qwiic-thermocouple/` | MCP9600 contact-temperature dashboard, native reader, single-file WebHID app and BOM |
+| `08_Software/temperature-logger/` | Separate logger page, alarms, interval CSV and optional Qwiic OpenLog adapter |
 | `00_Documentations/` | Hardware/protocol notes, troubleshooting and development guides |
 | `04_Media/` | Interface screenshots |
 | `05_Data/` | Diagnostic logs, validation results and SHA-256 manifest |
@@ -86,6 +89,8 @@ Software checks and the live Pages deployment pass. The edited browser transport
 - [Cython + HIDAPI timing experiment](08_Software/mlx90614-hidapi-demo/README.md).
 - [Native hardware timing results](05_Data/NATIVE_HARDWARE_TESTS.md).
 - [Qwiic thermocouple setup, BOM and timing limits](08_Software/qwiic-thermocouple/README.md).
+- [Temperature Logger: alarms, recording and SD](08_Software/temperature-logger/README.md).
+- [Qwiic OpenLog firmware update and exact SD readback](00_Documentations/OPENLOG_FIRMWARE.md).
 - [Hardware and protocol](00_Documentations/HARDWARE_AND_PROTOCOL.md).
 - [Known issues and hardware test plan](00_Documentations/KNOWN_ISSUES_AND_TEST_PLAN.md).
 - [Local checks, GitHub and Pages updates](00_Documentations/GITHUB_PAGES.md).

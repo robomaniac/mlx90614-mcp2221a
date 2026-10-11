@@ -16,18 +16,18 @@
     },
     {
       "path": ".github/workflows/hidapi-demo.yml",
-      "bytes": 1460,
-      "sha256": "2e5f8835507c26f0b77ec20d07f1a725ae782cd94a0063db230d735a8eadfdb6"
+      "bytes": 1790,
+      "sha256": "201fd2f0d88f87240459f87681a66ff8a67363e15b2fbdc1b9f54ff2119af0b1"
     },
     {
       "path": ".github/workflows/pages.yml",
-      "bytes": 1324,
-      "sha256": "3af27c989f15289e0d4b0d51f6b8add230d880295b3a14eb182504315b4a2f0f"
+      "bytes": 1457,
+      "sha256": "696314a1331c5bc03b81b06b04aacdee102ada74f4a9ca378f806696e437bb08"
     },
     {
       "path": ".gitignore",
-      "bytes": 942,
-      "sha256": "f7f5d2f779e58618b65c7e0ed8aa63c4df0de7fbc33ab3cbaedf62eb6dfd78eb"
+      "bytes": 981,
+      "sha256": "2243f59cc3077ac339b17c1fdd7c97981d69c31ee78355336526757b19842226"
     },
     {
       "path": ".vscode/tasks.json",
@@ -36,8 +36,8 @@
     },
     {
       "path": "00_Documentations/GITHUB_PAGES.md",
-      "bytes": 9740,
-      "sha256": "ae3fb54544d3995d2e2f5491a93646766973ec3651d1008042aadd63ecebe5ea"
+      "bytes": 10194,
+      "sha256": "a05545d6371184d8f256c4ba7ef27ff7b58e3b05bb65391f5990503bc9c483aa"
     },
     {
       "path": "00_Documentations/HARDWARE_AND_PROTOCOL.md",
@@ -46,13 +46,18 @@
     },
     {
       "path": "00_Documentations/KNOWN_ISSUES_AND_TEST_PLAN.md",
-      "bytes": 16962,
-      "sha256": "00e358be966458384c67c5580588e3a83e901034d134bfd89157432f478e28a2"
+      "bytes": 28839,
+      "sha256": "82f80b0576deee4dc7ce1d94931785755bc81990f4cd9ecee91403e2d12f20da"
     },
     {
       "path": "00_Documentations/NEXT_ASSISTANT_PROMPT.md",
       "bytes": 2786,
       "sha256": "271dbded5c494fecdf8b091e0cc31290fa63b4b72bec6c6c78c1a946855bc6ac"
+    },
+    {
+      "path": "00_Documentations/OPENLOG_FIRMWARE.md",
+      "bytes": 28356,
+      "sha256": "d61b35968e18a7f46d6e78d7ffd292c54c79edc95e58e077aa65468bcb6d66f1"
     },
     {
       "path": "00_Documentations/PROJECT_HISTORY.md",
@@ -83,6 +88,11 @@
       "path": "04_Media/sample-rate-dropdown-reference.png",
       "bytes": 8795,
       "sha256": "4ecf310ccb7153c4647e69736756a0164f3f8671e1f16307ef5087a156ed85c5"
+    },
+    {
+      "path": "04_Media/temperature-logger.png",
+      "bytes": 241199,
+      "sha256": "a19727b9ec968e05ce5f53780dae6db39454d09b3f432ec0d14197727a8d186b"
     },
     {
       "path": "04_Media/temperature-monitor.png",
@@ -125,9 +135,19 @@
       "sha256": "2dbfc70618734caf8b0aa7a7baaad553e10eddaefbd9ee24e901c13b4779c1f3"
     },
     {
+      "path": "05_Data/TEMPERATURE_LOGGER_RESULTS.json",
+      "bytes": 76061,
+      "sha256": "267259f7819590d93c798bd2ccf780af0a27fb1dfd507591b7a93323a8204af5"
+    },
+    {
+      "path": "05_Data/TEMPERATURE_LOGGER_TESTS.md",
+      "bytes": 36514,
+      "sha256": "a079188a2bcaaf25cf0b1239cb52a31f8ea049b514452a74209cb799b5ccf8fe"
+    },
+    {
       "path": "05_Data/VALIDATION.md",
-      "bytes": 11033,
-      "sha256": "d0525caf386f41ac7f1217e6b1958c72f4e471d99ea2c8cec612f1a036ac02ac"
+      "bytes": 16120,
+      "sha256": "307fd295709c55465cb8fc0dd99f9f6414f6be08d87b57e24a007151cd957378"
     },
     {
       "path": "08_Software/mlx90614-hidapi-demo/README.md",
@@ -230,6 +250,66 @@
       "sha256": "21f5f0c62b98e5911d53ba82f36312d09cc42903a5b2122c091105298f7f0ea4"
     },
     {
+      "path": "08_Software/temperature-logger/Check-UI.ps1",
+      "bytes": 1666,
+      "sha256": "0e175413cfac7e6831a1e97aa7339e82121ce721298d8e4aa0e6426d61a5a6a3"
+    },
+    {
+      "path": "08_Software/temperature-logger/README.md",
+      "bytes": 37334,
+      "sha256": "7f4664ce8daadac54829acbda574c79a5a3aea4fc8a52183d6d406c5879948d2"
+    },
+    {
+      "path": "08_Software/temperature-logger/Start-Logger.ps1",
+      "bytes": 961,
+      "sha256": "17dfeb3d75318ac94fd266c957996ccad73d163510e86d119eb3576b770bcbe2"
+    },
+    {
+      "path": "08_Software/temperature-logger/THIRD_PARTY_NOTICES.txt",
+      "bytes": 1241,
+      "sha256": "f160250f7209d240b5fed5ac378ba6885b31c04c046b74fba15ce6ac7b171448"
+    },
+    {
+      "path": "08_Software/temperature-logger/Test-FtdiLoopback.ps1",
+      "bytes": 2674,
+      "sha256": "5596c4f12740ef9f0e7cec12a46e88189d33341fc2580b2ba55025647b7a4811"
+    },
+    {
+      "path": "08_Software/temperature-logger/check_openlog.py",
+      "bytes": 5190,
+      "sha256": "7cce501eaad1979b373d3d309633da9900dd9c3174c29431bc29c74a8618cc6b"
+    },
+    {
+      "path": "08_Software/temperature-logger/check_ui.mjs",
+      "bytes": 12992,
+      "sha256": "7b9ec7b41eee0c04f380b6c5f3698564f8068012929ba22fd95d98bdd7d58abe"
+    },
+    {
+      "path": "08_Software/temperature-logger/logger.html",
+      "bytes": 124662,
+      "sha256": "99876c5c9c8bd78382a0b421f00c94be6d9ffceb08d8035b11799b61b8b02f4b"
+    },
+    {
+      "path": "08_Software/temperature-logger/logger.py",
+      "bytes": 22285,
+      "sha256": "829f247eb34835dd1a24ea2d1d9cafd867adace2998f2943b39cda580ebb265f"
+    },
+    {
+      "path": "08_Software/temperature-logger/recovery.py",
+      "bytes": 2791,
+      "sha256": "b371f4474200764113232358e89a9e770319e79df17b35a11e6ea823fd2bcb0b"
+    },
+    {
+      "path": "08_Software/temperature-logger/sdcard.py",
+      "bytes": 9110,
+      "sha256": "27f76191c919ae72fc42b2abe90d39d486d107e5f1f05a041368f3c24d5b1ce6"
+    },
+    {
+      "path": "08_Software/temperature-logger/test_logger.py",
+      "bytes": 24857,
+      "sha256": "2981d9f895424b3ff56ea9a85e0cbaa39d2752652726d9e373fbf69da4e914d9"
+    },
+    {
       "path": "99_Archive/webhid-history/01-first-singlefile.html",
       "bytes": 36908,
       "sha256": "13e493d9e2f8ad80984c0c34cb61070b90335dc9b287c77b734a3482636ef93a"
@@ -276,8 +356,21 @@
     },
     {
       "path": "README.md",
-      "bytes": 8159,
-      "sha256": "7e4e06fac00fb76089f88f04942cc3b475d9538287439861340116bdeddfdb90"
+      "bytes": 9277,
+      "sha256": "2f8e0d42ed09004a1366a70b44b36de08057e462429d5022219a885fc9421b12"
+    },
+    {
+      "path": "design-qa.md",
+      "bytes": 10993,
+      "sha256": "30c87ec95e5f147c4ad2c54728224b906b30f893ebe6a810e68044a33e1b4d26"
     }
-  ]
+  ],
+  "publication_scope": {
+    "repository": "robomaniac/mlx90614-mcp2221a",
+    "branch": "main",
+    "excluded_unreferenced_local_files": [
+      "image.png"
+    ],
+    "credentials_and_private_generated_material_excluded": true
+  }
 }

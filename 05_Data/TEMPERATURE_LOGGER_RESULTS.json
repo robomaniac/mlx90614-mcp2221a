@@ -1,0 +1,1927 @@
+{
+  "date": "2026-10-11",
+  "native_fake_device_tests": 32,
+  "publication": {
+    "repository": "robomaniac/mlx90614-mcp2221a",
+    "branch": "main",
+    "browser_url": "https://robomaniac.github.io/mlx90614-mcp2221a/logger.html",
+    "user_authorized": true,
+    "current_source_sha256": {
+      "08_Software/temperature-logger/logger.html": "99876c5c9c8bd78382a0b421f00c94be6d9ffceb08d8035b11799b61b8b02f4b",
+      "08_Software/temperature-logger/logger.py": "829f247eb34835dd1a24ea2d1d9cafd867adace2998f2943b39cda580ebb265f",
+      "08_Software/temperature-logger/sdcard.py": "27f76191c919ae72fc42b2abe90d39d486d107e5f1f05a041368f3c24d5b1ce6",
+      "08_Software/temperature-logger/test_logger.py": "2981d9f895424b3ff56ea9a85e0cbaa39d2752652726d9e373fbf69da4e914d9",
+      "08_Software/temperature-logger/check_ui.mjs": "7b9ec7b41eee0c04f380b6c5f3698564f8068012929ba22fd95d98bdd7d58abe",
+      "08_Software/temperature-logger/recovery.py": "b371f4474200764113232358e89a9e770319e79df17b35a11e6ea823fd2bcb0b"
+    },
+    "previous_distinct_alarm_revision_sha256": {
+      "08_Software/temperature-logger/logger.html": "2966b81bbe4b4de0d03bacb247ebe5475cf15e78213c08b5761a3bcf33e37758",
+      "08_Software/temperature-logger/logger.py": "829f247eb34835dd1a24ea2d1d9cafd867adace2998f2943b39cda580ebb265f",
+      "08_Software/temperature-logger/sdcard.py": "27f76191c919ae72fc42b2abe90d39d486d107e5f1f05a041368f3c24d5b1ce6",
+      "08_Software/temperature-logger/test_logger.py": "2981d9f895424b3ff56ea9a85e0cbaa39d2752652726d9e373fbf69da4e914d9",
+      "08_Software/temperature-logger/check_ui.mjs": "7b9ec7b41eee0c04f380b6c5f3698564f8068012929ba22fd95d98bdd7d58abe",
+      "08_Software/temperature-logger/recovery.py": "b371f4474200764113232358e89a9e770319e79df17b35a11e6ea823fd2bcb0b"
+    },
+    "change_scope": "DOCUMENTATION_PUBLIC_LINKS_AND_GUIDE_LINK_ONLY",
+    "hardware_tests": "EXISTING_RESULTS_RETAINED_NO_ADDITIONAL_DEVICE_OPERATIONS",
+    "excluded_local_material": [
+      "credentials",
+      "native build products",
+      "measurement output",
+      "browser profiles",
+      "original private archives",
+      "unreferenced root image.png"
+    ]
+  },
+  "chrome_webhid_simulated": {
+    "mode": "SIMULATED_CHROME_WEBHID",
+    "custom_dropdowns_keyboard_escape_outside_click": true,
+    "rate_controls_lock_during_recording": true,
+    "auto_4hz_for_250ms": true,
+    "viewport_pulse_test_timeout_reduced_motion_and_scroll": true,
+    "custom_names_safe": true,
+    "celsius_fahrenheit_and_difference": true,
+    "alarm_limits_hysteresis_acknowledgement_stale": true,
+    "audio_unlocked_on_click": true,
+    "notifications_only_on_click": true,
+    "sd_bytes_match_csv": true,
+    "sd_file_closed": true,
+    "real_csv_download": true,
+    "silent_write_error_retained": true,
+    "input_fault_retained": true,
+    "freeze_clear_keep_recording": true,
+    "responsive_390px": true,
+    "reduced_motion": true,
+    "no_physical_usb": true,
+    "js_exceptions": []
+  },
+  "chrome_native_simulated": {
+    "mode": "SIMULATED_NATIVE_UI",
+    "native_api": true,
+    "record_start_stop": true,
+    "sd_sync": true,
+    "csv_full_session": true,
+    "reload_keeps_recording": true,
+    "reload_restores_names": true,
+    "units": true,
+    "disconnect": true,
+    "shutdown": true,
+    "no_physical_usb": true,
+    "js_exceptions": []
+  },
+  "physical_openlog": {
+    "result": "LOCAL_3_101_NATIVE_CSV_READBACK_PASS",
+    "addresses_tested": [
+      "0x2A",
+      "0x29"
+    ],
+    "new_files_created": "6 named test CSVs; an earlier unretained test file may also remain.",
+    "existing_files_modified": false,
+    "usb_soft_reset": false,
+    "final_bridge_state": "0x00, SCL high/SDA high, pending=0; readers disconnected",
+    "replacement_card": {
+      "mode": "ACTUAL_READ_ONLY_BUS_DIAGNOSTIC",
+      "reported_card_gb": 32,
+      "reported_power_led": "steady",
+      "reported_usb_replug": true,
+      "usb_soft_reset": false,
+      "i2c_cancellation": false,
+      "sd_file_writes": false,
+      "initial_status": "10 00 00 00 00 00 00 00 25 02 00 00 00 00 76 00 c1 00 10 28 40 60 01 01 00 00",
+      "sensor_read_success": false,
+      "error_code": "I2C_COMMAND",
+      "error": "reg=0x20 reply=94 01 25 00 00 00 00 00",
+      "final_status": "10 00 00 00 00 00 00 00 25 02 00 00 00 00 76 00 c1 00 10 28 40 60 01 01 00 00",
+      "openlog_reached": false,
+      "sd_file_created": false
+    },
+    "initial_check": {
+      "result": "UNVERIFIED_ADDRESS_NACK",
+      "addresses_tested": [
+        "0x2A",
+        "0x29"
+      ],
+      "new_files_created": 0,
+      "final_bridge_state": "0x25",
+      "final_status": "10 00 00 00 00 00 00 00 25 01 00 00 00 00 76 00 52 00 10 a8 40 60 01 01 00 00"
+    },
+    "recovery_status": "ONE_EXPLICITLY_APPROVED_I2C_CANCEL_EXECUTED_IDLE_VERIFIED",
+    "approved_cancel": {
+      "mode": "ONE_EXPLICIT_I2C_CANCEL",
+      "usb_reset": false,
+      "sd_commands": false,
+      "i2c_cancel_sent": true,
+      "before": "10 00 00 00 00 00 00 00 25 02 00 00 00 00 76 00 c1 00 10 28 40 60 01 01 00 00",
+      "cancel_response": "10 00 00 00 00 00 00 00 00 02 00 00 00 00 76 00 c1 00 10 28 40 60 01 01 00 00",
+      "documented_cancel_ack": false,
+      "after": "10 00 00 00 00 00 00 00 00 02 00 00 00 00 76 00 c1 00 10 28 40 60 01 01 00 00",
+      "idle_verified": true
+    },
+    "post_cancel_attempt": {
+      "mode": "ACTUAL_OPENLOG_SD_HARDWARE",
+      "exact_readback": false,
+      "i2c_hz": 100000,
+      "usb_reset": false,
+      "i2c_cancel": false,
+      "existing_files_deleted": false,
+      "existing_files_modified": false,
+      "openlog": {
+        "address": 42,
+        "identity": 120,
+        "status": 21,
+        "firmware": "2.0"
+      },
+      "new_file": "T1D64F68.CSV",
+      "error_code": "SD_COMMAND",
+      "error": "OpenLog command 0x11 status 0x19.",
+      "trace": [
+        {
+          "tx": "90 01 00 54 00",
+          "rx": "90 00 10 00 00 00 00 00 00 01 00 01 00 00 76 00 55 00 10 28 20 60 01 01 00 00"
+        },
+        {
+          "tx": "10",
+          "rx": "10 00 00 00 00 00 00 00 00 01 00 01 00 01 76 2e 54 00 10 28 00 60 01 01 00 00"
+        },
+        {
+          "tx": "91 01 00 55",
+          "rx": "91 00 10 00 00 00 00 00 00 01 00 01 00 01 76 2e 54 00 10 28 00 60 01 01 00 00"
+        },
+        {
+          "tx": "10",
+          "rx": "10 00 00 00 00 00 00 00 55 01 00 01 00 00 76 3e 55 00 10 28 20 60 01 01 00 00"
+        },
+        {
+          "tx": "40",
+          "rx": "40 00 55 01 78 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "tx": "90 01 00 54 01",
+          "rx": "90 00 10 00 00 00 00 00 55 01 00 01 00 00 76 3e 55 00 10 28 20 60 01 01 00 00"
+        },
+        {
+          "tx": "10",
+          "rx": "10 00 00 00 00 00 00 00 00 01 00 01 00 01 76 2f 54 00 10 28 00 60 01 01 00 00"
+        },
+        {
+          "tx": "91 01 00 55",
+          "rx": "91 00 10 00 00 00 00 00 00 01 00 01 00 01 76 2f 54 00 10 28 00 60 01 01 00 00"
+        },
+        {
+          "tx": "10",
+          "rx": "10 00 00 00 00 00 00 00 55 01 00 01 00 00 76 3d 55 00 10 28 20 60 01 01 00 00"
+        },
+        {
+          "tx": "40",
+          "rx": "40 00 55 01 15 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "tx": "90 01 00 54 02",
+          "rx": "90 00 10 00 00 00 00 00 55 01 00 01 00 00 76 3d 55 00 10 28 20 60 01 01 00 00"
+        },
+        {
+          "tx": "10",
+          "rx": "10 00 00 00 00 00 00 00 00 01 00 01 00 01 76 2e 54 00 10 28 00 60 01 01 00 00"
+        },
+        {
+          "tx": "91 01 00 55",
+          "rx": "91 00 10 00 00 00 00 00 00 01 00 01 00 01 76 2e 54 00 10 28 00 60 01 01 00 00"
+        },
+        {
+          "tx": "10",
+          "rx": "10 00 00 00 00 00 00 00 55 01 00 01 00 00 76 3e 55 00 10 28 20 60 01 01 00 00"
+        },
+        {
+          "tx": "40",
+          "rx": "40 00 55 01 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "tx": "90 01 00 54 03",
+          "rx": "90 00 10 00 00 00 00 00 55 01 00 01 00 00 76 3e 55 00 10 28 20 60 01 01 00 00"
+        },
+        {
+          "tx": "10",
+          "rx": "10 00 00 00 00 00 00 00 00 01 00 01 00 01 76 2d 54 00 10 28 00 60 01 01 00 00"
+        },
+        {
+          "tx": "91 01 00 55",
+          "rx": "91 00 10 00 00 00 00 00 00 01 00 01 00 01 76 2d 54 00 10 28 00 60 01 01 00 00"
+        },
+        {
+          "tx": "10",
+          "rx": "10 00 00 00 00 00 00 00 55 01 00 01 00 00 76 3e 55 00 10 28 20 60 01 01 00 00"
+        },
+        {
+          "tx": "40",
+          "rx": "40 00 55 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "tx": "90 01 00 54 00",
+          "rx": "90 00 10 00 00 00 00 00 55 01 00 01 00 00 76 3e 55 00 10 28 20 60 01 01 00 00"
+        },
+        {
+          "tx": "10",
+          "rx": "10 00 00 00 00 00 00 00 00 01 00 01 00 01 76 2d 54 00 10 28 00 60 01 01 00 00"
+        },
+        {
+          "tx": "91 01 00 55",
+          "rx": "91 00 10 00 00 00 00 00 00 01 00 01 00 01 76 2d 54 00 10 28 00 60 01 01 00 00"
+        },
+        {
+          "tx": "10",
+          "rx": "10 00 00 00 00 00 00 00 55 01 00 01 00 00 76 3d 55 00 10 28 20 60 01 01 00 00"
+        },
+        {
+          "tx": "40",
+          "rx": "40 00 55 01 78 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "tx": "90 01 00 54 01",
+          "rx": "90 00 10 00 00 00 00 00 55 01 00 01 00 00 76 3d 55 00 10 28 20 60 01 01 00 00"
+        },
+        {
+          "tx": "10",
+          "rx": "10 00 00 00 00 00 00 00 00 01 00 01 00 01 76 2e 54 00 10 28 00 60 01 01 00 00"
+        },
+        {
+          "tx": "91 01 00 55",
+          "rx": "91 00 10 00 00 00 00 00 00 01 00 01 00 01 76 2e 54 00 10 28 00 60 01 01 00 00"
+        },
+        {
+          "tx": "10",
+          "rx": "10 00 00 00 00 00 00 00 55 01 00 01 00 00 76 3e 55 00 10 28 20 60 01 01 00 00"
+        },
+        {
+          "tx": "40",
+          "rx": "40 00 55 01 15 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "tx": "90 01 00 54 02",
+          "rx": "90 00 10 00 00 00 00 00 55 01 00 01 00 00 76 3e 55 00 10 28 20 60 01 01 00 00"
+        },
+        {
+          "tx": "10",
+          "rx": "10 00 00 00 00 00 00 00 00 01 00 01 00 01 76 2e 54 00 10 28 00 60 01 01 00 00"
+        },
+        {
+          "tx": "91 01 00 55",
+          "rx": "91 00 10 00 00 00 00 00 00 01 00 01 00 01 76 2e 54 00 10 28 00 60 01 01 00 00"
+        },
+        {
+          "tx": "10",
+          "rx": "10 00 00 00 00 00 00 00 55 01 00 01 00 00 76 3d 55 00 10 28 20 60 01 01 00 00"
+        },
+        {
+          "tx": "40",
+          "rx": "40 00 55 01 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "tx": "90 01 00 54 03",
+          "rx": "90 00 10 00 00 00 00 00 55 01 00 01 00 00 76 3d 55 00 10 28 20 60 01 01 00 00"
+        },
+        {
+          "tx": "10",
+          "rx": "10 00 00 00 00 00 00 00 00 01 00 01 00 01 76 30 54 00 10 28 00 60 01 01 00 00"
+        },
+        {
+          "tx": "91 01 00 55",
+          "rx": "91 00 10 00 00 00 00 00 00 01 00 01 00 01 76 30 54 00 10 28 00 60 01 01 00 00"
+        },
+        {
+          "tx": "10",
+          "rx": "10 00 00 00 00 00 00 00 55 01 00 01 00 00 76 3e 55 00 10 28 20 60 01 01 00 00"
+        },
+        {
+          "tx": "40",
+          "rx": "40 00 55 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "tx": "90 03 00 54 08 2e 2e",
+          "rx": "90 00 10 00 00 00 00 00 55 01 00 01 00 00 76 3e 55 00 10 28 20 60 01 01 00 00"
+        },
+        {
+          "tx": "10",
+          "rx": "10 00 00 00 00 00 00 00 00 03 00 03 00 03 76 38 54 00 10 28 00 60 01 01 00 00"
+        },
+        {
+          "tx": "91 01 00 55",
+          "rx": "91 00 10 00 00 00 00 00 00 03 00 03 00 03 76 38 54 00 10 28 00 60 01 01 00 00"
+        },
+        {
+          "tx": "10",
+          "rx": "10 00 00 00 00 00 00 00 55 01 00 01 00 00 76 3e 55 00 10 28 20 60 01 01 00 00"
+        },
+        {
+          "tx": "40",
+          "rx": "40 00 55 01 17 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "tx": "90 0d 00 54 06 54 31 44 36 34 46 36 38 2e 43 53 56",
+          "rx": "90 00 10 00 00 00 00 00 55 01 00 01 00 00 76 3e 55 00 10 28 20 60 01 01 00 00"
+        },
+        {
+          "tx": "10",
+          "rx": "10 00 00 00 00 00 00 00 00 0d 00 0d 00 0d 76 67 54 00 10 28 00 60 01 01 00 00"
+        },
+        {
+          "tx": "91 01 00 55",
+          "rx": "91 00 10 00 00 00 00 00 00 0d 00 0d 00 0d 76 67 54 00 10 28 00 60 01 01 00 00"
+        },
+        {
+          "tx": "10",
+          "rx": "10 00 00 00 00 00 00 00 50 01 00 00 00 00 76 36 55 00 08 28 08 60 00 00 00 00"
+        },
+        {
+          "tx": "10",
+          "rx": "10 00 00 00 00 00 00 00 50 01 00 00 00 00 76 00 55 00 08 28 08 60 00 00 00 00"
+        },
+        {
+          "tx": "10",
+          "rx": "10 00 00 00 00 00 00 00 55 01 00 01 00 00 76 58 55 00 10 28 20 60 01 01 00 00"
+        },
+        {
+          "tx": "40",
+          "rx": "40 00 55 01 17 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "tx": "90 0d 00 54 0b 54 31 44 36 34 46 36 38 2e 43 53 56",
+          "rx": "90 00 10 00 00 00 00 00 55 01 00 01 00 00 76 58 55 00 10 28 20 60 01 01 00 00"
+        },
+        {
+          "tx": "10",
+          "rx": "10 00 00 00 00 00 00 00 00 0d 00 0d 00 0d 76 66 54 00 10 28 00 60 01 01 00 00"
+        },
+        {
+          "tx": "91 01 00 55",
+          "rx": "91 00 10 00 00 00 00 00 00 0d 00 0d 00 0d 76 66 54 00 10 28 00 60 01 01 00 00"
+        },
+        {
+          "tx": "10",
+          "rx": "10 00 00 00 00 00 00 00 55 01 00 01 00 00 76 3e 55 00 10 28 20 60 01 01 00 00"
+        },
+        {
+          "tx": "40",
+          "rx": "40 00 55 01 1f 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "tx": "90 0f 00 54 0c 6b 69 6e 64 2c 6d 65 73 73 61 67 65 0d 0a",
+          "rx": "90 00 10 00 00 00 00 00 55 01 00 01 00 00 76 3e 55 00 10 28 20 60 01 01 00 00"
+        },
+        {
+          "tx": "10",
+          "rx": "10 00 00 00 00 00 00 00 00 0f 00 0f 00 0f 76 74 54 00 10 28 00 60 01 01 00 00"
+        },
+        {
+          "tx": "91 01 00 55",
+          "rx": "91 00 10 00 00 00 00 00 00 0f 00 0f 00 0f 76 74 54 00 10 28 00 60 01 01 00 00"
+        },
+        {
+          "tx": "10",
+          "rx": "10 00 00 00 00 00 00 00 50 01 00 00 00 00 76 37 55 00 08 28 08 60 00 00 00 00"
+        },
+        {
+          "tx": "10",
+          "rx": "10 00 00 00 00 00 00 00 50 01 00 00 00 00 76 00 55 00 08 28 08 60 00 00 00 00"
+        },
+        {
+          "tx": "10",
+          "rx": "10 00 00 00 00 00 00 00 50 01 00 00 00 00 76 00 55 00 08 28 08 60 00 00 00 00"
+        },
+        {
+          "tx": "10",
+          "rx": "10 00 00 00 00 00 00 00 50 01 00 00 00 00 76 00 55 00 08 28 08 60 00 00 00 00"
+        },
+        {
+          "tx": "10",
+          "rx": "10 00 00 00 00 00 00 00 50 01 00 00 00 00 76 00 55 00 08 28 08 60 00 00 00 00"
+        },
+        {
+          "tx": "10",
+          "rx": "10 00 00 00 00 00 00 00 50 01 00 00 00 00 76 00 55 00 08 28 08 60 00 00 00 00"
+        },
+        {
+          "tx": "10",
+          "rx": "10 00 00 00 00 00 00 00 50 01 00 00 00 00 76 00 55 00 08 28 08 60 00 00 00 00"
+        },
+        {
+          "tx": "10",
+          "rx": "10 00 00 00 00 00 00 00 50 01 00 00 00 00 76 00 55 00 08 28 08 60 00 00 00 00"
+        },
+        {
+          "tx": "10",
+          "rx": "10 00 00 00 00 00 00 00 50 01 00 00 00 00 76 00 55 00 08 28 08 60 00 00 00 00"
+        },
+        {
+          "tx": "10",
+          "rx": "10 00 00 00 00 00 00 00 55 01 00 01 00 00 76 51 55 00 10 28 20 60 01 01 00 00"
+        },
+        {
+          "tx": "40",
+          "rx": "40 00 55 01 1f 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "tx": "90 01 00 54 11",
+          "rx": "90 00 10 00 00 00 00 00 55 01 00 01 00 00 76 51 55 00 10 28 20 60 01 01 00 00"
+        },
+        {
+          "tx": "10",
+          "rx": "10 00 00 00 00 00 00 00 00 01 00 01 00 01 76 2e 54 00 10 28 00 60 01 01 00 00"
+        },
+        {
+          "tx": "91 01 00 55",
+          "rx": "91 00 10 00 00 00 00 00 00 01 00 01 00 01 76 2e 54 00 10 28 00 60 01 01 00 00"
+        },
+        {
+          "tx": "10",
+          "rx": "10 00 00 00 00 00 00 00 55 01 00 01 00 00 76 3d 55 00 10 28 20 60 01 01 00 00"
+        },
+        {
+          "tx": "40",
+          "rx": "40 00 55 01 19 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        }
+      ]
+    },
+    "test_file_readback": {
+      "mode": "READBACK_OF_THIS_TEST_FILE_ONLY",
+      "new_file": "T1D64F68.CSV",
+      "expected_header_bytes": 14,
+      "usb_reset": false,
+      "i2c_cancel": false,
+      "files_deleted": false,
+      "existing_files_modified": false,
+      "openlog": {
+        "address": 42,
+        "identity": 120,
+        "status": 29,
+        "firmware": "2.0"
+      },
+      "stored_bytes": 2,
+      "readback_hex": "6b 69",
+      "sensor": {
+        "valid_reading": false,
+        "error_code": "I2C_DATA",
+        "response": "40 41 25 7f 00 00 00 00",
+        "address": "0x60"
+      }
+    },
+    "known_test_files_created": 6,
+    "additional_empty_test_file_possible": true,
+    "full_csv_recording_verified": true,
+    "firmware_updated": true,
+    "firmware_update": {
+      "status": "FIRMWARE_3_1_I2C_CONFIRMED_SD_WRITE_FAILED",
+      "firmware_target": "3.1",
+      "source_repository": "https://github.com/sparkfun/Qwiic_OpenLog",
+      "source_revision": "f3f6a3ec3f70fe4c14612b38fac360f26ee79a4c",
+      "serialport_revision": "0a751d912af85b4a00ac4c4b8595e97df7b02166",
+      "sdfat_version": "1.1.4",
+      "arduino_cli": "1.4.1",
+      "avr_core": "1.8.8",
+      "avrdude": "8.0.0-arduino1",
+      "fqbn": "arduino:avr:uno",
+      "flash_bytes": 21698,
+      "flash_limit": 32256,
+      "sram_bytes": 1368,
+      "sram_free_bytes": 680,
+      "hex_sha256": "61479e702b30a5718ecf46b0f3579c2f25032aaadd12883ab0a23ffe5900c2ac",
+      "hex_checksums_verified": true,
+      "highest_application_address": 21697,
+      "bootloader_in_image": false,
+      "ftdi_port": "COM21",
+      "ftdi_vid_pid": "0403:6001",
+      "exclusive_port_open_succeeded": true,
+      "signature_received": true,
+      "backup_succeeded": true,
+      "flash_write_attempted": true,
+      "firmware_updated": true,
+      "eeprom_written": false,
+      "fuses_written": false,
+      "mcp2221_usb_reset": false,
+      "further_i2c_cancel": true,
+      "serial_checks": [
+        {
+          "baud": 115200,
+          "retries": 10,
+          "reply": "0x00",
+          "exit_code": 1
+        },
+        {
+          "baud": 115200,
+          "retries": 2,
+          "reply": "0x00",
+          "exit_code": 1,
+          "after_connection_confirmation": true
+        },
+        {
+          "baud": 115200,
+          "retries": 2,
+          "reply": "0x00",
+          "exit_code": 1,
+          "after_physical_rxtx_swap": true,
+          "inactive_readers_verified": true,
+          "error": "programmer is not responding; not in sync"
+        },
+        {
+          "port": "COM21",
+          "baud": 115200,
+          "retries": 2,
+          "exit_code": 0,
+          "replacement_ftdi": true,
+          "full_flash_backup_bytes": 32768
+        }
+      ],
+      "next_test": "Normal local dashboard use; optional longer/cold-start trials only when needed.",
+      "download_sha256": {
+        "sparkfun-source.zip": "e061c2bdd301d3fe34f7edfdb5573acab96ec30dc89a5b2a47920f76079a8605",
+        "serialport-source.zip": "ed269117230b41425cc1babefb9dda245c8eb5f1358acc5b6c8aaad9b40683d5",
+        "sdfat-1.1.4.zip": "861839263bcc1876594106eaa15a05d26379c5384867140ac1465003a5e4b33d"
+      },
+      "rxtx_swap_resolved_sync": false,
+      "loopback": {
+        "mode": "ACTUAL_FTDI_LOOPBACK",
+        "port": "COM20",
+        "baud": 115200,
+        "passed": false,
+        "openlog_disconnected_confirmed": true,
+        "sent_hex": "55-AA-00-FF-4F-50-45-4E-4C-4F-47-2D-46-54-44-49",
+        "received_bytes": 0,
+        "received_hex": "",
+        "error": "FTDI loopback mismatch: received 0 of 16 bytes.",
+        "status": "ACTUAL_LOOPBACK_FAILED_ZERO_BYTES",
+        "driver_provider": "FTDI",
+        "driver_version": "2.12.36.20",
+        "driver_signed": true,
+        "pnp_status": "OK",
+        "present_serial_ports": [
+          "COM20"
+        ],
+        "framing": "8N1",
+        "flow_control": "NONE",
+        "dtr": false,
+        "rts": false,
+        "receive_budget_ms": 2000,
+        "serial_port_closed": true,
+        "adapter_model": "UNCONFIRMED",
+        "hardware_cause": "UNRESOLVED",
+        "usb_reset": false,
+        "firmware_written": false,
+        "next_check": "Adapter model and exact joined pin labels; direct TX/RX contact without crossover/inverter"
+      },
+      "replacement_ftdi": true,
+      "signature_check_passed": true,
+      "backup_bytes": 32768,
+      "backup_sha256": "0a93c04feef4d813bf78ffbff05e1d1532cc0b396b74af1f2d66b52d97e6017d",
+      "flash_verified": true,
+      "verified_flash_bytes": 21698,
+      "signature": "1e950f",
+      "physical_i2c_version_rechecked": true,
+      "flash_attempts": [
+        {
+          "port": "COM21",
+          "exit_code": 1,
+          "phase": "BOOTLOADER_INITIALIZATION",
+          "error": "protocol expects sync byte 0x14 but got 0x00; cannot obtain SW version",
+          "programming_reported": false
+        },
+        {
+          "port": "COM21",
+          "exit_code": 0,
+          "signature": "1e950f",
+          "bytes_written": 21698,
+          "bytes_verified": 21698,
+          "serial_trace_retained": true
+        }
+      ],
+      "physical_i2c_firmware": "3.1",
+      "post_update_sd_check": {
+        "status": "IDENTITY_PASS_CSV_WRITE_FAILED",
+        "physical_i2c_version_verified": true,
+        "firmware": "3.1",
+        "i2c_hz": 100000,
+        "identity": {
+          "mode": "ACTUAL_OPENLOG_HARDWARE",
+          "timestamp_utc": "20261011T050628_794774Z",
+          "write_test_requested": false,
+          "exact_readback": false,
+          "i2c_hz": 100000,
+          "usb_reset": false,
+          "i2c_cancel": false,
+          "existing_files_deleted": false,
+          "existing_recording_files_modified": false,
+          "initial_bridge_status": "10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 01 01 00 00",
+          "openlog": {
+            "address": 42,
+            "identity": 120,
+            "status": 29,
+            "firmware": "3.1"
+          }
+        },
+        "new_file": "TBF8D92C.CSV",
+        "csv_write": {
+          "mode": "ACTUAL_OPENLOG_HARDWARE",
+          "timestamp_utc": "20261011T050637_386171Z",
+          "write_test_requested": true,
+          "exact_readback": false,
+          "i2c_hz": 100000,
+          "usb_reset": false,
+          "i2c_cancel": false,
+          "existing_files_deleted": false,
+          "existing_recording_files_modified": false,
+          "initial_bridge_status": "10 00 00 00 00 00 00 00 00 01 00 01 00 00 76 00 55 00 10 28 20 60 01 01 00 00",
+          "openlog": {
+            "address": 42,
+            "identity": 120,
+            "status": 29,
+            "firmware": "3.1"
+          },
+          "new_file_candidate": "TBF8D92C.CSV",
+          "error_code": "SD_TIMEOUT",
+          "error": "OpenLog transaction exceeded its budget."
+        },
+        "csv_write_trace_reports": 725,
+        "expected_header_bytes": 14,
+        "failed_read_recovery": {
+          "mode": "ONE_CANCEL_OF_OUR_FAILED_POST_UPDATE_READ",
+          "new_file": "TBF8D92C.CSV",
+          "usb_reset": false,
+          "i2c_cancel_sent": true,
+          "existing_recordings_modified": false,
+          "files_deleted": false,
+          "before": "10 00 00 00 00 00 00 00 50 01 00 00 00 00 76 00 55 00 10 28 00 60 01 01 00 00",
+          "i2c_cancel_attempted": true,
+          "ack": "10 00 10 00 00 00 00 00 60 01 00 00 00 00 76 00 55 00 10 28 00 60 01 01 00 00",
+          "after": "10 00 00 00 00 00 00 00 00 01 00 00 00 00 76 29 55 00 10 28 00 60 01 01 00 00",
+          "idle_verified": true,
+          "openlog": {
+            "address": 42,
+            "identity": 120,
+            "status": 29,
+            "firmware": "3.1"
+          },
+          "stored_bytes": 0,
+          "readback_hex": "",
+          "expected_header_bytes": 14,
+          "header_matches": false
+        },
+        "stored_bytes_before_sdk_comparison": 0,
+        "sdk_pattern_comparison": {
+          "mode": "ACTUAL_SPARKFUN_WRITE_SYNC_PATTERN",
+          "new_file": "TBF8D92C.CSV",
+          "usb_reset": false,
+          "i2c_cancel": false,
+          "existing_recordings_modified": false,
+          "files_deleted": false,
+          "immediate_write_status_read": false,
+          "immediate_sync_status_read": false,
+          "initial_status": "10 00 00 00 00 00 00 00 00 0d 00 0d 00 0d 76 00 54 00 10 28 00 60 01 01 00 00",
+          "openlog": {
+            "address": 42,
+            "identity": 120,
+            "status": 29,
+            "firmware": "3.1"
+          },
+          "phase": "sync",
+          "error_code": "HID_TIMEOUT",
+          "error": "Deadline passed after sending HID command."
+        },
+        "sdk_comparison_trace_reports": 696,
+        "final_status": {
+          "mode": "SDK_FAILURE_STATUS_ONLY",
+          "drained_reports": [],
+          "status": "10 00 00 00 00 00 00 00 44 01 00 01 00 01 76 00 54 00 08 28 00 60 00 01 00 00",
+          "engine": 68,
+          "scl": 0,
+          "sda": 1,
+          "pending": 0,
+          "usb_reset": false,
+          "i2c_cancel": false,
+          "card_commands": false
+        },
+        "final_file_size_unverified_after_sdk_comparison": true,
+        "exact_readback": false,
+        "full_csv_recording_verified": false,
+        "extra_immediate_status_read_is_sole_cause": false,
+        "usb_soft_reset": false,
+        "files_deleted": false,
+        "existing_recordings_modified": false,
+        "further_recovery_after_sdk_failure": false,
+        "next_test": "Power off and connect working FTDI; test separate local 3.101 SPI experiment; restore Qwiic and verify a new complete CSV."
+      },
+      "spi_experiment": {
+        "status": "FLASH_AND_NATIVE_RECORDING_READBACK_VERIFIED",
+        "version": "3.101",
+        "local_version_not_upstream_release": true,
+        "hypothesis": "SPI gated during sleep may block SD I/O in wake-time Wire callbacks before main-loop SPI restoration.",
+        "sleep_during_failed_command_proven": false,
+        "only_changes": [
+          "Keep SPI powered during idle sleep",
+          "Set local firmware minor version to 101"
+        ],
+        "upstream_copy_unchanged": true,
+        "source_revision": "f3f6a3ec3f70fe4c14612b38fac360f26ee79a4c",
+        "image": ".local/openlog-update/spi-awake-build/Qwiic_OpenLog.ino.hex",
+        "hex_sha256": "ca930c7fd55c4fd5b75c2ef84dd1d6557b99f143fe2a4ed49101fce9453ae1ef",
+        "flash_bytes": 21688,
+        "sram_bytes": 1368,
+        "sram_free_bytes": 680,
+        "highest_application_address": 21687,
+        "hex_checksums_verified": true,
+        "bootloader_in_image": false,
+        "official_3_1_rollback_preserved": true,
+        "original_factory_backup_preserved": true,
+        "may_increase_idle_consumption": true,
+        "flash_verified": true,
+        "physical_i2c_version_verified": true,
+        "native_sd_hardware_verified": true,
+        "standalone_webhid_sd_hardware_verified": false,
+        "flash_result": {
+          "mode": "ACTUAL_OPENLOG_SPI_EXPERIMENT_FLASH",
+          "version": "3.101",
+          "port": "COM21",
+          "status": "FLASH_VERIFIED_SD_RECHECK_PENDING",
+          "hex_sha256": "ca930c7fd55c4fd5b75c2ef84dd1d6557b99f143fe2a4ed49101fce9453ae1ef",
+          "backup": "before-spi-experiment-COM21-20261011T053047169Z.hex",
+          "backup_sha256": "fa95537cb9123a2217a117597ca2fbf5a4ea17485a5b1ff92b86f5ad0b19f808",
+          "log": "spi-flash-20261011T053208506Z.txt",
+          "usb_soft_reset": false,
+          "eeprom_written": false,
+          "fuses_written": false,
+          "sd_recording_verified": false,
+          "exit_code": 0,
+          "programming_reported": true,
+          "flash_verified": true,
+          "verified_flash_bytes": 21688
+        },
+        "pre_experiment_backup": {
+          "mode": "ACTUAL_PRE_EXPERIMENT_BACKUP",
+          "status": "COMPLETE_BACKUP_VALIDATED",
+          "port": "COM21",
+          "backup": "before-spi-experiment-COM21-20261011T053047169Z.hex",
+          "log": "spi-backup-20261011T053047169Z.txt",
+          "backup_bytes": 32768,
+          "backup_sha256": "fa95537cb9123a2217a117597ca2fbf5a4ea17485a5b1ff92b86f5ad0b19f808",
+          "hex_checksums_verified": true,
+          "official_3_1_application_matches": true,
+          "original_bootloader_matches": true,
+          "command_exit": 1,
+          "result_recording_error": "PowerShell used false instead of $false after backup read completed; saved output and all flash bytes independently validated.",
+          "avrdude_exit_code_retained": false,
+          "firmware_write": false
+        },
+        "i2c_identity": {
+          "mode": "ACTUAL_OPENLOG_HARDWARE",
+          "timestamp_utc": "20261011T053345_148117Z",
+          "write_test_requested": false,
+          "exact_readback": false,
+          "i2c_hz": 100000,
+          "usb_reset": false,
+          "i2c_cancel": false,
+          "existing_files_deleted": false,
+          "existing_recording_files_modified": false,
+          "initial_bridge_status": "10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 01 01 00 00",
+          "openlog": {
+            "address": 42,
+            "identity": 120,
+            "status": 29,
+            "firmware": "3.101"
+          }
+        },
+        "short_csv_check": {
+          "mode": "ACTUAL_OPENLOG_HARDWARE",
+          "timestamp_utc": "20261011T053353_975268Z",
+          "write_test_requested": true,
+          "exact_readback": true,
+          "i2c_hz": 100000,
+          "usb_reset": false,
+          "i2c_cancel": false,
+          "existing_files_deleted": false,
+          "existing_recording_files_modified": false,
+          "initial_bridge_status": "10 00 00 00 00 00 00 00 00 01 00 01 00 00 76 00 55 00 10 28 20 60 01 01 00 00",
+          "openlog": {
+            "address": 42,
+            "identity": 120,
+            "status": 29,
+            "firmware": "3.101"
+          },
+          "new_file_candidate": "T645CD8F.CSV",
+          "new_file": "T645CD8F.CSV",
+          "stored_bytes": 61,
+          "sha256": "702b134e0fb0d09e1edf97a76acb5e6091b5854e755d4bb5abc2dbb71d466025",
+          "expected_bytes": 61
+        },
+        "first_sensor_check": {
+          "mode": "ACTUAL_OPENLOG_HARDWARE",
+          "timestamp_utc": "20261011T053409_595221Z",
+          "write_test_requested": false,
+          "exact_readback": false,
+          "i2c_hz": 100000,
+          "usb_reset": false,
+          "i2c_cancel": false,
+          "existing_files_deleted": false,
+          "existing_recording_files_modified": false,
+          "initial_bridge_status": "10 00 00 00 00 00 00 00 00 1d 00 1d 00 00 76 00 55 00 10 28 20 60 01 01 00 00",
+          "openlog": {
+            "address": 42,
+            "identity": 120,
+            "status": 29,
+            "firmware": "3.101"
+          },
+          "error_code": "I2C_DATA",
+          "error": "reg=0x20 reply=40 41 25 7f 00 00 00 00"
+        },
+        "first_sensor_failure_status": {
+          "mode": "POST_SPI_EXPERIMENT_SENSOR_NACK_STATUS_ONLY",
+          "status": "10 00 00 00 00 00 00 00 25 02 00 00 00 00 76 00 c1 00 10 28 40 60 01 01 00 00",
+          "engine": 37,
+          "scl": 1,
+          "sda": 1,
+          "pending": 0,
+          "i2c_cancel": false,
+          "usb_reset": false,
+          "card_commands": false
+        },
+        "sensor_failure_cleanup": {
+          "mode": "ONE_CANCEL_OF_OUR_SENSOR_NACK",
+          "before": "10 00 00 00 00 00 00 00 25 02 00 00 00 00 76 00 c1 00 10 28 40 60 01 01 00 00",
+          "i2c_cancel_attempted": true,
+          "usb_reset": false,
+          "ack": "10 00 00 00 00 00 00 00 00 02 00 00 00 00 76 00 c1 00 10 28 40 60 01 01 00 00",
+          "after": "10 00 00 00 00 00 00 00 00 02 00 00 00 00 76 00 c1 00 10 28 40 60 01 01 00 00",
+          "idle_verified": true
+        },
+        "delayed_csv_check": {
+          "mode": "ACTUAL_SPI_EXPERIMENT_IDLE_GAP_SD_TEST",
+          "version": "3.101",
+          "new_file_candidate": "T8F4AE50.CSV",
+          "idle_gap_seconds": 1.0,
+          "i2c_hz": 100000,
+          "usb_reset": false,
+          "files_deleted": false,
+          "existing_recordings_modified": false,
+          "exact_readback": true,
+          "recovery": {
+            "mode": "ONE_CANCEL_OF_OUR_SENSOR_NACK",
+            "before": "10 00 00 00 00 00 00 00 25 02 00 00 00 00 76 00 c1 00 10 28 40 60 01 01 00 00",
+            "i2c_cancel_attempted": true,
+            "usb_reset": false,
+            "ack": "10 00 00 00 00 00 00 00 00 02 00 00 00 00 76 00 c1 00 10 28 40 60 01 01 00 00",
+            "after": "10 00 00 00 00 00 00 00 00 02 00 00 00 00 76 00 c1 00 10 28 40 60 01 01 00 00",
+            "idle_verified": true
+          },
+          "openlog": {
+            "address": 42,
+            "identity": 120,
+            "status": 29,
+            "firmware": "3.101"
+          },
+          "stored_bytes": 91,
+          "final_bridge_status": "10 00 00 00 00 00 00 00 00 1b 00 1b 00 00 76 00 55 00 10 28 20 60 01 01 00 00",
+          "expected_bytes": 91,
+          "sha256": "77ab20adfa965d9d9048527a2741f2b520bfa0d2a78573066bf890ebb87bed3e",
+          "status": "PASS"
+        },
+        "sensor_address_probe": {
+          "mode": "ACTUAL_MCP9600_BOUNDED_ADDRESS_PROBE",
+          "addresses": [
+            {
+              "address": "0x60",
+              "status": "10 00 00 00 00 00 00 00 00 00 00 00 00 00 76 28 c0 00 10 28 00 60 01 01 00 00",
+              "acknowledged": true,
+              "device_id": "4014"
+            }
+          ],
+          "usb_reset": false,
+          "sensor_config_writes": false,
+          "sd_file_writes": false,
+          "cancellations_of_failed_probes": 0,
+          "initial_status": "10 00 00 00 00 00 00 00 00 1b 00 1b 00 00 76 00 55 00 10 28 20 60 01 01 00 00",
+          "sensor": {
+            "info": {
+              "model": "MCP9600",
+              "device_id": "4014",
+              "address": 96,
+              "thermocouple_type": "K",
+              "adc_bits": 18,
+              "conversion_ms": 320,
+              "filter": 0,
+              "cold_resolution_c": 0.0625,
+              "power_mode": 0,
+              "sensor_config": 0,
+              "device_config": 0,
+              "i2c_hz": 100000
+            },
+            "reading": {
+              "hot_c": 27.1875,
+              "cold_c": 29.25,
+              "hot_raw": "01B3",
+              "cold_raw": "01D4",
+              "sensor_status": 79
+            }
+          },
+          "mcp9600_found": true,
+          "final_status": "10 00 00 00 00 00 00 00 00 01 00 01 00 00 76 00 c1 00 10 28 20 60 01 01 00 00",
+          "status": "MCP9600_FOUND"
+        },
+        "native_recording": {
+          "mode": "ACTUAL_NATIVE_LOGGER_SENSOR_TO_SD",
+          "requested_trial_seconds": 8.0,
+          "polling_hz": 2,
+          "recording_interval_seconds": 1,
+          "usb_reset": false,
+          "exact_readback": true,
+          "existing_recordings_modified": false,
+          "files_deleted": false,
+          "sensor_info": {
+            "model": "MCP9600",
+            "device_id": "4014",
+            "address": 96,
+            "thermocouple_type": "K",
+            "adc_bits": 18,
+            "conversion_ms": 320,
+            "filter": 0,
+            "cold_resolution_c": 0.0625,
+            "power_mode": 0,
+            "sensor_config": 0,
+            "device_config": 0,
+            "i2c_hz": 100000
+          },
+          "new_file": "T927E188.CSV",
+          "elapsed_recording_seconds": 8.407,
+          "recording": {
+            "phase": "stopped",
+            "message": "Recording stopped; CSV retained. SD synchronized and size verified; file closed.",
+            "count": 9,
+            "available": true,
+            "sd_filename": "T927E188.CSV",
+            "sd_bytes": 1263,
+            "settings": {
+              "interval_s": 1,
+              "probe_name": "Bench probe",
+              "board_name": "Cold junction",
+              "sd": true,
+              "sd_address": 42
+            }
+          },
+          "attempts": 19,
+          "valid_samples": 19,
+          "failed_samples": 0,
+          "recorded_rows": 9,
+          "pc_bytes": 1263,
+          "pc_sha256": "5af65b4bf436075da7a4bd59b477650144cd176d059f727049d4325f22063bdd",
+          "openlog": {
+            "address": 42,
+            "identity": 120,
+            "status": 29,
+            "firmware": "3.101"
+          },
+          "stored_bytes": 1263,
+          "status": "PASS",
+          "sd_sha256": "5af65b4bf436075da7a4bd59b477650144cd176d059f727049d4325f22063bdd",
+          "final_bridge_status": "10 00 00 00 00 00 00 00 00 0f 00 0f 00 00 76 00 55 00 10 28 20 60 01 01 00 00"
+        },
+        "spi_sleep_hypothesis_supported": true,
+        "spi_sleep_failure_instrumented": false,
+        "sustained_or_cold_start_validation": false
+      },
+      "current_firmware_version": "3.101",
+      "latest_operation": "LOCAL_3_101_NATIVE_RECORDING_READBACK_VERIFIED"
+    },
+    "post_update_sd_check": {
+      "status": "IDENTITY_PASS_CSV_WRITE_FAILED",
+      "physical_i2c_version_verified": true,
+      "firmware": "3.1",
+      "i2c_hz": 100000,
+      "identity": {
+        "mode": "ACTUAL_OPENLOG_HARDWARE",
+        "timestamp_utc": "20261011T050628_794774Z",
+        "write_test_requested": false,
+        "exact_readback": false,
+        "i2c_hz": 100000,
+        "usb_reset": false,
+        "i2c_cancel": false,
+        "existing_files_deleted": false,
+        "existing_recording_files_modified": false,
+        "initial_bridge_status": "10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 01 01 00 00",
+        "openlog": {
+          "address": 42,
+          "identity": 120,
+          "status": 29,
+          "firmware": "3.1"
+        }
+      },
+      "new_file": "TBF8D92C.CSV",
+      "csv_write": {
+        "mode": "ACTUAL_OPENLOG_HARDWARE",
+        "timestamp_utc": "20261011T050637_386171Z",
+        "write_test_requested": true,
+        "exact_readback": false,
+        "i2c_hz": 100000,
+        "usb_reset": false,
+        "i2c_cancel": false,
+        "existing_files_deleted": false,
+        "existing_recording_files_modified": false,
+        "initial_bridge_status": "10 00 00 00 00 00 00 00 00 01 00 01 00 00 76 00 55 00 10 28 20 60 01 01 00 00",
+        "openlog": {
+          "address": 42,
+          "identity": 120,
+          "status": 29,
+          "firmware": "3.1"
+        },
+        "new_file_candidate": "TBF8D92C.CSV",
+        "error_code": "SD_TIMEOUT",
+        "error": "OpenLog transaction exceeded its budget."
+      },
+      "csv_write_trace_reports": 725,
+      "expected_header_bytes": 14,
+      "failed_read_recovery": {
+        "mode": "ONE_CANCEL_OF_OUR_FAILED_POST_UPDATE_READ",
+        "new_file": "TBF8D92C.CSV",
+        "usb_reset": false,
+        "i2c_cancel_sent": true,
+        "existing_recordings_modified": false,
+        "files_deleted": false,
+        "before": "10 00 00 00 00 00 00 00 50 01 00 00 00 00 76 00 55 00 10 28 00 60 01 01 00 00",
+        "i2c_cancel_attempted": true,
+        "ack": "10 00 10 00 00 00 00 00 60 01 00 00 00 00 76 00 55 00 10 28 00 60 01 01 00 00",
+        "after": "10 00 00 00 00 00 00 00 00 01 00 00 00 00 76 29 55 00 10 28 00 60 01 01 00 00",
+        "idle_verified": true,
+        "openlog": {
+          "address": 42,
+          "identity": 120,
+          "status": 29,
+          "firmware": "3.1"
+        },
+        "stored_bytes": 0,
+        "readback_hex": "",
+        "expected_header_bytes": 14,
+        "header_matches": false
+      },
+      "stored_bytes_before_sdk_comparison": 0,
+      "sdk_pattern_comparison": {
+        "mode": "ACTUAL_SPARKFUN_WRITE_SYNC_PATTERN",
+        "new_file": "TBF8D92C.CSV",
+        "usb_reset": false,
+        "i2c_cancel": false,
+        "existing_recordings_modified": false,
+        "files_deleted": false,
+        "immediate_write_status_read": false,
+        "immediate_sync_status_read": false,
+        "initial_status": "10 00 00 00 00 00 00 00 00 0d 00 0d 00 0d 76 00 54 00 10 28 00 60 01 01 00 00",
+        "openlog": {
+          "address": 42,
+          "identity": 120,
+          "status": 29,
+          "firmware": "3.1"
+        },
+        "phase": "sync",
+        "error_code": "HID_TIMEOUT",
+        "error": "Deadline passed after sending HID command."
+      },
+      "sdk_comparison_trace_reports": 696,
+      "final_status": {
+        "mode": "SDK_FAILURE_STATUS_ONLY",
+        "drained_reports": [],
+        "status": "10 00 00 00 00 00 00 00 44 01 00 01 00 01 76 00 54 00 08 28 00 60 00 01 00 00",
+        "engine": 68,
+        "scl": 0,
+        "sda": 1,
+        "pending": 0,
+        "usb_reset": false,
+        "i2c_cancel": false,
+        "card_commands": false
+      },
+      "final_file_size_unverified_after_sdk_comparison": true,
+      "exact_readback": false,
+      "full_csv_recording_verified": false,
+      "extra_immediate_status_read_is_sole_cause": false,
+      "usb_soft_reset": false,
+      "files_deleted": false,
+      "existing_recordings_modified": false,
+      "further_recovery_after_sdk_failure": false,
+      "next_test": "Power off and connect working FTDI; test separate local 3.101 SPI experiment; restore Qwiic and verify a new complete CSV."
+    },
+    "spi_experiment": {
+      "status": "FLASH_AND_NATIVE_RECORDING_READBACK_VERIFIED",
+      "version": "3.101",
+      "local_version_not_upstream_release": true,
+      "hypothesis": "SPI gated during sleep may block SD I/O in wake-time Wire callbacks before main-loop SPI restoration.",
+      "sleep_during_failed_command_proven": false,
+      "only_changes": [
+        "Keep SPI powered during idle sleep",
+        "Set local firmware minor version to 101"
+      ],
+      "upstream_copy_unchanged": true,
+      "source_revision": "f3f6a3ec3f70fe4c14612b38fac360f26ee79a4c",
+      "image": ".local/openlog-update/spi-awake-build/Qwiic_OpenLog.ino.hex",
+      "hex_sha256": "ca930c7fd55c4fd5b75c2ef84dd1d6557b99f143fe2a4ed49101fce9453ae1ef",
+      "flash_bytes": 21688,
+      "sram_bytes": 1368,
+      "sram_free_bytes": 680,
+      "highest_application_address": 21687,
+      "hex_checksums_verified": true,
+      "bootloader_in_image": false,
+      "official_3_1_rollback_preserved": true,
+      "original_factory_backup_preserved": true,
+      "may_increase_idle_consumption": true,
+      "flash_verified": true,
+      "physical_i2c_version_verified": true,
+      "native_sd_hardware_verified": true,
+      "standalone_webhid_sd_hardware_verified": false,
+      "flash_result": {
+        "mode": "ACTUAL_OPENLOG_SPI_EXPERIMENT_FLASH",
+        "version": "3.101",
+        "port": "COM21",
+        "status": "FLASH_VERIFIED_SD_RECHECK_PENDING",
+        "hex_sha256": "ca930c7fd55c4fd5b75c2ef84dd1d6557b99f143fe2a4ed49101fce9453ae1ef",
+        "backup": "before-spi-experiment-COM21-20261011T053047169Z.hex",
+        "backup_sha256": "fa95537cb9123a2217a117597ca2fbf5a4ea17485a5b1ff92b86f5ad0b19f808",
+        "log": "spi-flash-20261011T053208506Z.txt",
+        "usb_soft_reset": false,
+        "eeprom_written": false,
+        "fuses_written": false,
+        "sd_recording_verified": false,
+        "exit_code": 0,
+        "programming_reported": true,
+        "flash_verified": true,
+        "verified_flash_bytes": 21688
+      },
+      "pre_experiment_backup": {
+        "mode": "ACTUAL_PRE_EXPERIMENT_BACKUP",
+        "status": "COMPLETE_BACKUP_VALIDATED",
+        "port": "COM21",
+        "backup": "before-spi-experiment-COM21-20261011T053047169Z.hex",
+        "log": "spi-backup-20261011T053047169Z.txt",
+        "backup_bytes": 32768,
+        "backup_sha256": "fa95537cb9123a2217a117597ca2fbf5a4ea17485a5b1ff92b86f5ad0b19f808",
+        "hex_checksums_verified": true,
+        "official_3_1_application_matches": true,
+        "original_bootloader_matches": true,
+        "command_exit": 1,
+        "result_recording_error": "PowerShell used false instead of $false after backup read completed; saved output and all flash bytes independently validated.",
+        "avrdude_exit_code_retained": false,
+        "firmware_write": false
+      },
+      "i2c_identity": {
+        "mode": "ACTUAL_OPENLOG_HARDWARE",
+        "timestamp_utc": "20261011T053345_148117Z",
+        "write_test_requested": false,
+        "exact_readback": false,
+        "i2c_hz": 100000,
+        "usb_reset": false,
+        "i2c_cancel": false,
+        "existing_files_deleted": false,
+        "existing_recording_files_modified": false,
+        "initial_bridge_status": "10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 01 01 00 00",
+        "openlog": {
+          "address": 42,
+          "identity": 120,
+          "status": 29,
+          "firmware": "3.101"
+        }
+      },
+      "short_csv_check": {
+        "mode": "ACTUAL_OPENLOG_HARDWARE",
+        "timestamp_utc": "20261011T053353_975268Z",
+        "write_test_requested": true,
+        "exact_readback": true,
+        "i2c_hz": 100000,
+        "usb_reset": false,
+        "i2c_cancel": false,
+        "existing_files_deleted": false,
+        "existing_recording_files_modified": false,
+        "initial_bridge_status": "10 00 00 00 00 00 00 00 00 01 00 01 00 00 76 00 55 00 10 28 20 60 01 01 00 00",
+        "openlog": {
+          "address": 42,
+          "identity": 120,
+          "status": 29,
+          "firmware": "3.101"
+        },
+        "new_file_candidate": "T645CD8F.CSV",
+        "new_file": "T645CD8F.CSV",
+        "stored_bytes": 61,
+        "sha256": "702b134e0fb0d09e1edf97a76acb5e6091b5854e755d4bb5abc2dbb71d466025",
+        "expected_bytes": 61
+      },
+      "first_sensor_check": {
+        "mode": "ACTUAL_OPENLOG_HARDWARE",
+        "timestamp_utc": "20261011T053409_595221Z",
+        "write_test_requested": false,
+        "exact_readback": false,
+        "i2c_hz": 100000,
+        "usb_reset": false,
+        "i2c_cancel": false,
+        "existing_files_deleted": false,
+        "existing_recording_files_modified": false,
+        "initial_bridge_status": "10 00 00 00 00 00 00 00 00 1d 00 1d 00 00 76 00 55 00 10 28 20 60 01 01 00 00",
+        "openlog": {
+          "address": 42,
+          "identity": 120,
+          "status": 29,
+          "firmware": "3.101"
+        },
+        "error_code": "I2C_DATA",
+        "error": "reg=0x20 reply=40 41 25 7f 00 00 00 00"
+      },
+      "first_sensor_failure_status": {
+        "mode": "POST_SPI_EXPERIMENT_SENSOR_NACK_STATUS_ONLY",
+        "status": "10 00 00 00 00 00 00 00 25 02 00 00 00 00 76 00 c1 00 10 28 40 60 01 01 00 00",
+        "engine": 37,
+        "scl": 1,
+        "sda": 1,
+        "pending": 0,
+        "i2c_cancel": false,
+        "usb_reset": false,
+        "card_commands": false
+      },
+      "sensor_failure_cleanup": {
+        "mode": "ONE_CANCEL_OF_OUR_SENSOR_NACK",
+        "before": "10 00 00 00 00 00 00 00 25 02 00 00 00 00 76 00 c1 00 10 28 40 60 01 01 00 00",
+        "i2c_cancel_attempted": true,
+        "usb_reset": false,
+        "ack": "10 00 00 00 00 00 00 00 00 02 00 00 00 00 76 00 c1 00 10 28 40 60 01 01 00 00",
+        "after": "10 00 00 00 00 00 00 00 00 02 00 00 00 00 76 00 c1 00 10 28 40 60 01 01 00 00",
+        "idle_verified": true
+      },
+      "delayed_csv_check": {
+        "mode": "ACTUAL_SPI_EXPERIMENT_IDLE_GAP_SD_TEST",
+        "version": "3.101",
+        "new_file_candidate": "T8F4AE50.CSV",
+        "idle_gap_seconds": 1.0,
+        "i2c_hz": 100000,
+        "usb_reset": false,
+        "files_deleted": false,
+        "existing_recordings_modified": false,
+        "exact_readback": true,
+        "recovery": {
+          "mode": "ONE_CANCEL_OF_OUR_SENSOR_NACK",
+          "before": "10 00 00 00 00 00 00 00 25 02 00 00 00 00 76 00 c1 00 10 28 40 60 01 01 00 00",
+          "i2c_cancel_attempted": true,
+          "usb_reset": false,
+          "ack": "10 00 00 00 00 00 00 00 00 02 00 00 00 00 76 00 c1 00 10 28 40 60 01 01 00 00",
+          "after": "10 00 00 00 00 00 00 00 00 02 00 00 00 00 76 00 c1 00 10 28 40 60 01 01 00 00",
+          "idle_verified": true
+        },
+        "openlog": {
+          "address": 42,
+          "identity": 120,
+          "status": 29,
+          "firmware": "3.101"
+        },
+        "stored_bytes": 91,
+        "final_bridge_status": "10 00 00 00 00 00 00 00 00 1b 00 1b 00 00 76 00 55 00 10 28 20 60 01 01 00 00",
+        "expected_bytes": 91,
+        "sha256": "77ab20adfa965d9d9048527a2741f2b520bfa0d2a78573066bf890ebb87bed3e",
+        "status": "PASS"
+      },
+      "sensor_address_probe": {
+        "mode": "ACTUAL_MCP9600_BOUNDED_ADDRESS_PROBE",
+        "addresses": [
+          {
+            "address": "0x60",
+            "status": "10 00 00 00 00 00 00 00 00 00 00 00 00 00 76 28 c0 00 10 28 00 60 01 01 00 00",
+            "acknowledged": true,
+            "device_id": "4014"
+          }
+        ],
+        "usb_reset": false,
+        "sensor_config_writes": false,
+        "sd_file_writes": false,
+        "cancellations_of_failed_probes": 0,
+        "initial_status": "10 00 00 00 00 00 00 00 00 1b 00 1b 00 00 76 00 55 00 10 28 20 60 01 01 00 00",
+        "sensor": {
+          "info": {
+            "model": "MCP9600",
+            "device_id": "4014",
+            "address": 96,
+            "thermocouple_type": "K",
+            "adc_bits": 18,
+            "conversion_ms": 320,
+            "filter": 0,
+            "cold_resolution_c": 0.0625,
+            "power_mode": 0,
+            "sensor_config": 0,
+            "device_config": 0,
+            "i2c_hz": 100000
+          },
+          "reading": {
+            "hot_c": 27.1875,
+            "cold_c": 29.25,
+            "hot_raw": "01B3",
+            "cold_raw": "01D4",
+            "sensor_status": 79
+          }
+        },
+        "mcp9600_found": true,
+        "final_status": "10 00 00 00 00 00 00 00 00 01 00 01 00 00 76 00 c1 00 10 28 20 60 01 01 00 00",
+        "status": "MCP9600_FOUND"
+      },
+      "native_recording": {
+        "mode": "ACTUAL_NATIVE_LOGGER_SENSOR_TO_SD",
+        "requested_trial_seconds": 8.0,
+        "polling_hz": 2,
+        "recording_interval_seconds": 1,
+        "usb_reset": false,
+        "exact_readback": true,
+        "existing_recordings_modified": false,
+        "files_deleted": false,
+        "sensor_info": {
+          "model": "MCP9600",
+          "device_id": "4014",
+          "address": 96,
+          "thermocouple_type": "K",
+          "adc_bits": 18,
+          "conversion_ms": 320,
+          "filter": 0,
+          "cold_resolution_c": 0.0625,
+          "power_mode": 0,
+          "sensor_config": 0,
+          "device_config": 0,
+          "i2c_hz": 100000
+        },
+        "new_file": "T927E188.CSV",
+        "elapsed_recording_seconds": 8.407,
+        "recording": {
+          "phase": "stopped",
+          "message": "Recording stopped; CSV retained. SD synchronized and size verified; file closed.",
+          "count": 9,
+          "available": true,
+          "sd_filename": "T927E188.CSV",
+          "sd_bytes": 1263,
+          "settings": {
+            "interval_s": 1,
+            "probe_name": "Bench probe",
+            "board_name": "Cold junction",
+            "sd": true,
+            "sd_address": 42
+          }
+        },
+        "attempts": 19,
+        "valid_samples": 19,
+        "failed_samples": 0,
+        "recorded_rows": 9,
+        "pc_bytes": 1263,
+        "pc_sha256": "5af65b4bf436075da7a4bd59b477650144cd176d059f727049d4325f22063bdd",
+        "openlog": {
+          "address": 42,
+          "identity": 120,
+          "status": 29,
+          "firmware": "3.101"
+        },
+        "stored_bytes": 1263,
+        "status": "PASS",
+        "sd_sha256": "5af65b4bf436075da7a4bd59b477650144cd176d059f727049d4325f22063bdd",
+        "final_bridge_status": "10 00 00 00 00 00 00 00 00 0f 00 0f 00 00 76 00 55 00 10 28 20 60 01 01 00 00"
+      },
+      "spi_sleep_hypothesis_supported": true,
+      "spi_sleep_failure_instrumented": false,
+      "sustained_or_cold_start_validation": false
+    },
+    "current_firmware_version": "3.101",
+    "latest_sd_check": {
+      "mode": "ACTUAL_NATIVE_LOGGER_SENSOR_TO_SD",
+      "requested_trial_seconds": 8.0,
+      "polling_hz": 2,
+      "recording_interval_seconds": 1,
+      "usb_reset": false,
+      "exact_readback": true,
+      "existing_recordings_modified": false,
+      "files_deleted": false,
+      "sensor_info": {
+        "model": "MCP9600",
+        "device_id": "4014",
+        "address": 96,
+        "thermocouple_type": "K",
+        "adc_bits": 18,
+        "conversion_ms": 320,
+        "filter": 0,
+        "cold_resolution_c": 0.0625,
+        "power_mode": 0,
+        "sensor_config": 0,
+        "device_config": 0,
+        "i2c_hz": 100000
+      },
+      "new_file": "T927E188.CSV",
+      "elapsed_recording_seconds": 8.407,
+      "recording": {
+        "phase": "stopped",
+        "message": "Recording stopped; CSV retained. SD synchronized and size verified; file closed.",
+        "count": 9,
+        "available": true,
+        "sd_filename": "T927E188.CSV",
+        "sd_bytes": 1263,
+        "settings": {
+          "interval_s": 1,
+          "probe_name": "Bench probe",
+          "board_name": "Cold junction",
+          "sd": true,
+          "sd_address": 42
+        }
+      },
+      "attempts": 19,
+      "valid_samples": 19,
+      "failed_samples": 0,
+      "recorded_rows": 9,
+      "pc_bytes": 1263,
+      "pc_sha256": "5af65b4bf436075da7a4bd59b477650144cd176d059f727049d4325f22063bdd",
+      "openlog": {
+        "address": 42,
+        "identity": 120,
+        "status": 29,
+        "firmware": "3.101"
+      },
+      "stored_bytes": 1263,
+      "status": "PASS",
+      "sd_sha256": "5af65b4bf436075da7a4bd59b477650144cd176d059f727049d4325f22063bdd",
+      "final_bridge_status": "10 00 00 00 00 00 00 00 00 0f 00 0f 00 00 76 00 55 00 10 28 20 60 01 01 00 00"
+    },
+    "standalone_webhid_sd_hardware_verified": false,
+    "final_status": "10 00 00 00 00 00 00 00 00 0f 00 0f 00 00 76 00 55 00 10 28 20 60 01 01 00 00",
+    "known_test_csv_files": [
+      {
+        "filename": "T1D64F68.CSV",
+        "last_verified_bytes": 2,
+        "firmware": "2.0"
+      },
+      {
+        "filename": "TBF8D92C.CSV",
+        "last_verified_bytes_before_later_failed_sync": 0,
+        "current_size_unverified": true,
+        "firmware": "3.1"
+      },
+      {
+        "filename": "T645CD8F.CSV",
+        "bytes": 61,
+        "exact_readback": true,
+        "firmware": "3.101"
+      },
+      {
+        "filename": "T8F4AE50.CSV",
+        "bytes": 91,
+        "exact_readback": true,
+        "firmware": "3.101"
+      },
+      {
+        "filename": "T927E188.CSV",
+        "bytes": 1263,
+        "recorded_rows": 9,
+        "exact_readback": true,
+        "firmware": "3.101"
+      },
+      {
+        "filename": "T108E52A.CSV",
+        "bytes": 4148,
+        "recorded_rows": 34,
+        "exact_readback": true,
+        "firmware": "3.101",
+        "purpose": "Native 4 Hz / 250 ms recording"
+      }
+    ],
+    "interval_250ms_trial": {
+      "mode": "ACTUAL_NATIVE_LOGGER_250MS_SD",
+      "requested_polling_hz": 4,
+      "recording_interval_s": 0.25,
+      "trial_seconds": 8,
+      "usb_soft_reset": false,
+      "i2c_cancel": false,
+      "files_deleted": false,
+      "existing_csv_backed_up": true,
+      "readback": "full card CSV equals downloaded PC CSV",
+      "status": "PASS",
+      "elapsed_recording_s": 8.4287,
+      "sd_filename": "T108E52A.CSV",
+      "sd_bytes": 4148,
+      "pc_bytes": 4148,
+      "pc_sha256": "244d0712d3b735ccad3893154f5fffd750905e21d8a8260aa3879ec5d1658c3a",
+      "recorded_rows": 34,
+      "valid_recorded_rows": 34,
+      "fault_rows": 0,
+      "recorded_hz": 4.0338,
+      "stored_size_matches_pc": true,
+      "file_closed": true,
+      "attempts_during_trial": 34,
+      "valid_during_trial": 34,
+      "failed_during_trial": 0,
+      "recorded_interval_ms": {
+        "median": 250,
+        "min": 235,
+        "max": 254
+      },
+      "nominal_sensor_conversion_ms": 320,
+      "openlog": {
+        "address": 42,
+        "identity": 120,
+        "status": 29,
+        "firmware": "3.101"
+      },
+      "exact_readback": true,
+      "sd_sha256": "244d0712d3b735ccad3893154f5fffd750905e21d8a8260aa3879ec5d1658c3a",
+      "final_bridge_status": "10 00 00 00 00 00 00 00 00 14 00 14 00 00 76 00 55 00 10 28 20 60 01 01 00 00",
+      "restored_rate_hz": 2,
+      "final_reader_phase": "disconnected",
+      "final_recording_phase": "stopped"
+    }
+  },
+  "preserved_source_sha256": {
+    "08_Software/mlx90614-webhid/mlx.html": "f0872108f3a73132feb8cb55776ca3a137ccc903e685f839dd9b1bd1b4323308",
+    "08_Software/qwiic-thermocouple/thermocouple.html": "21f5f0c62b98e5911d53ba82f36312d09cc42903a5b2122c091105298f7f0ea4",
+    "08_Software/qwiic-thermocouple/monitor.py": "435d3754ce72927aa9f1450aba1dd8dc5c54c68a3f9f2f4e9009517f77f2d0c7",
+    "08_Software/qwiic-thermocouple/sensor.py": "21075bc966f71f6a9749fa7f3a4b87f4894f0e4f000dc7c257999e984bd94d4e",
+    "08_Software/mlx90614-hidapi-demo/mcp2221_native.pyx": "f03721aaaef8c711cc542fb46790215b7dbc2944068f8c85ba0d1006041a77f6"
+  },
+  "tested_source_sha256": {
+    "08_Software/temperature-logger/logger.html": "99876c5c9c8bd78382a0b421f00c94be6d9ffceb08d8035b11799b61b8b02f4b",
+    "08_Software/temperature-logger/logger.py": "829f247eb34835dd1a24ea2d1d9cafd867adace2998f2943b39cda580ebb265f",
+    "08_Software/temperature-logger/sdcard.py": "27f76191c919ae72fc42b2abe90d39d486d107e5f1f05a041368f3c24d5b1ce6",
+    "08_Software/temperature-logger/test_logger.py": "2981d9f895424b3ff56ea9a85e0cbaa39d2752652726d9e373fbf69da4e914d9",
+    "08_Software/temperature-logger/check_ui.mjs": "7b9ec7b41eee0c04f380b6c5f3698564f8068012929ba22fd95d98bdd7d58abe",
+    "08_Software/temperature-logger/recovery.py": "b371f4474200764113232358e89a9e770319e79df17b35a11e6ea823fd2bcb0b"
+  },
+  "gpio": {
+    "status": "PROPOSED_ONLY_NOT_IMPLEMENTED",
+    "pin_configuration_changed": false,
+    "hardware_commands_sent": false,
+    "proposed_mapping": {
+      "GP0": "alarm_output",
+      "GP1": "latched_recording_trigger",
+      "GP2": "recording_indicator",
+      "GP3": "stop_input"
+    }
+  },
+  "openlog_checker": {
+    "syntax_and_help_passed": true,
+    "native_environment_reused": true,
+    "idle_reader_check_passed": true,
+    "hardware_execution": false,
+    "sha256": "7cce501eaad1979b373d3d309633da9900dd9c3174c29431bc29c74a8618cc6b"
+  },
+  "ftdi_loopback": {
+    "mode": "ACTUAL_FTDI_LOOPBACK",
+    "port": "COM20",
+    "baud": 115200,
+    "passed": false,
+    "openlog_disconnected_confirmed": true,
+    "sent_hex": "55-AA-00-FF-4F-50-45-4E-4C-4F-47-2D-46-54-44-49",
+    "received_bytes": 0,
+    "received_hex": "",
+    "error": "FTDI loopback mismatch: received 0 of 16 bytes.",
+    "status": "ACTUAL_LOOPBACK_FAILED_ZERO_BYTES",
+    "driver_provider": "FTDI",
+    "driver_version": "2.12.36.20",
+    "driver_signed": true,
+    "pnp_status": "OK",
+    "present_serial_ports": [
+      "COM20"
+    ],
+    "framing": "8N1",
+    "flow_control": "NONE",
+    "dtr": false,
+    "rts": false,
+    "receive_budget_ms": 2000,
+    "serial_port_closed": true,
+    "adapter_model": "UNCONFIRMED",
+    "hardware_cause": "UNRESOLVED",
+    "usb_reset": false,
+    "firmware_written": false,
+    "next_check": "Adapter model and exact joined pin labels; direct TX/RX contact without crossover/inverter"
+  },
+  "local_services": {
+    "session_tokens_replaced_and_verified": true,
+    "token_values_retained_in_public_evidence": false,
+    "native_logger_port": 8768,
+    "thermocouple_monitor_port": 8766,
+    "readers_disconnected": true
+  },
+  "ui_followup": {
+    "date": "2026-10-10",
+    "dropdowns": "Seven custom dark menus; Chrome keyboard, Escape, outside-click, selection and locks verified",
+    "screen_pulse": "Fixed viewport border/tint/label, 2 second cycle; six second test, early stop, scroll persistence, reduced motion and acknowledgement verified",
+    "recording_interval": "Validate first, raise polling before file creation, no automatic rate reduction; rate-rejection guard passed",
+    "js_check": "PASS",
+    "native_fake_device_tests": 19,
+    "original_pages_unchanged": true,
+    "publication": "LOCAL_ONLY"
+  },
+  "stop_sync_ui_followup": {
+    "date": "2026-10-10",
+    "status": "PASS",
+    "states": [
+      "Closing SD file",
+      "SD file closed",
+      "SD close not confirmed",
+      "Recording stopped: SD was off"
+    ],
+    "js_guards": "Stopped phase and successful synchronized-size-and-close wording required; pending, active, failed request, transport loss, sync failure and PC-only states checked",
+    "chrome": "Fake WebHID/native completion visible; native reload persistence and next-recording/PC-only behavior verified",
+    "physical_hardware_commands_this_followup": false,
+    "protocol_changed": false,
+    "local_only": true
+  },
+  "guided_ui_followup": {
+    "date": "2026-10-11",
+    "mode": "Chrome with simulated HID",
+    "step_order": true,
+    "theme_toggle_and_preference": true,
+    "slider_number_and_keyboard_sync": true,
+    "every_poll_recorded_at_250ms_and_400ms": true,
+    "hourly_polling_no_hidden_samples": true,
+    "hourly_stop_responsive": true,
+    "sd_exact_csv": true,
+    "viewport_border": true,
+    "responsive_widths": [
+      1487,
+      1024,
+      768,
+      390
+    ],
+    "console_exceptions": [],
+    "no_physical_usb": true,
+    "publication": "LOCAL_ONLY",
+    "physical_hardware_tests": false,
+    "sd_close_preserved_after_disconnect": true,
+    "previous_hardware_results_apply_to_pre_redesign_source": true,
+    "prior_browser_sha256": "ebbe923f0f22736d98e14e2e55f6f8c357dd7368a180a9c68ebbc32ce5bfa6f3",
+    "prior_native_logger_sha256": "7380b50d1f246c6ec3f3b6d6acc584f4087f0900a0a32fb9263f14b4228d0c13"
+  },
+  "plain_error_messages_followup": {
+    "mode": "CHROME_DISPLAY_ONLY_AND_READ_ONLY_NATIVE_API",
+    "date": "2026-10-11",
+    "readable_identity_failure": true,
+    "native_and_reported_reply_preserved": true,
+    "recording_messages_readable": true,
+    "details_link_opens_log": true,
+    "action_error_raw_reply_retained": true,
+    "error_html_escaped": true,
+    "responsive_390px": true,
+    "backend_state_unchanged": true,
+    "api_writes": 0,
+    "hardware_commands": 0,
+    "js_exceptions": [],
+    "static_ui_protocol_checks": "PASS",
+    "physical_communication_failure_resolved": false,
+    "native_transport_changed": false,
+    "native_fake_tests_repeated": false,
+    "previous_broader_software_checks_source_sha256": {
+      "08_Software/temperature-logger/logger.html": "0dd4bce091c9d411e9c2a1592937c529011ec614fdca4821c6495585422de17a",
+      "08_Software/temperature-logger/logger.py": "e9db6c184dbef6b682152276769bbfc7fcd3100225954be62a1b713e1a4d9133",
+      "08_Software/temperature-logger/sdcard.py": "266228430eb9620bd762257b202e40a79aeae354ce1d31fdd3dbd54cec18142c",
+      "08_Software/temperature-logger/test_logger.py": "a1287481e7cc09e5dd1db27a7f32a83a9775a5ed495dfcfc2b965a3effe31e09",
+      "08_Software/temperature-logger/check_ui.mjs": "89c55e30b685aeb7c5b6ef6355f670b4f02076639f71963a92f44280c9cecabe"
+    },
+    "current_source_sha256": {
+      "08_Software/temperature-logger/logger.html": "aa8591ec192715fe6d9178a1e1c5653125853b12c2375935b5cfd02bb9a72b63",
+      "08_Software/temperature-logger/logger.py": "e9db6c184dbef6b682152276769bbfc7fcd3100225954be62a1b713e1a4d9133",
+      "08_Software/temperature-logger/sdcard.py": "266228430eb9620bd762257b202e40a79aeae354ce1d31fdd3dbd54cec18142c",
+      "08_Software/temperature-logger/test_logger.py": "a1287481e7cc09e5dd1db27a7f32a83a9775a5ed495dfcfc2b965a3effe31e09",
+      "08_Software/temperature-logger/check_ui.mjs": "8aa3910630beba2d6d096b6d58fc56397717479cd76e1f3f7e6588006a8bce67"
+    },
+    "publication": "LOCAL_ONLY"
+  },
+  "recovery_alarm_followup": {
+    "date": "2026-10-11",
+    "native_fake_device_tests": 32,
+    "js_protocol_checks": "PASS",
+    "chrome_webhid": {
+      "mode": "SIMULATED_CHROME_WEBHID",
+      "matching_alarm_border_label_banner": true,
+      "graph_limits_c_and_f": true,
+      "graph_alarm_and_reset_markers": true,
+      "silence_rearm_and_automatic_reset": true,
+      "missing_sd_pc_fallback": true,
+      "raw_error_csv_retained": true,
+      "subsequent_pc_only_recording": true,
+      "manual_recovery_no_power_cycle": true,
+      "sticky_bus_stops_after_one_cancel": true,
+      "no_usb_reset": true,
+      "responsive_390px": true,
+      "physical_hardware": false,
+      "js_exceptions": []
+    },
+    "chrome_native": {
+      "mode": "SIMULATED_NATIVE_API_AND_CHROME",
+      "missing_sd_pc_recording_continues": true,
+      "summary_reports_actual_sd_state": true,
+      "reload_preserves_warning_and_recording": true,
+      "error_csv_retained": true,
+      "subsequent_pc_only_recording": true,
+      "recovery_endpoint_from_ui": true,
+      "physical_hardware": false,
+      "js_exceptions": []
+    },
+    "current_source_sha256": {
+      "08_Software/temperature-logger/logger.html": "f7b468f1534f873294b9e724f7dcd04c15bd682b1bc5aed3e3768912c5fb851c",
+      "08_Software/temperature-logger/logger.py": "829f247eb34835dd1a24ea2d1d9cafd867adace2998f2943b39cda580ebb265f",
+      "08_Software/temperature-logger/sdcard.py": "27f76191c919ae72fc42b2abe90d39d486d107e5f1f05a041368f3c24d5b1ce6",
+      "08_Software/temperature-logger/test_logger.py": "2981d9f895424b3ff56ea9a85e0cbaa39d2752652726d9e373fbf69da4e914d9",
+      "08_Software/temperature-logger/check_ui.mjs": "7b9ec7b41eee0c04f380b6c5f3698564f8068012929ba22fd95d98bdd7d58abe",
+      "08_Software/temperature-logger/recovery.py": "b371f4474200764113232358e89a9e770319e79df17b35a11e6ea823fd2bcb0b"
+    },
+    "previous_readable_error_revision_sha256": {
+      "08_Software/temperature-logger/logger.html": "aa8591ec192715fe6d9178a1e1c5653125853b12c2375935b5cfd02bb9a72b63",
+      "08_Software/temperature-logger/logger.py": "e9db6c184dbef6b682152276769bbfc7fcd3100225954be62a1b713e1a4d9133",
+      "08_Software/temperature-logger/sdcard.py": "266228430eb9620bd762257b202e40a79aeae354ce1d31fdd3dbd54cec18142c",
+      "08_Software/temperature-logger/test_logger.py": "a1287481e7cc09e5dd1db27a7f32a83a9775a5ed495dfcfc2b965a3effe31e09",
+      "08_Software/temperature-logger/check_ui.mjs": "8aa3910630beba2d6d096b6d58fc56397717479cd76e1f3f7e6588006a8bce67"
+    },
+    "physical_recovery_test": true,
+    "real_reader_restarted": true,
+    "real_service_old_worker_guard_verified_get_only": true,
+    "publication": "LOCAL_ONLY_NOT_COMMITTED_OR_PUSHED",
+    "physical_missing_sd_trial": {
+      "mode": "PHYSICAL_MCP9600_OPENLOG_DISCONNECTED",
+      "result": "PASS",
+      "finished_utc": "2026-10-11T21:29:52.230742+00:00",
+      "tested_source_sha256": {
+        "08_Software/temperature-logger/logger.html": "f7b468f1534f873294b9e724f7dcd04c15bd682b1bc5aed3e3768912c5fb851c",
+        "08_Software/temperature-logger/logger.py": "829f247eb34835dd1a24ea2d1d9cafd867adace2998f2943b39cda580ebb265f",
+        "08_Software/temperature-logger/sdcard.py": "27f76191c919ae72fc42b2abe90d39d486d107e5f1f05a041368f3c24d5b1ce6",
+        "08_Software/temperature-logger/test_logger.py": "2981d9f895424b3ff56ea9a85e0cbaa39d2752652726d9e373fbf69da4e914d9",
+        "08_Software/temperature-logger/check_ui.mjs": "7b9ec7b41eee0c04f380b6c5f3698564f8068012929ba22fd95d98bdd7d58abe",
+        "08_Software/temperature-logger/recovery.py": "b371f4474200764113232358e89a9e770319e79df17b35a11e6ea823fd2bcb0b"
+      },
+      "openlog_physically_disconnected": true,
+      "sensor_address": 96,
+      "i2c_hz": 100000,
+      "sensor_configuration_preserved": true,
+      "preserved_previous_attempt_rows": 1573,
+      "preserved_previous_csv_sha256": "24bfd070a4b6da1fcac87bec4db78288f5a6352994c09e113bb282cf8b713905",
+      "cancellations_sent": 1,
+      "usb_reset": false,
+      "usb_power_cycle": false,
+      "sensor_sample_retries": 0,
+      "sd_file_created": false,
+      "missing_sd_csv": {
+        "valid_rows": 17,
+        "fault_rows": 1,
+        "original_error": "10 00 00 00 00 00 00 00 25 01 00 00 00 00 76 2c 54 00 10 28 40 60 01 01 00 00",
+        "error_code": "SD_I2C_STATE",
+        "interval_s": 0.25,
+        "raw_error_retained_in_both_csvs": true
+      },
+      "valid_row_interval_ms": {
+        "median": 250.0,
+        "min": 248,
+        "max": 264
+      },
+      "sensor_read_errors": 0,
+      "reconnect_without_usb_power_cycle": true,
+      "subsequent_pc_only_recording": {
+        "result": "PASS",
+        "valid_rows": 8
+      },
+      "restored_rate_hz": 0.2857142857142857,
+      "restored_interval_s": 3.5,
+      "final_reader_phase": "live",
+      "final_recording_phase": "idle",
+      "final_sd_phase": "off",
+      "hardware_log_messages": [
+        "100 kHz confirmed; sensor configuration preserved; no USB reset.",
+        "SD start failed: SD_I2C_STATE: 10 00 00 00 00 00 00 00 25 01 00 00 00 00 76 2c 54 00 10 28 40 60 01 01 00 00",
+        "I2C recovery status before: 10 00 00 00 00 00 00 00 25 01 00 00 00 00 76 00 54 00 10 28 40 60 01 01 00 00",
+        "I2C cancellation reply: 10 00 00 00 00 00 00 00 00 01 00 00 00 00 76 00 54 00 10 28 40 60 01 01 00 00",
+        "I2C recovery verified idle, SCL/SDA high, no pending read: 10 00 00 00 00 00 00 00 00 01 00 00 00 00 76 00 54 00 10 28 40 60 01 01 00 00",
+        "SD disabled for this session; PC recording continues. No sensor sample was retried.",
+        "Recording to this PC. SD start failed; PC recording continues.",
+        "Recording stopped; CSV retained. SD was unavailable; PC CSV retained.",
+        "100 kHz confirmed; sensor configuration preserved; no USB reset.",
+        "Recording to this PC.",
+        "Recording stopped; CSV retained.",
+        "100 kHz confirmed; sensor configuration preserved; no USB reset."
+      ],
+      "recording_csv_sha256": "ef80d41026c110b38650f12d42a960f55f357b517e46809e3fe36b14e27fbb51",
+      "attempts_csv_sha256": "faa00933b1126a88b3d11232ccdc035bf8b48064331b25e0a21b93daddbcc596",
+      "pc_only_csv_sha256": "2f66d7b4ce351b0b5df6cc03f9954db4576161e6439533e315392ed4263cc679",
+      "real_service_chrome": {
+        "mode": "ACTUAL_NATIVE_SERVICE_READ_ONLY_CHROME",
+        "updated_worker_detected": true,
+        "restart_notice_absent": true,
+        "live_sensor": true,
+        "failed_sensor_reads": 0,
+        "recording_idle": true,
+        "sd_off": true,
+        "restored_interval_s": 3.5,
+        "only_get_requests": true,
+        "js_exceptions": []
+      },
+      "limitations": [
+        "Short native missing-board trial only; no sustained or cold-start guarantee.",
+        "No card write in this trial because OpenLog was disconnected.",
+        "Standalone WebHID recovery and manual stopped-reader recovery have simulated coverage only."
+      ],
+      "publication": "LOCAL_ONLY_NOT_COMMITTED_OR_PUSHED"
+    }
+  },
+  "distinct_alarm_followup": {
+    "date": "2026-10-11",
+    "recorded_utc": "2026-10-11T21:45:23.595095+00:00",
+    "change_scope": "HTML_ONLY_NATIVE_SERVICE_REUSED",
+    "js_protocol_checks": "PASS",
+    "chrome": {
+      "mode": "SIMULATED_CHROME_WEBHID_WITH_REAL_OFFLINE_WEB_AUDIO",
+      "high": {
+        "color": "#c63f25",
+        "frequencies_hz": [
+          880,
+          1046,
+          1318
+        ],
+        "tone_duration_s": 0.12
+      },
+      "low": {
+        "color": "#226fba",
+        "frequencies_hz": [
+          440,
+          330
+        ],
+        "tone_duration_s": 0.3
+      },
+      "real_offline_audio_waveforms": {
+        "high": {
+          "tones": [
+            0.08515672094969277,
+            0.08473408078734554,
+            0.08524121088683378
+          ],
+          "gaps": [
+            0,
+            0,
+            0
+          ]
+        },
+        "low": {
+          "tones": [
+            0.08554834606146121,
+            0.08537222419359054
+          ],
+          "gaps": [
+            0,
+            0
+          ]
+        }
+      },
+      "offline_audio_nodes_cleaned_up": true,
+      "preview_without_connection": true,
+      "preview_does_not_enable_sound": true,
+      "enabling_sound_within_limits_is_silent": true,
+      "repeat_uses_active_mode": true,
+      "direct_high_to_low_stops_previous_sound": true,
+      "silence_stops_scheduled_tones": true,
+      "rearm_and_reset_preserved": true,
+      "matching_banner_pulse_card_colors_dark_light_reduced_motion": true,
+      "graph_limits_and_markers_distinct_c_and_f": true,
+      "board_channel_color_correct": true,
+      "notifications_name_alarm_direction": true,
+      "mobile_390px": true,
+      "physical_hardware": false,
+      "js_exceptions": []
+    },
+    "recovery_regression": {
+      "mode": "SIMULATED_CHROME_WEBHID",
+      "matching_alarm_border_label_banner": true,
+      "graph_limits_c_and_f": true,
+      "graph_alarm_and_reset_markers": true,
+      "silence_rearm_and_automatic_reset": true,
+      "missing_sd_pc_fallback": true,
+      "raw_error_csv_retained": true,
+      "subsequent_pc_only_recording": true,
+      "manual_recovery_no_power_cycle": true,
+      "sticky_bus_stops_after_one_cancel": true,
+      "no_usb_reset": true,
+      "responsive_390px": true,
+      "physical_hardware": false,
+      "js_exceptions": []
+    },
+    "real_service_get_only": {
+      "mode": "ACTUAL_NATIVE_SERVICE_READ_ONLY_CHROME",
+      "updated_worker_detected": true,
+      "restart_notice_absent": true,
+      "live_sensor": true,
+      "failed_sensor_reads": 0,
+      "recording_idle": true,
+      "sd_off": true,
+      "distinct_high_low_previews": true,
+      "only_html_changed": true,
+      "only_get_requests": true,
+      "js_exceptions": []
+    },
+    "current_source_sha256": {
+      "08_Software/temperature-logger/logger.html": "2966b81bbe4b4de0d03bacb247ebe5475cf15e78213c08b5761a3bcf33e37758",
+      "08_Software/temperature-logger/logger.py": "829f247eb34835dd1a24ea2d1d9cafd867adace2998f2943b39cda580ebb265f",
+      "08_Software/temperature-logger/sdcard.py": "27f76191c919ae72fc42b2abe90d39d486d107e5f1f05a041368f3c24d5b1ce6",
+      "08_Software/temperature-logger/test_logger.py": "2981d9f895424b3ff56ea9a85e0cbaa39d2752652726d9e373fbf69da4e914d9",
+      "08_Software/temperature-logger/check_ui.mjs": "7b9ec7b41eee0c04f380b6c5f3698564f8068012929ba22fd95d98bdd7d58abe",
+      "08_Software/temperature-logger/recovery.py": "b371f4474200764113232358e89a9e770319e79df17b35a11e6ea823fd2bcb0b"
+    },
+    "previous_recovery_revision_sha256": {
+      "08_Software/temperature-logger/logger.html": "f7b468f1534f873294b9e724f7dcd04c15bd682b1bc5aed3e3768912c5fb851c",
+      "08_Software/temperature-logger/logger.py": "829f247eb34835dd1a24ea2d1d9cafd867adace2998f2943b39cda580ebb265f",
+      "08_Software/temperature-logger/sdcard.py": "27f76191c919ae72fc42b2abe90d39d486d107e5f1f05a041368f3c24d5b1ce6",
+      "08_Software/temperature-logger/test_logger.py": "2981d9f895424b3ff56ea9a85e0cbaa39d2752652726d9e373fbf69da4e914d9",
+      "08_Software/temperature-logger/check_ui.mjs": "7b9ec7b41eee0c04f380b6c5f3698564f8068012929ba22fd95d98bdd7d58abe",
+      "08_Software/temperature-logger/recovery.py": "b371f4474200764113232358e89a9e770319e79df17b35a11e6ea823fd2bcb0b"
+    },
+    "hardware_operations": false,
+    "real_reader_restarted": false,
+    "native_backend_transport_and_firmware_changed": false,
+    "publication": "LOCAL_ONLY_NOT_COMMITTED_OR_PUSHED"
+  }
+}

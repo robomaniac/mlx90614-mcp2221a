@@ -5,11 +5,13 @@ on:
     paths:
       - '08_Software/mlx90614-hidapi-demo/**'
       - '08_Software/qwiic-thermocouple/**'
+      - '08_Software/temperature-logger/**'
       - '.github/workflows/hidapi-demo.yml'
   pull_request:
     paths:
       - '08_Software/mlx90614-hidapi-demo/**'
       - '08_Software/qwiic-thermocouple/**'
+      - '08_Software/temperature-logger/**'
       - '.github/workflows/hidapi-demo.yml'
   workflow_dispatch:
 
@@ -37,3 +39,5 @@ jobs:
         run: ./08_Software/mlx90614-hidapi-demo/Run-Demo.ps1 -Simulate -Unpaced -Seconds 1
       - name: Check MCP9600 protocol and reader lifecycle without hardware
         run: ./08_Software/mlx90614-hidapi-demo/.venv/Scripts/python.exe -W error::ResourceWarning -m unittest discover -s ./08_Software/qwiic-thermocouple -p test_sensor.py -v
+      - name: Check logger and OpenLog protocol without hardware
+        run: ./08_Software/mlx90614-hidapi-demo/.venv/Scripts/python.exe -W error::ResourceWarning -m unittest discover -s ./08_Software/temperature-logger -p test_logger.py -v

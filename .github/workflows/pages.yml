@@ -23,11 +23,13 @@ jobs:
           node 08_Software/mlx90614-webhid/tools/check_html.mjs
           node 08_Software/mlx90614-webhid/tools/test_diagnostics.mjs
           node 08_Software/qwiic-thermocouple/check_ui.mjs
+          node 08_Software/temperature-logger/check_ui.mjs
       - name: Package the standalone temperature monitors
         run: |
           mkdir -p _site
           cp 08_Software/mlx90614-webhid/mlx.html _site/index.html
           cp 08_Software/qwiic-thermocouple/thermocouple.html _site/thermocouple.html
+          cp 08_Software/temperature-logger/logger.html _site/logger.html
           touch _site/.nojekyll
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
